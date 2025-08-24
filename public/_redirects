@@ -1,0 +1,2 @@
+# Use 301 redirect to properly redirect to chatbot
+/chat/* https://chat.ejencukai.my/:splat 301
