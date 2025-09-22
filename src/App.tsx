@@ -1,19 +1,20 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { LanguageProvider } from './contexts/LanguageContext';
-import { Hero } from './components/Hero';
-import { Features } from './components/Features';
-import { WaitlistForm } from './components/WaitlistForm';
-import { Footer } from './components/Footer';
+import { Home } from './components/Home';
+import { PrivacyPolicy } from './components/PrivacyPolicy';
 
 function App() {
   return (
     <LanguageProvider>
-      <div className="min-h-screen">
-        <Hero />
-        <Features />
-        <WaitlistForm />
-        <Footer />
-      </div>
+      <Router>
+        <div className="min-h-screen">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          </Routes>
+        </div>
+      </Router>
     </LanguageProvider>
   );
 }

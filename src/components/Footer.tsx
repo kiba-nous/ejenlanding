@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
 
 function Footer() {
@@ -63,7 +64,11 @@ function Footer() {
             <h3 className="text-lg font-semibold mb-4">{t('footer.company')}</h3>
             <ul className="space-y-2 text-sm text-gray-400">
               <li>About Us</li>
-              <li>Privacy Policy</li>
+              <li>
+                <Link to="/privacy-policy" className="hover:text-white transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
               <li>Terms of Service</li>
               <li>Contact</li>
               <li>Support</li>
