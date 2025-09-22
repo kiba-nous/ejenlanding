@@ -47,7 +47,7 @@ function Hero() {
 
   const openCukai = () => {
     // Navigate to the chat demo
-    window.open("https://firm.ejencukai.my", "_blank");
+    window.open("https://agent.ejencukai.my", "_blank");
   };
 
   return (
