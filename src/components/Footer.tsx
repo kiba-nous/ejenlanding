@@ -69,7 +69,11 @@ function Footer() {
                   Privacy Policy
                 </Link>
               </li>
-              <li>Terms of Service</li>
+              <li>
+                <Link to="/terms-of-service" className="hover:text-white transition-colors">
+                  Terms of Service
+                </Link>
+              </li>
               <li>Contact</li>
               <li>Support</li>
             </ul>
