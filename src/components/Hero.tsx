@@ -62,54 +62,9 @@ function Hero() {
         ></div>
       </div>
 
-      {/* Header with Language Toggle */}
-      <motion.header
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="relative z-10 pt-6 pb-4"
-      >
-        <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center">
-              <img src="/logo.png" alt="Ejen Cukai" className="h-20 w-auto" />
-            </div>
-
-            {/* Embedded Language Toggle */}
-            <div className="bg-white/90 backdrop-blur-sm rounded-full p-1 shadow-lg border border-gray-200">
-              <div className="flex items-center">
-                <motion.button
-                  onClick={() => setLanguage("en")}
-                  className={`px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-200 ${
-                    language === "en"
-                      ? "bg-blue-600 text-white shadow-sm"
-                      : "text-gray-600 hover:text-gray-900"
-                  }`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  EN
-                </motion.button>
-                <motion.button
-                  onClick={() => setLanguage("bm")}
-                  className={`px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-200 ${
-                    language === "bm"
-                      ? "bg-blue-600 text-white shadow-sm"
-                      : "text-gray-600 hover:text-gray-900"
-                  }`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  BM
-                </motion.button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </motion.header>
 
       <div className="relative container mx-auto px-4">
-        <div className="flex gap-8 py-16 lg:py-24 items-center justify-center flex-col">
+        <div className="flex gap-8 py-16 lg:py-20 items-center justify-center flex-col">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
