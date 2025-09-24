@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -11,6 +11,7 @@ interface NavbarProps {
 function Navbar({ currentSection, onSectionChange }: NavbarProps) {
   const { language, setLanguage } = useLanguage();
   const location = useLocation();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const sections = [
     { id: 'home', label: language === 'en' ? 'Home' : 'Laman Utama', path: '/' },
@@ -86,13 +87,50 @@ function Navbar({ currentSection, onSectionChange }: NavbarProps) {
 
           {/* Mobile menu button */}
           <div className="md:hidden">
-            <button className="text-gray-700 hover:text-gray-900">
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-md p-2"
+              aria-expanded={isMobileMenuOpen}
+              aria-label="Toggle mobile menu"
+            >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                {isMobileMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
               </svg>
             </button>
           </div>
         </div>
+
+        {/* Mobile Navigation Menu */}
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden bg-white border-t border-gray-200 shadow-lg"
+          >
+            <div className="px-4 py-3 space-y-2">
+              {sections.map((section) => (
+                <Link
+                  key={section.id}
+                  to={section.path}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`block px-4 py-3 text-sm font-medium transition-colors duration-200 rounded-lg ${
+                    getCurrentSection() === section.id
+                      ? 'text-blue-600 bg-blue-50 border-l-4 border-blue-600'
+                      : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+                  }`}
+                >
+                  {section.label}
+                </Link>
+              ))}
+            </div>
+          </motion.div>
+        )}
       </div>
     </nav>
   );
