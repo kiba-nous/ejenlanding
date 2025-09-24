@@ -1,12 +1,14 @@
 import { motion } from "framer-motion";
-import { useLanguage } from "../contexts/LanguageContext";
+import { Navbar } from "./Navbar";
+import { Footer } from "./Footer";
 
 function PrivacyPolicy() {
-  const { t } = useLanguage();
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-16">
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gray-50">
+        <div className="container mx-auto px-4 py-16">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -141,8 +143,10 @@ function PrivacyPolicy() {
             </section>
           </div>
         </motion.div>
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 }
 
