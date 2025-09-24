@@ -1,2 +1,5 @@
 # Use 301 redirect to properly redirect to chatbot
 /chat/* https://chat.ejencukai.my/:splat 301
+
+# Handle client-side routing for React Router
+/* /index.html 200
