@@ -134,7 +134,7 @@ function Hero() {
               variant="outline"
               onClick={openChatDemo}
             >
-              Chat Demo <MessageSquare className="w-4 h-4" />
+              {t("hero.forBusinessDemo")} <MessageSquare className="w-4 h-4" />
             </Button>
             <Button
               size="lg"
@@ -142,7 +142,7 @@ function Hero() {
               variant="outline"
               onClick={openCukai}
             >
-              Ejen Cukai 1.0
+              {t("hero.forTaxFirms")}
             </Button>
           </motion.div>
 

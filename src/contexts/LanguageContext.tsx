@@ -22,6 +22,8 @@ const translations = {
     'hero.description': 'Ejen Cukai simplifies Malaysian tax compliance with AI-powered automation. From SST calculations to income tax filing, we handle the complexity so you can focus on growing your business.',
     'hero.joinWaitlist': 'Join Waitlist',
     'hero.tryDemo': 'Try Demo',
+    'hero.forBusinessDemo': 'For Business (Demo)',
+    'hero.forTaxFirms': 'For Tax Firms',
     'hero.trustedBy': 'Trusted by Malaysian businesses and tax firms',
     
     // Features Section
@@ -82,6 +84,8 @@ const translations = {
     'hero.description': 'Ejen Cukai memudahkan pematuhan cukai Malaysia dengan automasi berkuasa AI. Dari pengiraan SST hingga pemfailan cukai pendapatan, kami mengendalikan kerumitan supaya anda boleh fokus mengembangkan perniagaan anda.',
     'hero.joinWaitlist': 'Sertai Senarai Menunggu',
     'hero.tryDemo': 'Cuba Demo',
+    'hero.forBusinessDemo': 'Untuk Perniagaan (Demo)',
+    'hero.forTaxFirms': 'Untuk Firma Cukai',
     'hero.trustedBy': 'Dipercayai oleh perniagaan dan firma cukai Malaysia',
     
     // Features Section

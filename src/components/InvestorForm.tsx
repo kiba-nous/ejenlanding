@@ -2,14 +2,14 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useLanguage } from "../contexts/LanguageContext";
 
-function WaitlistForm() {
-  const { t } = useLanguage();
+function InvestorForm() {
+  const { language } = useLanguage();
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     // Add global CSS to hide Tally branding
     const style = document.createElement('style');
-    style.id = 'tally-branding-remover-waitlist';
+    style.id = 'tally-branding-remover';
     style.textContent = `
       /* Hide Tally branding more aggressively */
       iframe[src*="tally.so"] + * {
@@ -40,7 +40,7 @@ function WaitlistForm() {
     `;
 
     // Remove any existing style with the same ID
-    const existingStyle = document.getElementById('tally-branding-remover-waitlist');
+    const existingStyle = document.getElementById('tally-branding-remover');
     if (existingStyle) {
       existingStyle.remove();
     }
@@ -48,7 +48,7 @@ function WaitlistForm() {
     document.head.appendChild(style);
 
     return () => {
-      const styleElement = document.getElementById('tally-branding-remover-waitlist');
+      const styleElement = document.getElementById('tally-branding-remover');
       if (styleElement) {
         styleElement.remove();
       }
@@ -66,10 +66,13 @@ function WaitlistForm() {
           className="max-w-2xl mx-auto text-center mb-12"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            {t('waitlist.title')}
+            {language === 'en' ? "Interested in Investing?" : "Berminat untuk Melabur?"}
           </h2>
           <p className="text-xl text-gray-600">
-            {t('waitlist.subtitle')}
+            {language === 'en'
+              ? "Connect with us to learn more about investment opportunities and access our investor deck."
+              : "Berhubung dengan kami untuk mengetahui lebih lanjut tentang peluang pelaburan dan mengakses dek pelabur kami."
+            }
           </p>
         </motion.div>
 
@@ -78,13 +81,12 @@ function WaitlistForm() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="max-w-md mx-auto"
+          className="max-w-2xl mx-auto"
           style={{ position: 'relative', zIndex: 50 }}
         >
-          <div className="bg-white rounded-3xl p-8 shadow-xl relative z-10">
-            {/* Tally Form Embed - using exact embed code provided */}
+          <div className="bg-white rounded-lg shadow-lg p-8 relative z-10">
             {!isLoaded && (
-              <div className="flex items-center justify-center h-96">
+              <div className="flex items-center justify-center h-80">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
                 <span className="ml-2 text-gray-600">Loading form...</span>
               </div>
@@ -93,16 +95,15 @@ function WaitlistForm() {
               position: 'relative',
               width: '100%',
               height: 'auto',
-              minHeight: '450px'
+              minHeight: '420px'
             }}>
               <iframe
-                src="https://tally.so/embed/mVa8Qy?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+                src="https://tally.so/embed/3q6YNG?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
                 width="100%"
                 frameBorder="0"
-                marginHeight={0}
-                marginWidth={0}
-                title="Join the waitlist"
-                className="rounded-lg"
+                marginHeight="0"
+                marginWidth="0"
+                title="I'm interested to invest."
                 style={{
                   pointerEvents: 'auto',
                   position: 'relative',
@@ -111,7 +112,7 @@ function WaitlistForm() {
                   transition: 'opacity 0.5s ease-in-out',
                   display: 'block',
                   width: '100%',
-                  height: '700px', // Set a large fixed height to avoid scrolling
+                  height: '420px', // Adjusted height to fit the form content better
                   border: 'none'
                 }}
                 onLoad={() => {
@@ -131,46 +132,26 @@ function WaitlistForm() {
                 zIndex: 25
               }}></div>
             </div>
-
-            <div className="mt-6 text-center">
-              <p className="text-sm text-gray-500">
-                {t('waitlist.privacy')}
-              </p>
-            </div>
           </div>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
           viewport={{ once: true }}
-          className="mt-16 text-center"
+          className="text-center mt-8"
         >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="text-center">
-              <div className="bg-white rounded-xl p-6 shadow-lg">
-                <div className="text-3xl font-bold text-blue-600 mb-2">500+</div>
-                <div className="text-gray-600">{t('waitlist.businesses')}</div>
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="bg-white rounded-xl p-6 shadow-lg">
-                <div className="text-3xl font-bold text-green-600 mb-2">Q3 2025</div>
-                <div className="text-gray-600">{t('waitlist.launch')}</div>
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="bg-white rounded-xl p-6 shadow-lg">
-                <div className="text-3xl font-bold text-purple-600 mb-2">50%</div>
-                <div className="text-gray-600">{t('waitlist.discount')}</div>
-              </div>
-            </div>
-          </div>
+          <p className="text-sm text-gray-500">
+            {language === 'en'
+              ? "By submitting your interest, you agree to receive investment-related communications from Ejen Cukai."
+              : "Dengan menyerahkan minat anda, anda bersetuju untuk menerima komunikasi berkaitan pelaburan daripada Ejen Cukai."
+            }
+          </p>
         </motion.div>
       </div>
     </section>
   );
 }
 
-export { WaitlistForm };
+export { InvestorForm };

@@ -179,12 +179,13 @@ function TaxFirms() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            <Button size="lg" className="gap-4 shadow-lg" onClick={scrollToWaitlist}>
-              {language === 'en' ? "Get AI Tax Tools" : "Dapatkan Alat Cukai AI"}
+            <Button
+              size="lg"
+              className="gap-4 shadow-lg"
+              onClick={() => window.open("https://agent.ejencukai.my", "_blank")}
+            >
+              {language === 'en' ? "Try Version 1.0" : "Cuba Versi 1.0"}
               <MoveRight className="w-4 h-4" />
-            </Button>
-            <Button size="lg" className="gap-4" variant="outline">
-              {language === 'en' ? "See Demo" : "Lihat Demo"}
             </Button>
           </motion.div>
         </div>

@@ -4,7 +4,7 @@ import { MoveRight, TrendingUp, DollarSign, Globe, Target, Rocket, PieChart } fr
 import { Button } from "./ui/button";
 import { useLanguage } from "../contexts/LanguageContext";
 import { Navbar } from "./Navbar";
-import { WaitlistForm } from "./WaitlistForm";
+import { InvestorForm } from "./InvestorForm";
 import { Footer } from "./Footer";
 
 function Investors() {
@@ -316,7 +316,7 @@ function Investors() {
         </div>
       </div>
 
-      <WaitlistForm />
+      <InvestorForm />
       <Footer />
     </div>
   );
