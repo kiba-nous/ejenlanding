@@ -172,6 +172,14 @@ function Business() {
             >
               {language === 'en' ? "See Demo" : "Lihat Demo"}
             </Button>
+            <Button
+              size="lg"
+              className="gap-4"
+              variant="outline"
+              onClick={() => window.open("https://calculator.ejencukai.my", "_blank")}
+            >
+              {language === 'en' ? "Tax Calculator" : "Kalkulator Cukai"}
+            </Button>
           </motion.div>
         </div>
       </div>
