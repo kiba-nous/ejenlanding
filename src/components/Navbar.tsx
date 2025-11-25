@@ -32,9 +32,9 @@ function Navbar({ currentSection, onSectionChange }: NavbarProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <div className="flex items-center">
+          <Link to="/" className="flex items-center cursor-pointer hover:opacity-80 transition-opacity duration-200">
             <img src="/logo.png" alt="Ejen Cukai" className="h-20 w-auto" />
-          </div>
+          </Link>
 
           {/* Navigation Links */}
           <div className="hidden md:block">
