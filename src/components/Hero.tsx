@@ -1,53 +1,13 @@
-import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { MoveRight, MessageSquare } from "lucide-react";
+import { MoveRight } from "lucide-react";
 import { Button } from "./ui/button";
 import { useLanguage } from "../contexts/LanguageContext";
 
 function Hero() {
-  const { t, language, setLanguage } = useLanguage();
-  const [titleNumber, setTitleNumber] = useState(0);
+  const { t } = useLanguage();
 
-  const titles = useMemo(
-    () => [
-      t("hero.title.intelligent"),
-      t("hero.title.automated"),
-      t("hero.title.accurate"),
-      t("hero.title.compliant"),
-      t("hero.title.efficient"),
-    ],
-    [t, language]
-  );
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (titleNumber === titles.length - 1) {
-        setTitleNumber(0);
-      } else {
-        setTitleNumber(titleNumber + 1);
-      }
-    }, 2000);
-    return () => clearTimeout(timeoutId);
-  }, [titleNumber, titles]);
-
-  const scrollToWaitlist = () => {
-    const waitlistSection = document.getElementById("waitlist-section");
-    if (waitlistSection) {
-      waitlistSection.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  };
-
-  const openChatDemo = () => {
-    // Navigate to the chat demo
-    window.open("https://chat.ejencukai.my", "_blank");
-  };
-
-  const openCukai = () => {
-    // Navigate to the chat demo
-    window.open("https://agent.ejencukai.my", "_blank");
+  const openConsultationForm = () => {
+    window.open("https://form.ejencukai.my", "_blank");
   };
 
   return (
@@ -83,31 +43,7 @@ function Hero() {
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             <h1 className="text-5xl md:text-7xl max-w-4xl tracking-tighter text-center font-bold">
-              <span className="text-blue-900">{t("hero.title.part1")}</span>
-              <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1">
-                &nbsp;
-                {titles.map((title, index) => (
-                  <motion.span
-                    key={`${title}-${language}`}
-                    className="absolute font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent"
-                    initial={{ opacity: 0, y: "-100" }}
-                    transition={{ type: "spring", stiffness: 50 }}
-                    animate={
-                      titleNumber === index
-                        ? {
-                            y: 0,
-                            opacity: 1,
-                          }
-                        : {
-                            y: titleNumber > index ? -150 : 150,
-                            opacity: 0,
-                          }
-                    }
-                  >
-                    {title}
-                  </motion.span>
-                ))}
-              </span>
+              <span className="text-blue-900">{t("hero.title")}</span>
             </h1>
 
             <p className="text-lg md:text-xl leading-relaxed tracking-tight text-gray-600 max-w-3xl text-center">
@@ -124,25 +60,9 @@ function Hero() {
             <Button
               size="lg"
               className="gap-4 shadow-lg"
-              onClick={scrollToWaitlist}
+              onClick={openConsultationForm}
             >
-              {t("hero.joinWaitlist")} <MoveRight className="w-4 h-4" />
-            </Button>
-            <Button
-              size="lg"
-              className="gap-4"
-              variant="outline"
-              onClick={openChatDemo}
-            >
-              {t("hero.forBusinessDemo")} <MessageSquare className="w-4 h-4" />
-            </Button>
-            <Button
-              size="lg"
-              className="gap-4"
-              variant="outline"
-              onClick={openCukai}
-            >
-              {t("hero.forTaxFirms")}
+              {t("hero.bookConsultation")} <MoveRight className="w-4 h-4" />
             </Button>
           </motion.div>
 

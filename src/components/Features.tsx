@@ -1,83 +1,35 @@
 import { motion } from "framer-motion";
 import {
-  Calculator,
-  FileText,
-  Clock,
-  Shield,
-  BarChart3,
-  Users,
+  Award,
   Zap,
-  CheckCircle,
   TrendingUp,
-  Database,
-  Building2,
-  AlertTriangle,
+  MoveRight,
 } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
+import { Button } from "./ui/button";
 
 function Features() {
   const { t } = useLanguage();
 
+  const openConsultationForm = () => {
+    window.open("https://form.ejencukai.my", "_blank");
+  };
+
   const features = [
     {
-      icon: <Calculator className="w-6 h-6" />,
-      title: t("features.gst.title"),
-      description: t("features.gst.description"),
-    },
-    {
-      icon: <FileText className="w-6 h-6" />,
-      title: t("features.income.title"),
-      description: t("features.income.description"),
-    },
-    {
-      icon: <Clock className="w-6 h-6" />,
-      title: t("features.monitoring.title"),
-      description: t("features.monitoring.description"),
-    },
-    {
-      icon: <Shield className="w-6 h-6" />,
-      title: t("features.compliance.title"),
-      description: t("features.compliance.description"),
-    },
-    {
-      icon: <BarChart3 className="w-6 h-6" />,
-      title: t("features.analytics.title"),
-      description: t("features.analytics.description"),
-    },
-    {
-      icon: <Users className="w-6 h-6" />,
-      title: t("features.multiuser.title"),
-      description: t("features.multiuser.description"),
+      icon: <Award className="w-6 h-6" />,
+      title: t("features.experienced.title"),
+      description: t("features.experienced.description"),
     },
     {
       icon: <Zap className="w-6 h-6" />,
-      title: t("features.ai.title"),
-      description: t("features.ai.description"),
-    },
-    {
-      icon: <Database className="w-6 h-6" />,
-      title: t("features.security.title"),
-      description: t("features.security.description"),
+      title: t("features.efficient.title"),
+      description: t("features.efficient.description"),
     },
     {
       icon: <TrendingUp className="w-6 h-6" />,
-      title: t("features.intelligence.title"),
-      description: t("features.intelligence.description"),
-    },
-    {
-      icon: <Building2 className="w-6 h-6" />,
-      title: t("features.integration.title"),
-      description: t("features.integration.description"),
-    },
-    {
-      icon: <AlertTriangle className="w-6 h-6" />,
-      title: t("features.alerts.title"),
-      description: t("features.alerts.description"),
-    },
-    {
-      icon: <CheckCircle className="w-6 h-6" />,
-      title: t("features.automation.title"),
-      description: t("features.automation.description"),
+      title: t("features.bestDeals.title"),
+      description: t("features.bestDeals.description"),
     },
   ];
 
@@ -104,7 +56,7 @@ function Features() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 relative z-10 max-w-7xl mx-auto"
+          className="grid grid-cols-1 md:grid-cols-3 relative z-10 max-w-5xl mx-auto"
         >
           {features.map((feature, index) => (
             <Feature key={feature.title} {...feature} index={index} />
@@ -117,7 +69,15 @@ function Features() {
           transition={{ duration: 0.8, delay: 0.4 }}
           viewport={{ once: true }}
           className="mt-16 text-center"
-        ></motion.div>
+        >
+          <Button
+            size="lg"
+            className="gap-4 shadow-lg"
+            onClick={openConsultationForm}
+          >
+            {t("features.cta")} <MoveRight className="w-4 h-4" />
+          </Button>
+        </motion.div>
       </div>
     </section>
   );
@@ -138,14 +98,9 @@ const Feature = ({
     let classes =
       "flex flex-col lg:border-r py-10 relative group/feature border-gray-200";
 
-    // Add left border for first column items
-    if (index % 4 === 0) {
+    // Add left border for first column
+    if (index === 0) {
       classes += " lg:border-l";
-    }
-
-    // Add bottom border for top two rows (first 8 items)
-    if (index < 8) {
-      classes += " lg:border-b";
     }
 
     return classes;
@@ -153,18 +108,8 @@ const Feature = ({
 
   return (
     <div className={getBorderClasses(index)}>
-      {/* Hover gradient effect for top row */}
-      {index < 4 && (
-        <div className="opacity-0 group-hover/feature:opacity-100 transition duration-300 absolute inset-0 h-full w-full bg-gradient-to-t from-blue-50 to-transparent pointer-events-none" />
-      )}
-      {/* Hover gradient effect for middle row */}
-      {index >= 4 && index < 8 && (
-        <div className="opacity-0 group-hover/feature:opacity-100 transition duration-300 absolute inset-0 h-full w-full bg-gradient-to-b from-blue-50 to-transparent pointer-events-none" />
-      )}
-      {/* Hover gradient effect for bottom row */}
-      {index >= 8 && (
-        <div className="opacity-0 group-hover/feature:opacity-100 transition duration-300 absolute inset-0 h-full w-full bg-gradient-to-t from-green-50 to-transparent pointer-events-none" />
-      )}
+      {/* Hover gradient effect */}
+      <div className="opacity-0 group-hover/feature:opacity-100 transition duration-300 absolute inset-0 h-full w-full bg-gradient-to-t from-blue-50 to-transparent pointer-events-none" />
 
       {/* Icon */}
       <div className="mb-4 relative z-10 px-10 text-gray-600">
