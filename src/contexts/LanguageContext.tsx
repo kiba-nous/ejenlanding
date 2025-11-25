@@ -13,14 +13,14 @@ const translations = {
     // Hero Section
     'hero.badge': 'Revolutionizing Malaysian Tax Compliance',
     'hero.sstUpdate': 'Updated for SST scope expansion effective 1 July 2025, including services like construction, leasing, and healthcare.',
-    'hero.title': 'Let Us Handle Your Taxes. You Focus on Your Business.',
+    'hero.title': 'Focus on Business. Leave Taxes to Us.',
     'hero.title.part1': 'Your AI Tax Co-Pilot is',
     'hero.title.intelligent': 'intelligent',
     'hero.title.automated': 'automated',
     'hero.title.accurate': 'accurate',
     'hero.title.compliant': 'compliant',
     'hero.title.efficient': 'efficient',
-    'hero.description': 'Backed by LHDN-registered tax agents with 30+ years of experience, EjenCukai combines expert guidance with smart automation to keep your accounts clean, compliant, and stress-free.',
+    'hero.description': 'Professional tax services backed by 30+ years of LHDN-registered experience.',
     'hero.joinWaitlist': 'Join Waitlist',
     'hero.bookConsultation': 'Book Free Consultation With Us',
     'hero.tryDemo': 'Try Demo',
@@ -77,6 +77,12 @@ const translations = {
     'services.advisory.title': 'Advisory',
     'services.advisory.description': 'Strategic tax planning and business advisory to help you make informed decisions and maximize your business potential.',
 
+    // Form Section
+    'form.title': 'Book Your Free Consultation',
+    'form.subtitle': 'Fill out the form below and our tax experts will get back to you within 24 hours.',
+    'form.placeholder': 'Embed your Tally form here',
+    'form.embedInstructions': 'Replace this placeholder with your Tally form embed code',
+
     // Waitlist Section
     'waitlist.title': 'Join the Waitlist',
     'waitlist.subtitle': 'Be among the first to experience AI-powered tax compliance. Get early access and exclusive pricing when we launch.',
@@ -96,14 +102,14 @@ const translations = {
     // Hero Section
     'hero.badge': 'Merevolusikan Pematuhan Cukai Malaysia',
     'hero.sstUpdate': 'Dikemas kini untuk pengembangan skop SST berkuat kuasa 1 Julai 2025, termasuk perkhidmatan seperti pembinaan, pajakan, dan penjagaan kesihatan.',
-    'hero.title': 'Biar Kami Uruskan Cukai Anda. Anda Fokus pada Perniagaan.',
+    'hero.title': 'Fokus pada Perniagaan. Serahkan Cukai kepada Kami.',
     'hero.title.part1': 'Pembantu Cukai Anda adalah',
     'hero.title.intelligent': 'pintar',
     'hero.title.automated': 'automatik',
     'hero.title.accurate': 'tepat',
     'hero.title.compliant': 'patuh',
     'hero.title.efficient': 'cekap',
-    'hero.description': 'Disokong oleh ejen cukai berdaftar LHDN dengan pengalaman 30+ tahun, EjenCukai menggabungkan bimbingan pakar dengan automasi pintar untuk memastikan akaun anda bersih, patuh, dan bebas tekanan.',
+    'hero.description': 'Perkhidmatan cukai profesional disokong oleh pengalaman 30+ tahun berdaftar LHDN.',
     'hero.joinWaitlist': 'Sertai Senarai Menunggu',
     'hero.bookConsultation': 'Tempah Konsultasi Percuma Dengan Kami',
     'hero.tryDemo': 'Cuba Demo',
@@ -159,6 +165,12 @@ const translations = {
     'services.audit.description': 'Perkhidmatan audit profesional untuk memastikan penyata kewangan anda tepat, telus, dan memenuhi piawaian pematuhan peraturan.',
     'services.advisory.title': 'Perundingan',
     'services.advisory.description': 'Perancangan cukai strategik dan nasihat perniagaan untuk membantu anda membuat keputusan bermaklumat dan memaksimumkan potensi perniagaan.',
+
+    // Form Section
+    'form.title': 'Tempah Konsultasi Percuma Anda',
+    'form.subtitle': 'Isi borang di bawah dan pakar cukai kami akan menghubungi anda dalam masa 24 jam.',
+    'form.placeholder': 'Sertakan borang Tally anda di sini',
+    'form.embedInstructions': 'Gantikan placeholder ini dengan kod embed borang Tally anda',
 
     // Waitlist Section
     'waitlist.title': 'Sertai Senarai Menunggu',

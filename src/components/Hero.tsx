@@ -1,13 +1,15 @@
 import { motion } from "framer-motion";
 import { MoveRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useLanguage } from "../contexts/LanguageContext";
 
 function Hero() {
   const { t } = useLanguage();
+  const navigate = useNavigate();
 
   const openConsultationForm = () => {
-    window.open("https://form.ejencukai.my", "_blank");
+    navigate("/form");
   };
 
   return (

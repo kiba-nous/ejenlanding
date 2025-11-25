@@ -5,14 +5,16 @@ import {
   TrendingUp,
   MoveRight,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
 import { Button } from "./ui/button";
 
 function Features() {
   const { t } = useLanguage();
+  const navigate = useNavigate();
 
   const openConsultationForm = () => {
-    window.open("https://form.ejencukai.my", "_blank");
+    navigate("/form");
   };
 
   const features = [
