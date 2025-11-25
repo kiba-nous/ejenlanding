@@ -37,7 +37,7 @@ function Navbar({ currentSection, onSectionChange }: NavbarProps) {
           </Link>
 
           {/* Navigation Links */}
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-6">
             <div className="flex items-baseline space-x-8">
               {sections.map((section) => (
                 <Link
@@ -53,10 +53,21 @@ function Navbar({ currentSection, onSectionChange }: NavbarProps) {
                 </Link>
               ))}
             </div>
+
+            {/* CTA Button */}
+            <Link to="/form">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-full shadow-md transition-all duration-200"
+              >
+                {language === 'en' ? 'Book Consultation' : 'Tempah Konsultasi'}
+              </motion.button>
+            </Link>
           </div>
 
           {/* Language Toggle */}
-          <div className="bg-white/90 backdrop-blur-sm rounded-full p-1 shadow-lg border border-gray-200">
+          <div className="hidden md:block bg-white/90 backdrop-blur-sm rounded-full p-1 shadow-lg border border-gray-200">
             <div className="flex items-center">
               <motion.button
                 onClick={() => setLanguage("en")}
@@ -85,8 +96,37 @@ function Navbar({ currentSection, onSectionChange }: NavbarProps) {
             </div>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
+          {/* Mobile: Language Toggle & Menu button */}
+          <div className="md:hidden flex items-center gap-3">
+            <div className="bg-white/90 backdrop-blur-sm rounded-full p-1 shadow-lg border border-gray-200">
+              <div className="flex items-center">
+                <motion.button
+                  onClick={() => setLanguage("en")}
+                  className={`px-2 py-1 text-xs font-medium rounded-full transition-all duration-200 ${
+                    language === "en"
+                      ? "bg-blue-600 text-white shadow-sm"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  EN
+                </motion.button>
+                <motion.button
+                  onClick={() => setLanguage("bm")}
+                  className={`px-2 py-1 text-xs font-medium rounded-full transition-all duration-200 ${
+                    language === "bm"
+                      ? "bg-blue-600 text-white shadow-sm"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  BM
+                </motion.button>
+              </div>
+            </div>
+
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-md p-2"
@@ -128,6 +168,13 @@ function Navbar({ currentSection, onSectionChange }: NavbarProps) {
                   {section.label}
                 </Link>
               ))}
+
+              {/* Mobile CTA Button */}
+              <Link to="/form" onClick={() => setIsMobileMenuOpen(false)}>
+                <button className="w-full mt-3 px-4 py-3 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-lg shadow-md transition-all duration-200">
+                  {language === 'en' ? 'Book Consultation' : 'Tempah Konsultasi'}
+                </button>
+              </Link>
             </div>
           </motion.div>
         )}
