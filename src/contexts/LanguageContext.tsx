@@ -13,14 +13,14 @@ const translations = {
     // Hero Section
     'hero.badge': 'Revolutionizing Malaysian Tax Compliance',
     'hero.sstUpdate': 'Updated for SST scope expansion effective 1 July 2025, including services like construction, leasing, and healthcare.',
-    'hero.title': 'Let us handle your accounting and taxes',
+    'hero.title': 'Let Us Handle Your Taxes. You Focus on Your Business.',
     'hero.title.part1': 'Your AI Tax Co-Pilot is',
     'hero.title.intelligent': 'intelligent',
     'hero.title.automated': 'automated',
     'hero.title.accurate': 'accurate',
     'hero.title.compliant': 'compliant',
     'hero.title.efficient': 'efficient',
-    'hero.description': 'Backed by seasoned tax agents with over 30 years of experience registered with LHDN, we combine expert knowledge with cutting-edge technology to deliver comprehensive accounting and tax solutions tailored to your business needs.',
+    'hero.description': 'Backed by LHDN-registered tax agents with 30+ years of experience, EjenCukai combines expert guidance with smart automation to keep your accounts clean, compliant, and stress-free.',
     'hero.joinWaitlist': 'Join Waitlist',
     'hero.bookConsultation': 'Book Free Consultation With Us',
     'hero.tryDemo': 'Try Demo',
@@ -64,7 +64,19 @@ const translations = {
     'features.automation.description': 'From data entry to report generation, automate your entire tax workflow. Save time and reduce human errors significantly.',
     'features.compliant.title': 'Fully Compliant with Malaysian Tax Regulations',
     'features.compliant.description': 'Our AI is trained on the latest Malaysian tax laws and regulations, ensuring your business stays compliant with LHDN requirements.',
-    
+
+    // Services Section
+    'services.title': 'Our Services',
+    'services.subtitle': 'Comprehensive tax and accounting solutions tailored to your business needs.',
+    'services.accounting.title': 'Accounting',
+    'services.accounting.description': 'Complete bookkeeping and financial record management to keep your business finances organized and compliant with Malaysian accounting standards.',
+    'services.taxComputation.title': 'Tax Computation',
+    'services.taxComputation.description': 'Accurate calculation of your tax obligations, including income tax, SST, and other statutory requirements, ensuring optimal tax efficiency.',
+    'services.audit.title': 'Audit',
+    'services.audit.description': 'Professional audit services to ensure your financial statements are accurate, transparent, and meet regulatory compliance standards.',
+    'services.advisory.title': 'Advisory',
+    'services.advisory.description': 'Strategic tax planning and business advisory to help you make informed decisions and maximize your business potential.',
+
     // Waitlist Section
     'waitlist.title': 'Join the Waitlist',
     'waitlist.subtitle': 'Be among the first to experience AI-powered tax compliance. Get early access and exclusive pricing when we launch.',
@@ -84,14 +96,14 @@ const translations = {
     // Hero Section
     'hero.badge': 'Merevolusikan Pematuhan Cukai Malaysia',
     'hero.sstUpdate': 'Dikemas kini untuk pengembangan skop SST berkuat kuasa 1 Julai 2025, termasuk perkhidmatan seperti pembinaan, pajakan, dan penjagaan kesihatan.',
-    'hero.title': 'Biar kami uruskan perakaunan dan cukai anda',
+    'hero.title': 'Biar Kami Uruskan Cukai Anda. Anda Fokus pada Perniagaan.',
     'hero.title.part1': 'Pembantu Cukai Anda adalah',
     'hero.title.intelligent': 'pintar',
     'hero.title.automated': 'automatik',
     'hero.title.accurate': 'tepat',
     'hero.title.compliant': 'patuh',
     'hero.title.efficient': 'cekap',
-    'hero.description': 'Disokong oleh ejen cukai berpengalaman dengan lebih 30 tahun pengalaman berdaftar dengan LHDN, kami menggabungkan kepakaran dengan teknologi terkini untuk menyampaikan penyelesaian perakaunan dan cukai komprehensif yang disesuaikan untuk keperluan perniagaan anda.',
+    'hero.description': 'Disokong oleh ejen cukai berdaftar LHDN dengan pengalaman 30+ tahun, EjenCukai menggabungkan bimbingan pakar dengan automasi pintar untuk memastikan akaun anda bersih, patuh, dan bebas tekanan.',
     'hero.joinWaitlist': 'Sertai Senarai Menunggu',
     'hero.bookConsultation': 'Tempah Konsultasi Percuma Dengan Kami',
     'hero.tryDemo': 'Cuba Demo',
@@ -135,7 +147,19 @@ const translations = {
     'features.automation.description': 'Dari kemasukan data hingga penjanaan laporan, automatikkan keseluruhan aliran kerja cukai anda. Jimat masa dan kurangkan kesilapan manusia dengan ketara.',
     'features.compliant.title': 'Patuh Sepenuhnya dengan Peraturan Cukai Malaysia',
     'features.compliant.description': 'AI kami dilatih dengan undang-undang dan peraturan cukai Malaysia terkini, memastikan perniagaan anda kekal patuh dengan keperluan LHDN.',
-    
+
+    // Services Section
+    'services.title': 'Perkhidmatan Kami',
+    'services.subtitle': 'Penyelesaian cukai dan perakaunan komprehensif yang disesuaikan untuk keperluan perniagaan anda.',
+    'services.accounting.title': 'Perakaunan',
+    'services.accounting.description': 'Pengurusan simpan kira dan rekod kewangan lengkap untuk memastikan kewangan perniagaan anda teratur dan patuh dengan piawaian perakaunan Malaysia.',
+    'services.taxComputation.title': 'Pengiraan Cukai',
+    'services.taxComputation.description': 'Pengiraan tepat kewajipan cukai anda, termasuk cukai pendapatan, SST, dan keperluan berkanun lain, memastikan kecekapan cukai optimum.',
+    'services.audit.title': 'Audit',
+    'services.audit.description': 'Perkhidmatan audit profesional untuk memastikan penyata kewangan anda tepat, telus, dan memenuhi piawaian pematuhan peraturan.',
+    'services.advisory.title': 'Perundingan',
+    'services.advisory.description': 'Perancangan cukai strategik dan nasihat perniagaan untuk membantu anda membuat keputusan bermaklumat dan memaksimumkan potensi perniagaan.',
+
     // Waitlist Section
     'waitlist.title': 'Sertai Senarai Menunggu',
     'waitlist.subtitle': 'Jadilah antara yang pertama mengalami pematuhan cukai berkuasa AI. Dapatkan akses awal dan harga eksklusif apabila kami melancarkan.',
