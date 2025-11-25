@@ -109,7 +109,7 @@ const translations = {
     'hero.title.accurate': 'tepat',
     'hero.title.compliant': 'patuh',
     'hero.title.efficient': 'cekap',
-    'hero.description': 'Perkhidmatan cukai profesional disokong oleh pengalaman 30+ tahun berdaftar LHDN.',
+    'hero.description': 'Perkhidmatan cukai profesional disokong oleh 30+ tahun pengalaman di LHDN.',
     'hero.joinWaitlist': 'Sertai Senarai Menunggu',
     'hero.bookConsultation': 'Tempah Konsultasi Percuma Dengan Kami',
     'hero.tryDemo': 'Cuba Demo',
