@@ -1,10 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { useLanguage } from '../contexts/LanguageContext';
 
 function FormPage() {
   const { t } = useLanguage();
+
+  useEffect(() => {
+    // Load Tally embed script
+    const script = document.createElement('script');
+    script.src = 'https://tally.so/widgets/embed.js';
+    script.async = true;
+    script.onload = () => {
+      if (typeof window !== 'undefined' && (window as any).Tally) {
+        (window as any).Tally.loadEmbeds();
+      }
+    };
+    document.body.appendChild(script);
+
+    return () => {
+      // Cleanup script on unmount
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
+      }
+    };
+  }, []);
 
   return (
     <>
@@ -23,16 +43,19 @@ function FormPage() {
             </div>
 
             {/* Form Container */}
-            <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
-              <div className="text-center text-gray-500">
-                {/* Placeholder for Tally form embed */}
-                <p className="mb-4">{t("form.placeholder")}</p>
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-16">
-                  <p className="text-sm text-gray-400">
-                    {t("form.embedInstructions")}
-                  </p>
-                </div>
-              </div>
+            <div className="bg-white rounded-2xl shadow-xl p-4 md:p-8">
+              {/* Tally Form Embed */}
+              <iframe
+                data-tally-src="https://tally.so/embed/dWbqvd?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+                loading="lazy"
+                width="100%"
+                height="694"
+                frameBorder="0"
+                marginHeight={0}
+                marginWidth={0}
+                title="Client form"
+                className="w-full"
+              />
             </div>
           </div>
         </div>
