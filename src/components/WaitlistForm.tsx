@@ -56,37 +56,37 @@ function WaitlistForm() {
   }, []);
 
   return (
-    <section id="waitlist-section" className="py-24 bg-gradient-to-br from-blue-50 to-green-50 relative">
-      <div className="container mx-auto px-4">
+    <section id="waitlist-section" className="py-32 md:py-40 bg-white relative">
+      <div className="container mx-auto px-6">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="max-w-2xl mx-auto text-center mb-12"
+          className="max-w-2xl mx-auto text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-4xl md:text-5xl font-light text-apple-gray-1 mb-4">
             {t('waitlist.title')}
           </h2>
-          <p className="text-xl text-gray-600">
+          <p className="text-body-lg text-apple-gray-2">
             {t('waitlist.subtitle')}
           </p>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="max-w-md mx-auto"
-          style={{ position: 'relative', zIndex: 50 }}
+          className="max-w-lg mx-auto mb-20"
+          style={{ position: 'relative', zIndex: 1 }}
         >
-          <div className="bg-white rounded-3xl p-8 shadow-xl relative z-10">
-            {/* Tally Form Embed - using exact embed code provided */}
+          <div className="bg-white rounded-apple p-10 border border-apple-gray-4 relative z-10">
+            {/* Tally Form Embed */}
             {!isLoaded && (
               <div className="flex items-center justify-center h-96">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-                <span className="ml-2 text-gray-600">Loading form...</span>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-apple-blue"></div>
+                <span className="ml-3 text-[15px] text-apple-gray-2">Loading form...</span>
               </div>
             )}
             <div style={{
@@ -111,7 +111,7 @@ function WaitlistForm() {
                   transition: 'opacity 0.5s ease-in-out',
                   display: 'block',
                   width: '100%',
-                  height: '700px', // Set a large fixed height to avoid scrolling
+                  height: '700px',
                   border: 'none'
                 }}
                 onLoad={() => {
@@ -120,7 +120,6 @@ function WaitlistForm() {
                   }, 500);
                 }}
               />
-              {/* Cover the bottom area where branding appears */}
               <div style={{
                 position: 'absolute',
                 bottom: 0,
@@ -133,7 +132,7 @@ function WaitlistForm() {
             </div>
 
             <div className="mt-6 text-center">
-              <p className="text-sm text-gray-500">
+              <p className="text-[13px] text-apple-gray-3">
                 {t('waitlist.privacy')}
               </p>
             </div>
@@ -141,30 +140,24 @@ function WaitlistForm() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="mt-16 text-center"
+          className="text-center"
         >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-16 max-w-3xl mx-auto">
             <div className="text-center">
-              <div className="bg-white rounded-xl p-6 shadow-lg">
-                <div className="text-3xl font-bold text-blue-600 mb-2">500+</div>
-                <div className="text-gray-600">{t('waitlist.businesses')}</div>
-              </div>
+              <div className="text-4xl font-light text-apple-gray-1 mb-1">500+</div>
+              <div className="text-[15px] text-apple-gray-2">{t('waitlist.businesses')}</div>
             </div>
             <div className="text-center">
-              <div className="bg-white rounded-xl p-6 shadow-lg">
-                <div className="text-3xl font-bold text-green-600 mb-2">Q3 2025</div>
-                <div className="text-gray-600">{t('waitlist.launch')}</div>
-              </div>
+              <div className="text-4xl font-light text-apple-gray-1 mb-1">Q3 2025</div>
+              <div className="text-[15px] text-apple-gray-2">{t('waitlist.launch')}</div>
             </div>
             <div className="text-center">
-              <div className="bg-white rounded-xl p-6 shadow-lg">
-                <div className="text-3xl font-bold text-purple-600 mb-2">50%</div>
-                <div className="text-gray-600">{t('waitlist.discount')}</div>
-              </div>
+              <div className="text-4xl font-light text-apple-gray-1 mb-1">50%</div>
+              <div className="text-[15px] text-apple-gray-2">{t('waitlist.discount')}</div>
             </div>
           </div>
         </motion.div>

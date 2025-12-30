@@ -34,34 +34,28 @@ function Services() {
   ];
 
   return (
-    <section className="py-24 bg-gradient-to-br from-gray-50 to-blue-50">
-      <div className="container mx-auto px-4">
+    <section className="py-32 md:py-40 bg-apple-gray-6">
+      <div className="container mx-auto px-6">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-20 md:mb-24"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-4xl md:text-5xl font-light text-apple-gray-1 mb-4">
             {t("services.title")}
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-body-lg text-apple-gray-2 max-w-2xl mx-auto">
             {t("services.subtitle")}
           </p>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-7xl mx-auto">
           {services.map((service, index) => (
             <ServiceCard key={service.title} {...service} index={index} />
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -80,26 +74,24 @@ const ServiceCard = ({
 }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
+      transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
       viewport={{ once: true }}
-      className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 group"
+      className="bg-white rounded-apple p-10 border border-apple-gray-4/50"
     >
       {/* Icon */}
-      <div className="mb-6">
-        <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-green-500 rounded-lg flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300">
-          {icon}
-        </div>
+      <div className="mb-6 text-apple-gray-2">
+        {icon}
       </div>
 
       {/* Title */}
-      <h3 className="text-xl font-bold text-gray-900 mb-4">
+      <h3 className="text-xl font-medium text-apple-gray-1 mb-3">
         {title}
       </h3>
 
       {/* Description */}
-      <p className="text-gray-600 leading-relaxed">
+      <p className="text-[15px] text-apple-gray-2 leading-relaxed">
         {description}
       </p>
     </motion.div>

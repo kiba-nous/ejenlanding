@@ -56,19 +56,19 @@ function InvestorForm() {
   }, []);
 
   return (
-    <section id="waitlist-section" className="py-24 bg-gradient-to-br from-blue-50 to-green-50 relative">
-      <div className="container mx-auto px-4">
+    <section id="waitlist-section" className="py-32 md:py-40 bg-white relative">
+      <div className="container mx-auto px-6">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="max-w-2xl mx-auto text-center mb-12"
+          className="max-w-2xl mx-auto text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-4xl md:text-5xl font-light text-apple-gray-1 mb-4">
             {language === 'en' ? "Interested in Investing?" : "Berminat untuk Melabur?"}
           </h2>
-          <p className="text-xl text-gray-600">
+          <p className="text-body-lg text-apple-gray-2">
             {language === 'en'
               ? "Connect with us to learn more about investment opportunities and access our investor deck."
               : "Berhubung dengan kami untuk mengetahui lebih lanjut tentang peluang pelaburan dan mengakses dek pelabur kami."
@@ -77,18 +77,18 @@ function InvestorForm() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
           viewport={{ once: true }}
           className="max-w-2xl mx-auto"
-          style={{ position: 'relative', zIndex: 50 }}
+          style={{ position: 'relative', zIndex: 1 }}
         >
-          <div className="bg-white rounded-lg shadow-lg p-8 relative z-10">
+          <div className="bg-white rounded-apple p-10 border border-apple-gray-4 relative z-10">
             {!isLoaded && (
               <div className="flex items-center justify-center h-80">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-                <span className="ml-2 text-gray-600">Loading form...</span>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-apple-blue"></div>
+                <span className="ml-3 text-[15px] text-apple-gray-2">Loading form...</span>
               </div>
             )}
             <div style={{
@@ -112,7 +112,7 @@ function InvestorForm() {
                   transition: 'opacity 0.5s ease-in-out',
                   display: 'block',
                   width: '100%',
-                  height: '420px', // Adjusted height to fit the form content better
+                  height: '420px',
                   border: 'none'
                 }}
                 onLoad={() => {
@@ -121,7 +121,6 @@ function InvestorForm() {
                   }, 500);
                 }}
               />
-              {/* Cover the bottom area where branding appears */}
               <div style={{
                 position: 'absolute',
                 bottom: 0,
@@ -138,11 +137,11 @@ function InvestorForm() {
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
           viewport={{ once: true }}
           className="text-center mt-8"
         >
-          <p className="text-sm text-gray-500">
+          <p className="text-[13px] text-apple-gray-3">
             {language === 'en'
               ? "By submitting your interest, you agree to receive investment-related communications from Ejen Cukai."
               : "Dengan menyerahkan minat anda, anda bersetuju untuk menerima komunikasi berkaitan pelaburan daripada Ejen Cukai."

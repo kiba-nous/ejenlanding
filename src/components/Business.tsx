@@ -89,133 +89,98 @@ function Business() {
   ];
 
   return (
-    <div className="relative w-full min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }}
-        ></div>
-      </div>
-
+    <div className="relative w-full min-h-screen bg-white">
       <Navbar />
 
       {/* Hero Section */}
-      <div className="relative container mx-auto px-4">
-        <div className="flex gap-8 py-16 lg:py-24 items-center justify-center flex-col">
+      <div className="relative container mx-auto px-6">
+        <div className="flex gap-10 py-32 md:py-40 items-center justify-center flex-col">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
           >
-            <Button variant="secondary" size="sm" className="gap-4 shadow-lg">
-              {language === 'en' ? "For Malaysian Businesses" : "Untuk Perniagaan Malaysia"}
-              <MoveRight className="w-4 h-4" />
-            </Button>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-apple-gray-5 rounded-apple-button">
+              <span className="text-[13px] font-medium text-apple-gray-1">
+                {language === 'en' ? "For Malaysian Businesses" : "Untuk Perniagaan Malaysia"}
+              </span>
+            </div>
           </motion.div>
 
           <motion.div
-            className="flex gap-4 flex-col"
-            initial={{ opacity: 0, y: 30 }}
+            className="flex gap-6 flex-col"
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
           >
-            <h1 className="text-5xl md:text-7xl max-w-4xl tracking-tighter text-center font-bold">
-              <span className="text-blue-900">
-                {language === 'en' ? "Tax Support Made" : "Sokongan Cukai Dibuat"}
-              </span>
-              <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1">
-                &nbsp;
-                {titles.map((title, index) => (
-                  <motion.span
-                    key={`${title}-${language}`}
-                    className="absolute font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent"
-                    initial={{ opacity: 0, y: "-100" }}
-                    transition={{ type: "spring", stiffness: 50 }}
-                    animate={
-                      titleNumber === index
-                        ? { y: 0, opacity: 1 }
-                        : { y: titleNumber > index ? -150 : 150, opacity: 0 }
-                    }
-                  >
-                    {title}
-                  </motion.span>
-                ))}
-              </span>
+            <h1 className="text-5xl md:text-hero-lg lg:text-hero-xl max-w-4xl text-center font-light text-apple-gray-1">
+              {language === 'en' ? "Tax Support Made Simple" : "Sokongan Cukai Dibuat Mudah"}
             </h1>
 
-            <p className="text-lg md:text-xl leading-relaxed tracking-tight text-gray-600 max-w-3xl text-center">
+            <p className="text-body-lg md:text-xl text-apple-gray-2 max-w-2xl text-center mx-auto">
               {language === 'en'
-                ? "Get expert tax guidance, discover knowledge resources, and connect with the right tax professionals for your Malaysian business needs."
-                : "Dapatkan panduan cukai pakar, temui sumber pengetahuan, dan berhubung dengan profesional cukai yang sesuai untuk keperluan perniagaan Malaysia anda."
+                ? "Expert tax guidance, knowledge resources, and qualified professionals for your Malaysian business."
+                : "Panduan cukai pakar, sumber pengetahuan, dan profesional berkelayakan untuk perniagaan Malaysia anda."
               }
             </p>
           </motion.div>
 
           <motion.div
-            className="flex flex-col sm:flex-row gap-4 mt-8"
-            initial={{ opacity: 0, y: 30 }}
+            className="flex flex-col sm:flex-row gap-4"
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
           >
-            <Button size="lg" className="gap-4 shadow-lg" onClick={scrollToWaitlist}>
+            <button
+              className="px-6 py-3 text-[17px] font-medium text-white bg-apple-blue hover:opacity-90 rounded-apple-button transition-opacity duration-200"
+              onClick={scrollToWaitlist}
+            >
               {language === 'en' ? "Join Waitlist" : "Sertai Senarai Menunggu"}
-              <MoveRight className="w-4 h-4" />
-            </Button>
-            <Button
-              size="lg"
-              className="gap-4"
-              variant="outline"
+            </button>
+            <button
+              className="px-6 py-3 text-[17px] font-medium text-apple-gray-1 bg-white border border-apple-gray-4 hover:bg-apple-gray-5 rounded-apple-button transition-colors duration-200"
               onClick={() => window.open("https://chat.ejencukai.my", "_blank")}
             >
               {language === 'en' ? "See Demo" : "Lihat Demo"}
-            </Button>
-            <Button
-              size="lg"
-              className="gap-4"
-              variant="outline"
-              onClick={() => window.open("https://calculator.ejencukai.my", "_blank")}
-            >
-              {language === 'en' ? "Tax Calculator" : "Kalkulator Cukai"}
-            </Button>
+            </button>
           </motion.div>
         </div>
       </div>
 
       {/* Features Section */}
-      <div className="py-16 bg-white/50">
-        <div className="container mx-auto px-4">
+      <div className="py-32 md:py-40 bg-apple-gray-6">
+        <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            viewport={{ once: true }}
+            className="text-center mb-20 md:mb-24"
           >
-            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
-              {language === 'en' ? "Tax Support Services for Your Business" : "Perkhidmatan Sokongan Cukai untuk Perniagaan Anda"}
+            <h2 className="text-4xl md:text-5xl font-light text-apple-gray-1 mb-4">
+              {language === 'en' ? "Tax Support Services" : "Perkhidmatan Sokongan Cukai"}
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-body-lg text-apple-gray-2 max-w-2xl mx-auto">
               {language === 'en'
-                ? "Comprehensive tax support services connecting you with expert guidance and qualified professionals"
-                : "Perkhidmatan sokongan cukai menyeluruh yang menghubungkan anda dengan panduan pakar dan profesional berkelayakan"
+                ? "Comprehensive services connecting you with expert guidance and qualified professionals."
+                : "Perkhidmatan menyeluruh yang menghubungkan anda dengan panduan pakar dan profesional berkelayakan."
               }
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto">
             {features.map((feature, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow"
+                transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+                viewport={{ once: true }}
+                className="bg-white rounded-apple p-10 border border-apple-gray-4/50"
               >
-                <feature.icon className="w-12 h-12 text-blue-600 mb-4" />
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
+                <feature.icon className="w-6 h-6 text-apple-gray-2 mb-6" />
+                <h3 className="text-xl font-medium text-apple-gray-1 mb-3">{feature.title}</h3>
+                <p className="text-[15px] text-apple-gray-2 leading-relaxed">{feature.description}</p>
               </motion.div>
             ))}
           </div>

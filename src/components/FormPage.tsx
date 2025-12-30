@@ -29,21 +29,21 @@ function FormPage() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 py-24">
-        <div className="container mx-auto px-4">
+      <div className="min-h-screen bg-white py-32 md:py-40">
+        <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto">
             {/* Header */}
-            <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            <div className="text-center mb-16">
+              <h1 className="text-4xl md:text-5xl font-light text-apple-gray-1 mb-4">
                 {t("form.title")}
               </h1>
-              <p className="text-xl text-gray-600">
+              <p className="text-body-lg text-apple-gray-2">
                 {t("form.subtitle")}
               </p>
             </div>
 
             {/* Form Container */}
-            <div className="bg-white rounded-2xl shadow-xl p-4 md:p-8">
+            <div className="bg-white rounded-apple border border-apple-gray-4 p-6 md:p-10">
               {/* Tally Form Embed */}
               <iframe
                 data-tally-src="https://tally.so/embed/dWbqvd?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"

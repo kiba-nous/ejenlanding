@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'default' | 'outline' | 'secondary' | 'ghost';
@@ -14,13 +13,13 @@ const Button: React.FC<ButtonProps> = ({
   className = '',
   ...props 
 }) => {
-  const baseClasses = 'inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+  const baseClasses = 'inline-flex items-center justify-center rounded-apple-button font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
   
   const variants = {
-    default: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 shadow-md hover:shadow-lg',
-    outline: 'border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white focus:ring-blue-500',
-    secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500',
-    ghost: 'text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:ring-gray-500'
+    default: 'bg-apple-blue text-white hover:opacity-90 focus:ring-apple-blue shadow-sm',
+    outline: 'border border-apple-gray-4 text-apple-gray-1 hover:bg-apple-gray-5 focus:ring-apple-gray-4',
+    secondary: 'bg-apple-gray-5 text-apple-gray-1 hover:bg-apple-gray-4 focus:ring-apple-gray-4',
+    ghost: 'text-apple-gray-2 hover:bg-apple-gray-5 hover:text-apple-gray-1 focus:ring-apple-gray-4'
   };
   
   const sizes = {
@@ -30,14 +29,12 @@ const Button: React.FC<ButtonProps> = ({
   };
   
   return (
-    <motion.button
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+    <button
       className={`${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`}
       {...props}
     >
       {children}
-    </motion.button>
+    </button>
   );
 };
 
