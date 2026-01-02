@@ -90,7 +90,15 @@ const translations = {
     'waitlist.businesses': 'Businesses waiting',
     'waitlist.launch': 'Expected launch',
     'waitlist.discount': 'Early bird discount',
-    
+
+    // Mobile App Section
+    'mobileApp.badge': 'Our First App Launch',
+    'mobileApp.title': 'Save your receipts with',
+    'mobileApp.ai': 'AI',
+    'mobileApp.description': 'EjenCukai app uses AI technology to scan and save your receipts automatically. Now available on Google Play Store!',
+    'mobileApp.downloadAt': 'GET IT ON',
+    'mobileApp.playStore': 'Google Play',
+
     // Footer
     'footer.description': 'AI-powered tax compliance for Malaysian businesses and tax firms. Simplifying tax management with intelligent automation.',
     'footer.features': 'Features',
@@ -179,7 +187,15 @@ const translations = {
     'waitlist.businesses': 'Perniagaan menunggu',
     'waitlist.launch': 'Pelancaran dijangka',
     'waitlist.discount': 'Diskaun awal',
-    
+
+    // Mobile App Section
+    'mobileApp.badge': 'Pelancaran Aplikasi Pertama Kami',
+    'mobileApp.title': 'Simpan resit anda dengan',
+    'mobileApp.ai': 'AI',
+    'mobileApp.description': 'Aplikasi EjenCukai menggunakan teknologi AI untuk mengimbas dan menyimpan resit anda secara automatik. Kini tersedia di Google Play Store!',
+    'mobileApp.downloadAt': 'MUAT TURUN DI',
+    'mobileApp.playStore': 'Google Play',
+
     // Footer
     'footer.description': 'Pematuhan cukai berkuasa AI untuk perniagaan dan firma cukai Malaysia. Memudahkan pengurusan cukai dengan automasi pintar.',
     'footer.features': 'Ciri-ciri',
