@@ -4,7 +4,6 @@ import { Hero } from './Hero';
 import { Services } from './Services';
 import { PricingTiers } from './PricingTiers';
 import { Features } from './Features';
-import { WaitlistForm } from './WaitlistForm';
 import { Footer } from './Footer';
 
 function Home() {
@@ -15,7 +14,6 @@ function Home() {
       <Services />
       <PricingTiers />
       <Features />
-      <WaitlistForm />
       <Footer />
     </>
   );
