@@ -9,6 +9,7 @@ import { Investors } from './components/Investors';
 // import { AboutUs } from './components/AboutUs';
 import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { TermsOfService } from './components/TermsOfService';
+import { WhatsAppButton } from './components/WhatsAppButton';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
           </Routes>
+          <WhatsAppButton />
         </div>
       </Router>
     </LanguageProvider>

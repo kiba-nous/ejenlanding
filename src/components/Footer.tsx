@@ -1,4 +1,4 @@
-import { Mail, MapPin } from "lucide-react";
+import { Mail, MapPin, Phone, Instagram } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
 
@@ -45,6 +45,10 @@ function Footer() {
                 <span className="text-[13px] text-apple-gray-2">Kuala Lumpur, Malaysia</span>
               </div>
               <div className="flex items-start gap-2">
+                <Phone className="w-4 h-4 text-apple-gray-3 mt-0.5 flex-shrink-0" />
+                <span className="text-[13px] text-apple-gray-2">+60 10-321 6650</span>
+              </div>
+              <div className="flex items-start gap-2">
                 <Mail className="w-4 h-4 text-apple-gray-3 mt-0.5 flex-shrink-0" />
                 <span className="text-[13px] text-apple-gray-2">contact@ejencukai.my</span>
               </div>
@@ -57,7 +61,15 @@ function Footer() {
             <p className="text-[13px] text-apple-gray-3">
               {t('footer.copyright')}
             </p>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3">
+                <a href="https://www.instagram.com/ejencukaimy" target="_blank" rel="noopener noreferrer" className="text-apple-gray-3 hover:text-apple-gray-1 transition-colors duration-150">
+                  <Instagram className="w-5 h-5" />
+                </a>
+                <a href="https://www.threads.net/@ejencukaimy" target="_blank" rel="noopener noreferrer" className="opacity-60 hover:opacity-100 transition-opacity duration-150">
+                  <img src="/threads.png" alt="Threads" className="w-5 h-5" />
+                </a>
+              </div>
               <img
                 src="/logo.png"
                 alt="Ejen Cukai"
