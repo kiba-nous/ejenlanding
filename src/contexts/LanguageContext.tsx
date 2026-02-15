@@ -22,7 +22,7 @@ const translations = {
     'hero.title.efficient': 'efficient',
     'hero.description': 'Professional tax services backed by 30+ years of LHDN-registered experience.',
     'hero.joinWaitlist': 'Join Waitlist',
-    'hero.bookConsultation': 'Book Free Consultation With Us',
+    'hero.bookConsultation': 'Book Consultation With Us',
     'hero.tryDemo': 'Try Demo',
     'hero.forBusinessDemo': 'For Business (Demo)',
     'hero.forTaxFirms': 'For Tax Firms',
@@ -31,7 +31,7 @@ const translations = {
     // Features Section
     'features.title': 'Why Choose Us',
     'features.subtitle': 'Professional tax services you can trust, backed by decades of experience and expertise.',
-    'features.cta': 'Book Free Consultation With Us',
+    'features.cta': 'Book Consultation With Us',
     'features.experienced.title': 'Experienced Tax Agents',
     'features.experienced.description': 'Our team of LHDN-registered tax agents brings over 30 years of combined expertise in Malaysian tax regulations and compliance.',
     'features.efficient.title': 'Efficient Service',
@@ -78,7 +78,7 @@ const translations = {
     'services.advisory.description': 'Strategic tax planning and business advisory to help you make informed decisions and maximize your business potential.',
 
     // Form Section
-    'form.title': 'Book Your Free Consultation',
+    'form.title': 'Book Your Consultation',
     'form.subtitle': 'Fill out the form below and our tax experts will get back to you within 24 hours.',
     'form.placeholder': 'Embed your Tally form here',
     'form.embedInstructions': 'Replace this placeholder with your Tally form embed code',
@@ -119,7 +119,7 @@ const translations = {
     'hero.title.efficient': 'cekap',
     'hero.description': 'Perkhidmatan cukai profesional disokong oleh 30+ tahun pengalaman di LHDN.',
     'hero.joinWaitlist': 'Sertai Senarai Menunggu',
-    'hero.bookConsultation': 'Tempah Konsultasi Percuma Dengan Kami',
+    'hero.bookConsultation': 'Tempah Konsultasi Dengan Kami',
     'hero.tryDemo': 'Cuba Demo',
     'hero.forBusinessDemo': 'Untuk Perniagaan (Demo)',
     'hero.forTaxFirms': 'Untuk Firma Cukai',
@@ -128,7 +128,7 @@ const translations = {
     // Features Section
     'features.title': 'Mengapa Pilih Kami',
     'features.subtitle': 'Perkhidmatan cukai profesional yang boleh anda percayai, disokong oleh pengalaman dan kepakaran berdekad-dekad.',
-    'features.cta': 'Tempah Konsultasi Percuma Dengan Kami',
+    'features.cta': 'Tempah Konsultasi Dengan Kami',
     'features.experienced.title': 'Ejen Cukai Berpengalaman',
     'features.experienced.description': 'Pasukan ejen cukai berdaftar LHDN kami membawa lebih 30 tahun kepakaran gabungan dalam peraturan dan pematuhan cukai Malaysia.',
     'features.efficient.title': 'Perkhidmatan Cekap',
@@ -175,7 +175,7 @@ const translations = {
     'services.advisory.description': 'Perancangan cukai strategik dan nasihat perniagaan untuk membantu anda membuat keputusan bermaklumat dan memaksimumkan potensi perniagaan.',
 
     // Form Section
-    'form.title': 'Tempah Konsultasi Percuma Anda',
+    'form.title': 'Tempah Konsultasi Anda',
     'form.subtitle': 'Isi borang di bawah dan pakar cukai kami akan menghubungi anda dalam masa 24 jam.',
     'form.placeholder': 'Sertakan borang Tally anda di sini',
     'form.embedInstructions': 'Gantikan placeholder ini dengan kod embed borang Tally anda',
