@@ -42,12 +42,12 @@ function Hero() {
             {t("hero.description")}
           </motion.p>
 
-          {/* CTA Button */}
+          {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-            className="mb-20"
+            className="mb-20 flex flex-col sm:flex-row gap-4 items-center justify-center"
           >
             <Button
               size="lg"
@@ -55,6 +55,14 @@ function Hero() {
               onClick={openConsultationForm}
             >
               {t("hero.bookConsultation")} <MoveRight className="w-5 h-5" />
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="gap-2 transition-all duration-200 ease-out text-[17px] font-medium px-8 py-3 rounded-apple-button shadow-sm hover:shadow-md border-apple-blue text-apple-blue hover:bg-apple-blue hover:text-white"
+              onClick={() => window.open("https://ai.ejencukai.my", "_blank")}
+            >
+              {t("hero.askAI")} 🤖
             </Button>
           </motion.div>
 
