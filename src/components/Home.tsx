@@ -2,6 +2,7 @@ import React from 'react';
 import { Navbar } from './Navbar';
 import { Hero } from './Hero';
 import { MobileApp } from './MobileApp';
+import { EbookBanner } from './EbookBanner';
 import { Services } from './Services';
 import { PricingTiers } from './PricingTiers';
 import { Features } from './Features';
@@ -13,6 +14,7 @@ function Home() {
       <Navbar />
       <Hero />
       <MobileApp />
+      <EbookBanner />
       <Services />
       <PricingTiers />
       <Features />

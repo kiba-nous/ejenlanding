@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { MoveRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useLanguage } from "../contexts/LanguageContext";
 
@@ -64,6 +64,15 @@ function Hero() {
             >
               {t("hero.askAI")} 🤖
             </Button>
+            <Link to="/ebook">
+              <Button
+                size="lg"
+                variant="outline"
+                className="gap-2 transition-all duration-200 ease-out text-[17px] font-medium px-8 py-3 rounded-apple-button shadow-sm hover:shadow-md border-apple-gray-4 text-apple-gray-1 hover:border-apple-gray-1"
+              >
+                {t("hero.buyEbook")} 📖
+              </Button>
+            </Link>
           </motion.div>
 
           {/* Trust Indicators - Minimal */}
