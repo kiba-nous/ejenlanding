@@ -4,7 +4,7 @@ import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { CheckCircle, BookOpen, Shield, ArrowLeft } from 'lucide-react';
 
-const CHIPIN_BE_URL = 'https://pay.chip-in.asia/YOUR_BE_LINK';
+const CHIPIN_BE_URL = 'https://pay.chip-in.asia/borangbetest';
 const CHIPIN_B_URL  = 'https://pay.chip-in.asia/YOUR_B_LINK';
 
 const commonFeatures = [

@@ -2,7 +2,9 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
-import { CheckCircle, Mail, ArrowLeft } from 'lucide-react';
+import { CheckCircle, ArrowLeft, Download } from 'lucide-react';
+
+const EBOOK_BE_URL = 'https://drive.google.com/file/d/1eWCx_i9HNGjt1DxgMzqlysYllaeVVM83/view?usp=sharing';
 
 export function EbookThankYou() {
   return (
@@ -27,14 +29,19 @@ export function EbookThankYou() {
             <span className="font-medium">pembelian anda!</span>
           </h1>
 
-          <p className="text-apple-gray-2 text-[15px] mt-4 mb-2 leading-relaxed">
-            E-book akan dihantar ke emel anda dalam masa beberapa minit.
+          <p className="text-apple-gray-2 text-[15px] mt-4 mb-6 leading-relaxed">
+            Klik butang di bawah untuk memuat turun e-book anda.
           </p>
 
-          <div className="flex justify-center items-center gap-2 text-apple-gray-3 text-sm mt-4">
-            <Mail className="w-4 h-4 shrink-0" />
-            <span>Semak folder <strong className="text-apple-gray-2">Spam</strong> atau <strong className="text-apple-gray-2">Promotions</strong> jika tidak menerima dalam 5 minit.</span>
-          </div>
+          <a
+            href={EBOOK_BE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-apple-blue hover:opacity-90 text-white text-[15px] font-medium py-3 px-6 rounded-apple-button transition-opacity duration-200 shadow-sm hover:shadow-md"
+          >
+            <Download className="w-4 h-4" />
+            Borang BE E-Book
+          </a>
 
           <div className="mt-8 pt-6 border-t border-apple-gray-4 text-[13px] text-apple-gray-3">
             Sebarang pertanyaan?{' '}
