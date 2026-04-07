@@ -13,17 +13,17 @@ Buyer clicks "Beli Sekarang" on ejencukai.my/ebook
   → Chip-in fires POST webhook
   → ejencukai.my/.netlify/functions/chip-in-webhook
   → Verifies signature
-  → Matches Product ID to correct ebook
-  → Sends email via Resend with ebook download link
+  → Matches Payment Link slug to correct ebook
+  → Sends email via Resend with Google Drive link
+  → Buyer redirected to ejencukai.my/ebook/thank-you/be (or /b)
+  → Thank-you page shows a "Buka E-Book" button linking to Google Drive
 ```
 
-**Stack:** Netlify Functions · Resend · Chip-in Webhook · Google Drive (PDF hosting)
+**Stack:** Netlify Functions · Resend · Chip-in Webhook · Google Drive
 
 ---
 
 ## Repo Structure
-
-Add the following to your existing ejencukai.my repo:
 
 ```
 ejencukai-repo/
@@ -31,11 +31,10 @@ ejencukai-repo/
 │   └── functions/
 │       └── chip-in-webhook.js    ← serverless webhook receiver
 ├── src/
-│   └── pages/
-│       └── ebook/
-│           ├── index.html        ← landing page (or .jsx/.astro)
-│           └── thank-you.html    ← post-payment confirmation page
-└── .env                          ← local dev only, never commit
+│   └── components/
+│       ├── EbookPage.tsx         ← landing page with buy buttons
+│       └── EbookThankYou.tsx     ← post-payment page (one per product)
+└── .env.example                  ← copy to .env for local dev, never commit .env
 ```
 
 ---
@@ -44,30 +43,31 @@ ejencukai-repo/
 
 In your Chip-in Merchant Portal:
 
-1. Go to **Collect → Products** → create two products:
-   - `Panduan Asas Cukai Individu Bergaji (Borang BE)` — set your price
-   - `Panduan Asas Cukai Individu Berbisnes (Borang B)` — set your price
+1. Go to **Collect → Payment Links** → create two payment links:
+   - `Panduan Asas Cukai Individu Bergaji (Borang BE)` — set your price, slug e.g. `borangbe`
+   - `Panduan Asas Cukai Individu Berbisnes (Borang B)` — set your price, slug e.g. `borangb`
 
-2. For each product, generate a **Payment Link**
+2. Set the **Success Redirect URL** for each payment link separately:
+   - Borang BE → `https://ejencukai.my/ebook/thank-you/be`
+   - Borang B  → `https://ejencukai.my/ebook/thank-you/b`
 
-3. Set the **Success Redirect URL** for both to:
+3. Copy the **slug** from each payment URL — the last part of:
    ```
-   https://ejencukai.my/ebook/thank-you
+   https://pay.chip-in.asia/YOUR_SLUG_HERE
    ```
+   Both slugs go into your environment variables in Step 3.
 
-4. After creating each product, **copy the Product ID** from the product detail page. It is a UUID that looks like:
-   ```
-   xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-   ```
-   You need both IDs — they go into your environment variables in Step 3.
-
-5. Go to **Developers → Webhooks → New Live Webhook**:
+4. Go to **Developers → Webhooks → New Live Webhook**:
    - Name: `Ebook Delivery`
    - Callback URL: `https://ejencukai.my/.netlify/functions/chip-in-webhook`
    - Event: `purchase.paid`
    - Click **Create**
 
-6. Copy the **Public Key** that Chip-in generates — you will need it in Step 3
+5. Copy the **Public Key** that Chip-in generates — you will need it in Step 3.
+
+> **How product matching works:** The webhook identifies which ebook was purchased using
+> `purchase.payment_page_uid` in the Chip-in payload — the slug from the payment link URL.
+> Set `CHIPIN_SLUG_BE` and `CHIPIN_SLUG_B` to match exactly.
 
 ---
 
@@ -108,41 +108,39 @@ exports.handler = async (event) => {
   // 2. Parse payload
   const payload = JSON.parse(event.body)
 
-  // Only handle paid purchases
   if (payload.event_type !== 'purchase.paid') {
     return { statusCode: 200, body: 'Ignored' }
   }
 
-  const buyerEmail  = payload.client.email
-  const buyerName   = payload.client.full_name
-  const productId   = payload.purchase.products[0].id
-  const productName = payload.purchase.products[0].name
+  const buyerEmail = payload.client.email
+  const buyerName  = payload.client.full_name
 
-  // 3. Match product to correct ebook using Chip-in Product ID
-  // More reliable than string matching — IDs never change even if you rename the product
-  // CHIPIN_PRODUCT_ID_BE and CHIPIN_PRODUCT_ID_B are the UUIDs from your Chip-in dashboard
+  // 3. Match payment link slug to correct ebook
+  // CHIPIN_SLUG_BE / CHIPIN_SLUG_B = slug from pay.chip-in.asia/SLUG
+  // EBOOK_BE_URL / EBOOK_B_URL = Google Drive view links
+  const slug = payload.purchase?.payment_page_uid
+
   const PRODUCT_MAP = {
-    [process.env.CHIPIN_PRODUCT_ID_BE]: {
+    [process.env.CHIPIN_SLUG_BE]: {
       url:   process.env.EBOOK_BE_URL,
       label: 'Panduan Asas Cukai Individu Bergaji (Borang BE)',
     },
-    [process.env.CHIPIN_PRODUCT_ID_B]: {
+    [process.env.CHIPIN_SLUG_B]: {
       url:   process.env.EBOOK_B_URL,
       label: 'Panduan Asas Cukai Individu Berbisnes (Borang B)',
     },
   }
 
-  const product = PRODUCT_MAP[productId]
+  const product = PRODUCT_MAP[slug]
 
   if (!product) {
-    // Unknown product ID — log for manual follow-up, don't crash
-    console.warn(`Unknown product ID received: ${productId} | buyer: ${buyerEmail}`)
+    console.warn(`Unknown payment slug: ${slug} | buyer: ${buyerEmail}`)
     return { statusCode: 200, body: 'Unknown product' }
   }
 
   const { url: ebookUrl, label: ebookLabel } = product
 
-  // 4. Send delivery email via Resend
+  // 4. Send delivery email with Google Drive link
   const emailRes = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
@@ -152,20 +150,20 @@ exports.handler = async (event) => {
     body: JSON.stringify({
       from: 'EjenCukai <contact@ejencukai.my>',
       to: buyerEmail,
-      subject: `E-book anda sedia dimuat turun — ${ebookLabel}`,
+      subject: `E-book anda sedia dibuka — ${ebookLabel}`,
       html: `
         <div style="font-family: sans-serif; max-width: 560px; margin: 0 auto; color: #1a1a1a;">
           <p>Assalamualaikum ${buyerName},</p>
 
           <p>Terima kasih kerana membeli <strong>${ebookLabel}</strong> daripada EjenCukai.</p>
 
-          <p>Klik butang di bawah untuk memuat turun e-book anda:</p>
+          <p>Klik butang di bawah untuk membuka e-book anda:</p>
 
           <p style="margin: 24px 0;">
             <a href="${ebookUrl}"
                style="background:#1a56db; color:#fff; padding:12px 24px;
                       border-radius:6px; text-decoration:none; font-weight:600;">
-              Muat Turun E-Book
+              Buka E-Book
             </a>
           </p>
 
@@ -189,11 +187,10 @@ exports.handler = async (event) => {
   if (!emailRes.ok) {
     const err = await emailRes.text()
     console.error('Resend error:', err)
-    // Still return 200 — log the error but don't trigger Chip-in retries
     return { statusCode: 200, body: 'Email failed' }
   }
 
-  console.log(`Ebook delivered to ${buyerEmail} — ${ebookLabel} (product: ${productId})`)
+  console.log(`Ebook link sent to ${buyerEmail} — ${ebookLabel}`)
   return { statusCode: 200, body: 'OK' }
 }
 ```
@@ -203,84 +200,83 @@ exports.handler = async (event) => {
 ## Step 3 — Environment Variables
 
 ### In Netlify Dashboard
+
 Go to **Site → Environment Variables** and add:
 
 | Key | Value |
 |---|---|
 | `CHIPIN_PUBLIC_KEY` | RSA public key from Chip-in Developers → Webhooks |
-| `CHIPIN_PRODUCT_ID_BE` | Product ID UUID for Borang BE (from Chip-in product detail page) |
-| `CHIPIN_PRODUCT_ID_B` | Product ID UUID for Borang B (from Chip-in product detail page) |
+| `CHIPIN_SLUG_BE` | Payment link slug for Borang BE (e.g. `borangbe`) |
+| `CHIPIN_SLUG_B` | Payment link slug for Borang B (e.g. `borangb`) |
 | `RESEND_API_KEY` | Your Resend API key |
-| `EBOOK_BE_URL` | Direct download link for Borang BE PDF |
-| `EBOOK_B_URL` | Direct download link for Borang B PDF |
+| `EBOOK_BE_URL` | Google Drive view link for Borang BE PDF |
+| `EBOOK_B_URL` | Google Drive view link for Borang B PDF |
 
-### For Local Dev (never commit this file)
-Create `.env` in your repo root:
+### For Local Dev
+
+Copy `.env.example` to `.env` and fill in the values. Never commit `.env`.
 
 ```env
 CHIPIN_PUBLIC_KEY="-----BEGIN PUBLIC KEY-----
 ...paste full key here...
 -----END PUBLIC KEY-----"
-CHIPIN_PRODUCT_ID_BE=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-CHIPIN_PRODUCT_ID_B=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+CHIPIN_SLUG_BE=borangbe
+CHIPIN_SLUG_B=borangb
 RESEND_API_KEY=re_xxxxxxxxxxxx
-EBOOK_BE_URL=https://drive.google.com/...
-EBOOK_B_URL=https://drive.google.com/...
+EBOOK_BE_URL=https://drive.google.com/file/d/YOUR_BE_FILE_ID/view?usp=sharing
+EBOOK_B_URL=https://drive.google.com/file/d/YOUR_B_FILE_ID/view?usp=sharing
 ```
-
-Make sure `.env` is in your `.gitignore`.
 
 ---
 
-## Step 4 — Host the PDF Files
+## Step 4 — Host the PDF Files on Google Drive
 
-**Quickest option — Google Drive:**
 1. Upload both PDFs to Google Drive
-2. Right-click → Share → set to "Anyone with the link can view"
-3. Change the URL from:
+2. Right-click each file → **Share** → set to "Anyone with the link can view"
+3. Copy the sharing URL — it looks like:
    ```
    https://drive.google.com/file/d/FILE_ID/view?usp=sharing
    ```
-   to a direct download link:
-   ```
-   https://drive.google.com/uc?export=download&id=FILE_ID
-   ```
-4. Paste this into `EBOOK_BE_URL` / `EBOOK_B_URL`
+4. Paste the Borang BE URL into `EBOOK_BE_URL` and the Borang B URL into `EBOOK_B_URL`
 
-**Better option later — Supabase Storage:**
-Upload PDFs to a private Supabase Storage bucket and generate signed URLs that expire after 7 days. Add this when volume justifies it.
+The same URLs go in both the Netlify env vars (for the webhook email) and in
+`EbookThankYou.tsx` (for the thank-you page button).
 
 ---
 
-## Step 5 — Landing Page CTAs
+## Step 5 — Landing Page CTAs (`EbookPage.tsx`)
 
-In your `ebook/index.html` (or component), the buy buttons simply link to your Chip-in payment links:
+Update the payment link constants at the top of `EbookPage.tsx`:
 
-```html
-<!-- Borang BE -->
-<a href="https://pay.chip-in.asia/YOUR_BE_LINK" target="_blank">
-  Beli Sekarang — Borang BE
-</a>
-
-<!-- Borang B -->
-<a href="https://pay.chip-in.asia/YOUR_B_LINK" target="_blank">
-  Beli Sekarang — Borang B
-</a>
+```tsx
+const CHIPIN_BE_URL = 'https://pay.chip-in.asia/borangbe'  // your actual slug
+const CHIPIN_B_URL  = 'https://pay.chip-in.asia/borangb'   // your actual slug
 ```
-
-Replace `YOUR_BE_LINK` and `YOUR_B_LINK` with the actual Chip-in payment URLs.
 
 ---
 
-## Step 6 — Thank You Page
+## Step 6 — Thank You Pages (`EbookThankYou.tsx`)
 
-Create `ebook/thank-you.html` — a simple page buyers land on after payment. No logic needed here, just a confirmation message. The email with the download link is already on its way.
+Update the Google Drive URLs in `EbookThankYou.tsx`:
 
-```html
-<h1>Terima kasih atas pembelian anda!</h1>
-<p>E-book akan dihantar ke emel anda dalam masa beberapa minit.</p>
-<p>Semak folder Spam jika tidak menerima dalam 5 minit.</p>
+```tsx
+const EBOOK_CONFIG = {
+  be: {
+    label:    'Panduan Cukai Individu Bergaji (Borang BE)',
+    driveUrl: 'https://drive.google.com/file/d/YOUR_BE_FILE_ID/view?usp=sharing',
+  },
+  b: {
+    label:    'Panduan Cukai Individu Berbisnes (Borang B)',
+    driveUrl: 'https://drive.google.com/file/d/YOUR_B_FILE_ID/view?usp=sharing',
+  },
+}
 ```
+
+Two separate routes are already wired up in `App.tsx`:
+- `/ebook/thank-you/be` → shows Borang BE button only
+- `/ebook/thank-you/b`  → shows Borang B button only
+
+Each page has a single **Buka E-Book** button that opens the correct Drive file in a new tab.
 
 ---
 
@@ -296,35 +292,47 @@ npx netlify dev
 ngrok http 8888
 ```
 
-Then temporarily set your Chip-in webhook callback URL to the ngrok URL:
+Temporarily set your Chip-in webhook callback URL to the ngrok URL:
 ```
 https://xxxx.ngrok.io/.netlify/functions/chip-in-webhook
 ```
 
-Trigger a test payment in Chip-in's sandbox mode and confirm the email arrives.
+To confirm the correct slug field name, log the full payload during a test payment:
+```js
+console.log('Full payload:', JSON.stringify(payload, null, 2))
+```
+
+Check Netlify function logs to verify `payload.purchase.payment_page_uid` matches your
+slugs. Adjust the field path if Chip-in uses a different key name.
 
 ---
 
 ## Deployment Checklist
 
-- [ ] Netlify function file created at `netlify/functions/chip-in-webhook.js`
+- [ ] `netlify/functions/chip-in-webhook.js` created
 - [ ] All 6 environment variables set in Netlify dashboard
-- [ ] Both Chip-in Product IDs copied correctly (not payment link URLs — the UUIDs)
-- [ ] PDF files uploaded, direct download links tested in browser
+- [ ] `CHIPIN_SLUG_BE` and `CHIPIN_SLUG_B` match your payment link slugs exactly
+- [ ] `EBOOK_BE_URL` and `EBOOK_B_URL` are Drive view links — tested in browser
 - [ ] Chip-in webhook configured with correct callback URL and `purchase.paid` event
-- [ ] Chip-in payment links created for both ebooks
-- [ ] Success redirect URL set on both Chip-in products → `ejencukai.my/ebook/thank-you`
-- [ ] Thank-you page live at `ejencukai.my/ebook/thank-you`
-- [ ] End-to-end test done with Chip-in sandbox payment
+- [ ] Chip-in success redirect URLs set per product:
+      - Borang BE → `ejencukai.my/ebook/thank-you/be`
+      - Borang B  → `ejencukai.my/ebook/thank-you/b`
+- [ ] `EbookPage.tsx` — `CHIPIN_BE_URL` and `CHIPIN_B_URL` updated to real payment links
+- [ ] `EbookThankYou.tsx` — `driveUrl` values updated for both BE and B
+- [ ] End-to-end test: sandbox payment → email received → Drive link opens correctly
 - [ ] `.env` confirmed in `.gitignore`
 
 ---
 
 ## How Chip-in Retries Work
 
-If your function returns anything other than `200`, Chip-in will retry the webhook multiple times. This means a buyer could receive duplicate emails. Always return `{ statusCode: 200 }` — even when something goes wrong — and log errors to Netlify's function logs instead. Handle failures through the Resend dashboard and Chip-in's transaction log manually if needed.
+If your function returns anything other than `200`, Chip-in will retry the webhook
+multiple times — the buyer could receive duplicate emails. Always return
+`{ statusCode: 200 }` even when something goes wrong, and log errors to Netlify's
+function logs instead. Handle failures through the Resend dashboard and Chip-in's
+transaction log manually if needed.
 
 ---
 
-*Last updated: April 2026*
-*Stack: Netlify Functions · Chip-in Webhook · Resend*
+*Last updated: April 2026*  
+*Stack: Netlify Functions · Chip-in Webhook · Resend · Google Drive*

@@ -28,7 +28,8 @@ function App() {
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/ebook" element={<EbookPage />} />
-            <Route path="/ebook/thank-you" element={<EbookThankYou />} />
+            <Route path="/ebook/thank-you/be" element={<EbookThankYou ebook="be" />} />
+            <Route path="/ebook/thank-you/b" element={<EbookThankYou ebook="b" />} />
           </Routes>
           <WhatsAppButton />
         </div>

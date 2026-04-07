@@ -4,9 +4,22 @@ import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { CheckCircle, ArrowLeft, Download } from 'lucide-react';
 
-const EBOOK_BE_URL = 'https://drive.google.com/file/d/1eWCx_i9HNGjt1DxgMzqlysYllaeVVM83/view?usp=sharing';
+const EBOOK_CONFIG = {
+  be: {
+    label:    'Panduan Cukai Individu Bergaji (Borang BE)',
+    driveUrl: 'https://drive.google.com/file/d/1eWCx_i9HNGjt1DxgMzqlysYllaeVVM83/view?usp=sharing',
+  },
+  b: {
+    label:    'Panduan Cukai Individu Berbisnes (Borang B)',
+    driveUrl: 'https://drive.google.com/file/d/10_uhl-2B0uhmKcKuvMGgADU78omue2oy/view?usp=sharing',
+  },
+} as const;
 
-export function EbookThankYou() {
+type EbookKey = keyof typeof EBOOK_CONFIG;
+
+export function EbookThankYou({ ebook }: { ebook: EbookKey }) {
+  const { label, driveUrl } = EBOOK_CONFIG[ebook];
+
   return (
     <>
       <Navbar />
@@ -29,28 +42,44 @@ export function EbookThankYou() {
             <span className="font-medium">pembelian anda!</span>
           </h1>
 
-          <p className="text-apple-gray-2 text-[15px] mt-4 mb-6 leading-relaxed">
-            Klik butang di bawah untuk memuat turun e-book anda.
+          <p className="text-apple-gray-2 text-[15px] mt-4 mb-2 leading-relaxed">
+            {label}
+          </p>
+
+          <p className="text-apple-gray-3 text-[13px] mb-6">
+            E-book juga dihantar ke emel anda.
           </p>
 
           <a
-            href={EBOOK_BE_URL}
+            href={driveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-apple-blue hover:opacity-90 text-white text-[15px] font-medium py-3 px-6 rounded-apple-button transition-opacity duration-200 shadow-sm hover:shadow-md"
+            className="inline-flex items-center justify-center gap-2 bg-apple-blue hover:opacity-90 text-white text-[15px] font-medium py-3 px-6 rounded-apple-button transition-opacity duration-200 shadow-sm hover:shadow-md"
           >
             <Download className="w-4 h-4" />
-            Borang BE E-Book
+            Buka E-Book
           </a>
 
-          <div className="mt-8 pt-6 border-t border-apple-gray-4 text-[13px] text-apple-gray-3">
-            Sebarang pertanyaan?{' '}
-            <a
-              href="mailto:contact@ejencukai.my"
-              className="text-apple-blue hover:opacity-70 transition-opacity duration-150"
-            >
-              contact@ejencukai.my
-            </a>
+          <div className="mt-8 pt-6 border-t border-apple-gray-4 text-[13px] text-apple-gray-3 space-y-1">
+            <p>Sebarang pertanyaan? Hubungi kami:</p>
+            <p>
+              <a
+                href="mailto:contact@ejencukai.my"
+                className="text-apple-blue hover:opacity-70 transition-opacity duration-150"
+              >
+                contact@ejencukai.my
+              </a>
+            </p>
+            <p>
+              <a
+                href="https://wa.me/60103216650"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-apple-blue hover:opacity-70 transition-opacity duration-150"
+              >
+                +6010 321 6650
+              </a>
+            </p>
           </div>
 
           <Link

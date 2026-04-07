@@ -30,41 +30,39 @@ exports.handler = async (event) => {
   // 2. Parse payload
   const payload = JSON.parse(event.body)
 
-  // Only handle paid purchases
   if (payload.event_type !== 'purchase.paid') {
     return { statusCode: 200, body: 'Ignored' }
   }
 
-  const buyerEmail  = payload.client.email
-  const buyerName   = payload.client.full_name
-  const productId   = payload.purchase.products[0].id
-  const productName = payload.purchase.products[0].name
+  const buyerEmail = payload.client.email
+  const buyerName  = payload.client.full_name
 
-  // 3. Match product to correct ebook using Chip-in Product ID
-  // More reliable than string matching — IDs never change even if you rename the product
-  // CHIPIN_PRODUCT_ID_BE and CHIPIN_PRODUCT_ID_B are the UUIDs from your Chip-in dashboard
+  // 3. Match payment link slug to correct ebook
+  // CHIPIN_SLUG_BE / CHIPIN_SLUG_B = the slug from pay.chip-in.asia/SLUG
+  // EBOOK_BE_URL / EBOOK_B_URL = Google Drive view links for each ebook
+  const slug = payload.purchase?.payment_page_uid
+
   const PRODUCT_MAP = {
-    [process.env.CHIPIN_PRODUCT_ID_BE]: {
+    [process.env.CHIPIN_SLUG_BE]: {
       url:   process.env.EBOOK_BE_URL,
       label: 'Panduan Asas Cukai Individu Bergaji (Borang BE)',
     },
-    [process.env.CHIPIN_PRODUCT_ID_B]: {
+    [process.env.CHIPIN_SLUG_B]: {
       url:   process.env.EBOOK_B_URL,
       label: 'Panduan Asas Cukai Individu Berbisnes (Borang B)',
     },
   }
 
-  const product = PRODUCT_MAP[productId]
+  const product = PRODUCT_MAP[slug]
 
   if (!product) {
-    // Unknown product ID — log for manual follow-up, don't crash
-    console.warn(`Unknown product ID received: ${productId} | buyer: ${buyerEmail}`)
+    console.warn(`Unknown payment slug: ${slug} | buyer: ${buyerEmail}`)
     return { statusCode: 200, body: 'Unknown product' }
   }
 
   const { url: ebookUrl, label: ebookLabel } = product
 
-  // 4. Send delivery email via Resend
+  // 4. Send delivery email with Google Drive link
   const emailRes = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
@@ -74,20 +72,20 @@ exports.handler = async (event) => {
     body: JSON.stringify({
       from: 'EjenCukai <contact@ejencukai.my>',
       to: buyerEmail,
-      subject: `E-book anda sedia dimuat turun — ${ebookLabel}`,
+      subject: `E-book anda sedia dibuka — ${ebookLabel}`,
       html: `
         <div style="font-family: sans-serif; max-width: 560px; margin: 0 auto; color: #1a1a1a;">
           <p>Assalamualaikum ${buyerName},</p>
 
           <p>Terima kasih kerana membeli <strong>${ebookLabel}</strong> daripada EjenCukai.</p>
 
-          <p>Klik butang di bawah untuk memuat turun e-book anda:</p>
+          <p>Klik butang di bawah untuk membuka e-book anda:</p>
 
           <p style="margin: 24px 0;">
             <a href="${ebookUrl}"
                style="background:#1a56db; color:#fff; padding:12px 24px;
                       border-radius:6px; text-decoration:none; font-weight:600;">
-              Muat Turun E-Book
+              Buka E-Book
             </a>
           </p>
 
@@ -111,10 +109,9 @@ exports.handler = async (event) => {
   if (!emailRes.ok) {
     const err = await emailRes.text()
     console.error('Resend error:', err)
-    // Still return 200 — log the error but don't trigger Chip-in retries
     return { statusCode: 200, body: 'Email failed' }
   }
 
-  console.log(`Ebook delivered to ${buyerEmail} — ${ebookLabel} (product: ${productId})`)
+  console.log(`Ebook link sent to ${buyerEmail} — ${ebookLabel}`)
   return { statusCode: 200, body: 'OK' }
 }
