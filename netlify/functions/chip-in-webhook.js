@@ -14,11 +14,15 @@ exports.handler = async (event) => {
 
   // Normalize the public key — Netlify env vars may have literal \n or missing PEM headers
   const rawKey = process.env.CHIPIN_PUBLIC_KEY || ''
+  console.log('Public key first 60 chars:', rawKey.substring(0, 60))
   const base64Key = rawKey
     .replace(/-----BEGIN PUBLIC KEY-----/g, '')
     .replace(/-----END PUBLIC KEY-----/g, '')
+    .replace(/-----BEGIN RSA PUBLIC KEY-----/g, '')
+    .replace(/-----END RSA PUBLIC KEY-----/g, '')
     .replace(/\\n/g, '')
     .replace(/\s+/g, '')
+  console.log('Base64 key length:', base64Key.length)
   const publicKey = `-----BEGIN PUBLIC KEY-----\n${base64Key.match(/.{1,64}/g).join('\n')}\n-----END PUBLIC KEY-----`
 
   if (!signature) {
@@ -58,6 +62,7 @@ exports.handler = async (event) => {
   }
 
   console.log('Event type:', payload.event_type)
+  console.log('Full payload:', JSON.stringify(payload))
 
   if (payload.event_type !== 'purchase.paid') {
     return { statusCode: 200, body: 'Ignored' }
