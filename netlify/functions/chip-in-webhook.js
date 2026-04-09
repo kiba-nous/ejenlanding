@@ -11,8 +11,15 @@ exports.handler = async (event) => {
 
   // 1. Verify Chip-in RSA signature
   const signature = event.headers['x-signature']
-  // Netlify env vars store newlines as literal \n — convert them back
-  const publicKey = (process.env.CHIPIN_PUBLIC_KEY || '').replace(/\\n/g, '\n')
+
+  // Normalize the public key — Netlify env vars may have literal \n or missing PEM headers
+  const rawKey = process.env.CHIPIN_PUBLIC_KEY || ''
+  const base64Key = rawKey
+    .replace(/-----BEGIN PUBLIC KEY-----/g, '')
+    .replace(/-----END PUBLIC KEY-----/g, '')
+    .replace(/\\n/g, '')
+    .replace(/\s+/g, '')
+  const publicKey = `-----BEGIN PUBLIC KEY-----\n${base64Key.match(/.{1,64}/g).join('\n')}\n-----END PUBLIC KEY-----`
 
   if (!signature) {
     console.warn('Missing x-signature header')
