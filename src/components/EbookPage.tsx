@@ -8,8 +8,8 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 
-const CHIPIN_BE_URL = 'https://pay.chip-in.asia/borangbetest';
-const CHIPIN_B_URL  = 'https://pay.chip-in.asia/borangbtest';
+const CHIPIN_BE_URL = 'https://pay.chip-in.asia/borangbe';
+const CHIPIN_B_URL  = 'https://pay.chip-in.asia/borangb';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
