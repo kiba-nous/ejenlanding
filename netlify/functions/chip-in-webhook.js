@@ -11,10 +11,8 @@ exports.handler = async (event) => {
 
   // 1. Verify Chip-in RSA signature
   const signature = event.headers['x-signature']
-  const rawKey = process.env.CHIPIN_PUBLIC_KEY || ''
-
   // Netlify env vars store newlines as literal \n — convert them back
-  const publicKey = rawKey.replace(/\\n/g, '\n')
+  const publicKey = (process.env.CHIPIN_PUBLIC_KEY || '').replace(/\\n/g, '\n')
 
   if (!signature) {
     console.warn('Missing x-signature header')
@@ -59,7 +57,6 @@ exports.handler = async (event) => {
   }
 
   const buyerEmail = payload.client?.email
-  const buyerName  = payload.client?.full_name || 'Pelanggan'
 
   console.log('Buyer email:', buyerEmail)
 
@@ -106,14 +103,12 @@ exports.handler = async (event) => {
     body: JSON.stringify({
       from: 'EjenCukai <contact@ejencukai.my>',
       to: buyerEmail,
-      subject: `E-book anda sedia dibuka — ${ebookLabel}`,
+      subject: `E-book anda — ${ebookLabel}`,
       html: `
         <div style="font-family: sans-serif; max-width: 560px; margin: 0 auto; color: #1a1a1a;">
-          <p>Assalamualaikum ${buyerName},</p>
+          <p>Salam Sejahtera,</p>
 
-          <p>Terima kasih kerana membeli <strong>${ebookLabel}</strong> daripada EjenCukai.</p>
-
-          <p>Klik butang di bawah untuk membuka e-book anda:</p>
+          <p>Terima kasih atas pembelian anda. Berikut adalah pautan e-book anda:</p>
 
           <p style="margin: 24px 0;">
             <a href="${ebookUrl}"
@@ -124,13 +119,7 @@ exports.handler = async (event) => {
           </p>
 
           <p style="font-size:13px; color:#666;">
-            Pautan ini adalah untuk kegunaan peribadi anda. Jangan kongsikan kepada orang lain.
-          </p>
-
-          <hr style="border:none; border-top:1px solid #eee; margin:24px 0;" />
-
-          <p style="font-size:13px; color:#666;">
-            Sebarang pertanyaan? Hubungi kami di
+            Sebarang pertanyaan, hubungi kami di
             <a href="mailto:contact@ejencukai.my">contact@ejencukai.my</a>
           </p>
 
@@ -147,6 +136,6 @@ exports.handler = async (event) => {
     return { statusCode: 200, body: 'Email failed' }
   }
 
-  console.log(`Email sent successfully to ${buyerEmail} — ${ebookLabel} | Resend response: ${resendBody}`)
+  console.log(`Email sent to ${buyerEmail} — ${ebookLabel} | Resend: ${resendBody}`)
   return { statusCode: 200, body: 'OK' }
 }

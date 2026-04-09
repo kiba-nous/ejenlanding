@@ -10,6 +10,8 @@ import { Investors } from './components/Investors';
 import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { TermsOfService } from './components/TermsOfService';
 import { WhatsAppButton } from './components/WhatsAppButton';
+import { EbookPage } from './components/EbookPage';
+import { EbookThankYou } from './components/EbookThankYou';
 
 function App() {
   return (
@@ -25,6 +27,9 @@ function App() {
             {/* <Route path="/about" element={<AboutUs />} /> */}
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/ebook" element={<EbookPage />} />
+            <Route path="/ebook/thank-you/be" element={<EbookThankYou ebook="be" />} />
+            <Route path="/ebook/thank-you/b" element={<EbookThankYou ebook="b" />} />
           </Routes>
           <WhatsAppButton />
         </div>
