@@ -17,7 +17,8 @@ function Navbar({ currentSection, onSectionChange }: NavbarProps) {
     { id: 'home', label: language === 'en' ? 'Home' : 'Laman Utama', path: '/' },
     { id: 'business', label: language === 'en' ? 'Business' : 'Perniagaan', path: '/business' },
     { id: 'tax-firms', label: language === 'en' ? 'Tax Firms' : 'Firma Cukai', path: '/tax-firms' },
-    { id: 'investors', label: language === 'en' ? 'Investors' : 'Pelabur', path: '/investors' }
+    { id: 'investors', label: language === 'en' ? 'Investors' : 'Pelabur', path: '/investors' },
+    { id: 'ebook', label: language === 'en' ? 'E-Book' : 'E-Book', path: '/ebook' },
   ];
 
   const getCurrentSection = () => {
