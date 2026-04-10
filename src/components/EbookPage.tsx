@@ -87,7 +87,6 @@ export function EbookPage() {
             <motion.h1 {...fadeUp(0.08)} className="text-4xl md:text-5xl font-light text-apple-gray-1 mb-5 leading-tight">
               Isi Borang Cukai Anda{' '}
               <span className="font-semibold">Dengan Betul.</span>
-              <br />Jimat Lebih. Tanpa Stres.
             </motion.h1>
 
             <motion.p {...fadeUp(0.14)} className="text-[17px] text-apple-gray-2 leading-relaxed mb-8 max-w-xl mx-auto">
