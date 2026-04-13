@@ -42,12 +42,8 @@ export function EbookThankYou({ ebook }: { ebook: EbookKey }) {
             <span className="font-medium">pembelian anda!</span>
           </h1>
 
-          <p className="text-apple-gray-2 text-[15px] mt-4 mb-2 leading-relaxed">
+          <p className="text-apple-gray-2 text-[15px] mt-4 mb-6 leading-relaxed">
             {label}
-          </p>
-
-          <p className="text-apple-gray-3 text-[13px] mb-6">
-            E-book juga dihantar ke emel anda.
           </p>
 
           <a

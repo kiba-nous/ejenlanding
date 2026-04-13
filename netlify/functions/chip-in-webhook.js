@@ -73,7 +73,7 @@ exports.handler = async (event) => {
   console.log('Buyer email:', buyerEmail)
 
   // 3. Match product from success_redirect URL (e.g. "https://ejencukai.my/ebook/thank-you/b")
-  const successRedirect = payload.purchase?.success_redirect || ''
+  const successRedirect = payload.success_redirect || ''
   console.log('Success redirect:', successRedirect)
 
   const PRODUCT_MAP = {
@@ -108,51 +108,6 @@ exports.handler = async (event) => {
     return { statusCode: 200, body: 'OK' }
   }
 
-  console.log(`Sending email to ${buyerEmail} for: ${ebookLabel}`)
-
-  // 4. Send delivery email via Resend
-  const emailRes = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      from: 'EjenCukai <contact@ejencukai.my>',
-      to: buyerEmail,
-      subject: `E-book anda — ${ebookLabel}`,
-      html: `
-        <div style="font-family: sans-serif; max-width: 560px; margin: 0 auto; color: #1a1a1a;">
-          <p>Salam Sejahtera,</p>
-
-          <p>Terima kasih atas pembelian anda. Berikut adalah pautan e-book anda:</p>
-
-          <p style="margin: 24px 0;">
-            <a href="${ebookUrl}"
-               style="background:#1a56db; color:#fff; padding:12px 24px;
-                      border-radius:6px; text-decoration:none; font-weight:600;">
-              Buka E-Book
-            </a>
-          </p>
-
-          <p style="font-size:13px; color:#666;">
-            Sebarang pertanyaan, hubungi kami di
-            <a href="mailto:contact@ejencukai.my">contact@ejencukai.my</a>
-          </p>
-
-          <p style="font-size:13px; color:#666;">— Team EjenCukai</p>
-        </div>
-      `
-    })
-  })
-
-  const resendBody = await emailRes.text()
-
-  if (!emailRes.ok) {
-    console.error('Resend error:', emailRes.status, resendBody)
-    return { statusCode: 200, body: 'Email failed' }
-  }
-
-  console.log(`Email sent to ${buyerEmail} — ${ebookLabel} | Resend: ${resendBody}`)
+  console.log(`Payment confirmed for ${buyerEmail} — ${ebookLabel}`)
   return { statusCode: 200, body: 'OK' }
 }
