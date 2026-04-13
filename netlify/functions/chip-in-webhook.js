@@ -72,27 +72,32 @@ exports.handler = async (event) => {
 
   console.log('Buyer email:', buyerEmail)
 
-  // 3. Match payment link slug to correct ebook
-  const slug = payload.purchase?.payment_page_uid
-  console.log('Payment slug received:', slug)
-  console.log('Expected BE slug:', process.env.CHIPIN_SLUG_BE)
-  console.log('Expected B slug:', process.env.CHIPIN_SLUG_B)
+  // 3. Match product from success_redirect URL (e.g. "https://ejencukai.my/ebook/thank-you/b")
+  const successRedirect = payload.purchase?.success_redirect || ''
+  console.log('Success redirect:', successRedirect)
 
   const PRODUCT_MAP = {
-    [process.env.CHIPIN_SLUG_BE]: {
+    be: {
       url:   process.env.EBOOK_BE_URL,
       label: 'Panduan Asas Cukai Individu Bergaji (Borang BE)',
     },
-    [process.env.CHIPIN_SLUG_B]: {
+    b: {
       url:   process.env.EBOOK_B_URL,
       label: 'Panduan Asas Cukai Individu Berbisnes (Borang B)',
     },
   }
 
-  const product = PRODUCT_MAP[slug]
+  // Check 'be' before 'b' to avoid substring false-match
+  let productKey = null
+  if (successRedirect.includes('/thank-you/be')) productKey = 'be'
+  else if (successRedirect.includes('/thank-you/b')) productKey = 'b'
+
+  console.log('Product key:', productKey)
+
+  const product = PRODUCT_MAP[productKey]
 
   if (!product) {
-    console.warn(`Unknown payment slug: "${slug}" — check CHIPIN_SLUG_BE and CHIPIN_SLUG_B env vars`)
+    console.warn(`Could not determine product from success_redirect: "${successRedirect}"`)
     return { statusCode: 200, body: 'Unknown product' }
   }
 
