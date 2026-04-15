@@ -113,7 +113,7 @@ export function EbookPage() {
             </motion.div>
 
             <motion.p {...fadeUp(0.26)} className="mt-4 text-[13px] text-apple-gray-3">
-              Pembayaran selamat melalui Chip-in. E-book dihantar ke emel anda serta-merta.
+              Pembayaran selamat melalui Chip-in. Link E-book akan muncul serta-merta.
             </motion.p>
           </div>
         </div>
@@ -236,7 +236,7 @@ export function EbookPage() {
             className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-6 text-[13px] text-apple-gray-3"
           >
             <span className="flex items-center gap-1.5"><Shield className="w-3.5 h-3.5" /> Pembayaran selamat via Chip-in</span>
-            <span className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5" /> E-book dihantar ke emel serta-merta</span>
+            <span className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5" /> Link E-book muncul serta-merta</span>
             <span className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5" /> Format PDF, akses Google Drive selamanya</span>
           </motion.div>
         </div>
@@ -285,7 +285,7 @@ export function EbookPage() {
                 Jangan terlepas pelepasan anda <span className="font-semibold">lagi tahun ini</span>
               </h2>
               <p className="text-[14px] text-white/50 mb-8">
-                E-book dihantar ke emel anda serta-merta selepas pembayaran.
+                Link E-book akan muncul serta-merta selepas pembayaran.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-sm mx-auto">
                 <a
