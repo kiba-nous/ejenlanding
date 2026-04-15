@@ -38,7 +38,7 @@ const faqs = [
   },
   {
     q: 'Macam mana saya terima e-book selepas beli?',
-    a: 'Pautan Google Drive dihantar terus ke emel anda sebaik pembayaran disahkan, biasanya dalam masa beberapa minit. Semak folder Spam jika tidak menerima dalam 10 minit.',
+    a: 'Pautan Ebook di website Ejen Cukai akan muncul setelah anda membayar. Hubungi kami jika anda perlukan bantuan untuk akses e-book.',
   },
   {
     q: 'Saya langsung tidak faham tentang cukai. Sesuai ke?',
