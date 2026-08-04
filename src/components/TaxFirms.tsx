@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { MoveRight, Bot, Users, Search, Zap, Calendar, Database } from "lucide-react";
-import { Button } from "./ui/button";
+import { Bot, Users, Search, Zap, Calendar, Database } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { Navbar } from "./Navbar";
 import { WaitlistForm } from "./WaitlistForm";
@@ -32,16 +31,6 @@ function TaxFirms() {
     }, 2000);
     return () => clearTimeout(timeoutId);
   }, [titleNumber, titles]);
-
-  const scrollToWaitlist = () => {
-    const waitlistSection = document.getElementById("waitlist-section");
-    if (waitlistSection) {
-      waitlistSection.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  };
 
   const features = [
     {

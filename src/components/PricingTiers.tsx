@@ -1,8 +1,23 @@
 import { motion } from "framer-motion";
+import { MessageCircle } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
+import { trackEvent, buildWhatsAppUrl } from "../utils/analytics";
 
 function PricingTiers() {
   const { language } = useLanguage();
+
+  /**
+   * Every price now has an action attached. Previously a visitor who decided
+   * on a service had to scroll past the whole list to find a CTA elsewhere.
+   */
+  const enquiryUrl = (serviceName: string, price: string) =>
+    buildWhatsAppUrl(
+      language === 'en'
+        ? `Hi EjenCukai! I'd like to enquire about: ${serviceName} (from ${price}).`
+        : `Hi EjenCukai! Saya ingin bertanya tentang: ${serviceName} (dari ${price}).`
+    );
+
+  const ctaLabel = language === 'en' ? 'Enquire on WhatsApp' : 'Tanya di WhatsApp';
 
   const individualServices = [
     {
@@ -112,7 +127,7 @@ function PricingTiers() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
                 viewport={{ once: true }}
-                className="bg-white rounded-apple p-8 border border-apple-gray-4/50"
+                className="bg-white rounded-apple p-8 border border-apple-gray-4/50 flex flex-col"
               >
                 <h3 className="text-xl font-medium text-apple-gray-1 mb-3">
                   {language === 'en' ? service.titleEn : service.titleBm}
@@ -125,9 +140,22 @@ function PricingTiers() {
                     {service.price}
                   </span>
                 </div>
-                <p className="text-[15px] text-apple-gray-2 leading-relaxed">
+                <p className="text-[15px] text-apple-gray-2 leading-relaxed flex-grow">
                   {language === 'en' ? service.descriptionEn : service.descriptionBm}
                 </p>
+                <a
+                  href={enquiryUrl(language === 'en' ? service.titleEn : service.titleBm, service.price)}
+                  onClick={() => trackEvent('whatsapp_click', {
+                    location: 'pricing_individual',
+                    service: service.titleEn,
+                  })}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 inline-flex items-center justify-center gap-2 border border-apple-gray-4 hover:border-apple-blue hover:text-apple-blue text-apple-gray-1 text-[14px] font-medium py-2.5 px-5 rounded-apple-button transition-colors duration-150 self-start"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  {ctaLabel}
+                </a>
               </motion.div>
             ))}
           </div>
@@ -154,7 +182,7 @@ function PricingTiers() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
                 viewport={{ once: true }}
-                className="bg-white rounded-apple p-8 border border-apple-gray-4/50"
+                className="bg-white rounded-apple p-8 border border-apple-gray-4/50 flex flex-col"
               >
                 <h3 className="text-xl font-medium text-apple-gray-1 mb-3">
                   {language === 'en' ? service.titleEn : service.titleBm}
@@ -167,9 +195,22 @@ function PricingTiers() {
                     {service.price}
                   </span>
                 </div>
-                <p className="text-[15px] text-apple-gray-2 leading-relaxed">
+                <p className="text-[15px] text-apple-gray-2 leading-relaxed flex-grow">
                   {language === 'en' ? service.descriptionEn : service.descriptionBm}
                 </p>
+                <a
+                  href={enquiryUrl(language === 'en' ? service.titleEn : service.titleBm, service.price)}
+                  onClick={() => trackEvent('whatsapp_click', {
+                    location: 'pricing_business',
+                    service: service.titleEn,
+                  })}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 inline-flex items-center justify-center gap-2 border border-apple-gray-4 hover:border-apple-blue hover:text-apple-blue text-apple-gray-1 text-[14px] font-medium py-2.5 px-5 rounded-apple-button transition-colors duration-150 self-start"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  {ctaLabel}
+                </a>
               </motion.div>
             ))}
           </div>

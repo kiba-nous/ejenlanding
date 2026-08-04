@@ -7,9 +7,11 @@ import {
   ChevronDown, ChevronUp,
 } from 'lucide-react';
 import { useState } from 'react';
+import { trackEvent, buildWhatsAppUrl } from '../utils/analytics';
+import { CHIPIN, CONTACT_EMAIL, WHATSAPP_DISPLAY } from '../config/site';
 
-const CHIPIN_BE_URL = 'https://pay.chip-in.asia/borangbe';
-const CHIPIN_B_URL  = 'https://pay.chip-in.asia/borangb';
+const CHIPIN_BE_URL = CHIPIN.ebookBE;
+const CHIPIN_B_URL  = CHIPIN.ebookB;
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -96,16 +98,14 @@ export function EbookPage() {
             <motion.div {...fadeUp(0.2)} className="flex flex-col sm:flex-row gap-3 justify-center max-w-sm mx-auto">
               <a
                 href={CHIPIN_BE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={() => trackEvent('ebook_checkout_click', { product: 'be', value: 25, currency: 'MYR' })}
                 className="flex-1 text-center bg-apple-blue hover:opacity-90 text-white text-[15px] font-semibold py-3.5 px-6 rounded-apple-button transition-opacity duration-200 shadow-sm"
               >
                 Borang BE · RM25
               </a>
               <a
                 href={CHIPIN_B_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={() => trackEvent('ebook_checkout_click', { product: 'b', value: 29, currency: 'MYR' })}
                 className="flex-1 text-center bg-apple-gray-1 hover:opacity-80 text-white text-[15px] font-semibold py-3.5 px-6 rounded-apple-button transition-opacity duration-200 shadow-sm"
               >
                 Borang B · RM29
@@ -186,8 +186,7 @@ export function EbookPage() {
               <p className="text-[13px] text-apple-gray-3 mb-5">Bayar sekali · Akses selamanya</p>
               <a
                 href={CHIPIN_BE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={() => trackEvent('ebook_checkout_click', { product: 'be', value: 25, currency: 'MYR' })}
                 className="block w-full text-center bg-apple-blue hover:opacity-90 text-white text-[15px] font-semibold py-4 px-6 rounded-apple-button transition-opacity duration-200"
               >
                 Dapatkan Borang BE · RM25
@@ -219,8 +218,7 @@ export function EbookPage() {
               <p className="text-[13px] text-white/50 mb-5">Bayar sekali · Akses selamanya</p>
               <a
                 href={CHIPIN_B_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={() => trackEvent('ebook_checkout_click', { product: 'b', value: 29, currency: 'MYR' })}
                 className="block w-full text-center bg-white hover:bg-apple-gray-5 text-apple-gray-1 text-[15px] font-semibold py-4 px-6 rounded-apple-button transition-colors duration-200"
               >
                 Dapatkan Borang B · RM29
@@ -259,12 +257,18 @@ export function EbookPage() {
               <div className="mt-6 text-[14px] text-apple-gray-3 space-y-1">
                 <p>Ada soalan lain? Hubungi kami:</p>
                 <p>
-                  <a href="mailto:contact@ejencukai.my" className="text-apple-blue hover:opacity-70 transition-opacity duration-150">
-                    contact@ejencukai.my
+                  <a href={`mailto:${CONTACT_EMAIL}`} className="text-apple-blue hover:opacity-70 transition-opacity duration-150">
+                    {CONTACT_EMAIL}
                   </a>
                   {' '}·{' '}
-                  <a href="https://wa.me/60103216650" target="_blank" rel="noopener noreferrer" className="text-apple-blue hover:opacity-70 transition-opacity duration-150">
-                    +6010 321 6650
+                  <a
+                    href={buildWhatsAppUrl('Hi EjenCukai! Saya ada soalan tentang E-Book cukai.')}
+                    onClick={() => trackEvent('whatsapp_click', { location: 'ebook_faq' })}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-apple-blue hover:opacity-70 transition-opacity duration-150"
+                  >
+                    {WHATSAPP_DISPLAY}
                   </a>
                 </p>
               </div>
@@ -290,16 +294,14 @@ export function EbookPage() {
               <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-sm mx-auto">
                 <a
                   href={CHIPIN_BE_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  onClick={() => trackEvent('ebook_checkout_click', { product: 'be', value: 25, currency: 'MYR' })}
                   className="flex-1 text-center bg-white hover:bg-apple-gray-5 text-apple-gray-1 text-[15px] font-semibold py-4 px-6 rounded-apple-button transition-colors duration-200"
                 >
                   Borang BE · RM25
                 </a>
                 <a
                   href={CHIPIN_B_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  onClick={() => trackEvent('ebook_checkout_click', { product: 'b', value: 29, currency: 'MYR' })}
                   className="flex-1 text-center bg-apple-blue hover:opacity-90 text-white text-[15px] font-semibold py-4 px-6 rounded-apple-button transition-opacity duration-200"
                 >
                   Borang B · RM29

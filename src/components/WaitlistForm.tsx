@@ -139,28 +139,10 @@ function WaitlistForm() {
           </div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-          viewport={{ once: true }}
-          className="text-center"
-        >
-          <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-16 max-w-3xl mx-auto">
-            <div className="text-center">
-              <div className="text-4xl font-light text-apple-gray-1 mb-1">500+</div>
-              <div className="text-[15px] text-apple-gray-2">{t('waitlist.businesses')}</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-light text-apple-gray-1 mb-1">Q3 2025</div>
-              <div className="text-[15px] text-apple-gray-2">{t('waitlist.launch')}</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-light text-apple-gray-1 mb-1">50%</div>
-              <div className="text-[15px] text-apple-gray-2">{t('waitlist.discount')}</div>
-            </div>
-          </div>
-        </motion.div>
+        {/* The "500+ businesses waiting / Q3 2025 launch / 50% discount" stat
+            row was removed: the launch date had passed and the figures were
+            unverifiable, which made the whole project read as abandoned. Put
+            it back only with numbers you can produce a record for. */}
       </div>
     </section>
   );

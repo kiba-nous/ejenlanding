@@ -80,8 +80,8 @@ const translations = {
     'services.advisory.description': 'Strategic tax planning and business advisory to help you make informed decisions and maximize your business potential.',
 
     // Form Section
-    'form.title': 'Book Your Consultation',
-    'form.subtitle': 'Fill out the form below and our tax experts will get back to you within 24 hours.',
+    'form.title': 'Tell us what you need',
+    'form.subtitle': 'Three quick steps. We reply on WhatsApp within 24 hours.',
     'form.placeholder': 'Embed your Tally form here',
     'form.embedInstructions': 'Replace this placeholder with your Tally form embed code',
 
@@ -105,7 +105,8 @@ const translations = {
     'footer.description': 'AI-powered tax compliance for Malaysian businesses and tax firms. Simplifying tax management with intelligent automation.',
     'footer.features': 'Features',
     'footer.company': 'Company',
-    'footer.copyright': '© 2025 Ejen Cukai. All rights reserved.',
+    // Year is prepended by the Footer so it never goes stale.
+    'footer.copyright': 'Ejen Cukai. All rights reserved.',
     'footer.madeWith': 'Made with ❤️ in Malaysia'
   },
   bm: {
@@ -179,8 +180,8 @@ const translations = {
     'services.advisory.description': 'Perancangan cukai strategik dan nasihat perniagaan untuk membantu anda membuat keputusan bermaklumat dan memaksimumkan potensi perniagaan.',
 
     // Form Section
-    'form.title': 'Tempah Konsultasi Anda',
-    'form.subtitle': 'Isi borang di bawah dan pakar cukai kami akan menghubungi anda dalam masa 24 jam.',
+    'form.title': 'Beritahu kami keperluan anda',
+    'form.subtitle': 'Tiga langkah ringkas. Kami balas melalui WhatsApp dalam masa 24 jam.',
     'form.placeholder': 'Sertakan borang Tally anda di sini',
     'form.embedInstructions': 'Gantikan placeholder ini dengan kod embed borang Tally anda',
 
@@ -204,7 +205,7 @@ const translations = {
     'footer.description': 'Pematuhan cukai berkuasa AI untuk perniagaan dan firma cukai Malaysia. Memudahkan pengurusan cukai dengan automasi pintar.',
     'footer.features': 'Ciri-ciri',
     'footer.company': 'Syarikat',
-    'footer.copyright': '© 2025 Ejen Cukai. Hak cipta terpelihara.',
+    'footer.copyright': 'Ejen Cukai. Hak cipta terpelihara.',
     'footer.madeWith': 'Dibuat dengan ❤️ di Malaysia'
   }
 };

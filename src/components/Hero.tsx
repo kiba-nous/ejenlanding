@@ -3,12 +3,15 @@ import { MoveRight } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useLanguage } from "../contexts/LanguageContext";
+import { getDeadlineNotice } from "../config/site";
+import { trackEvent } from "../utils/analytics";
 
 function Hero() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const navigate = useNavigate();
 
   const openConsultationForm = () => {
+    trackEvent("hero_cta_click", { cta: "consultation" });
     navigate("/form");
   };
 
@@ -47,8 +50,10 @@ function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-            className="mb-20 flex flex-col sm:flex-row gap-4 items-center justify-center"
+            className="mb-6 flex flex-col sm:flex-row gap-4 items-center justify-center"
           >
+            {/* One primary, one secondary. A third equal-weight button was
+                splitting attention — "Tanya AI" now sits below as a text link. */}
             <Button
               size="lg"
               className="gap-2 transition-all duration-200 ease-out text-[17px] font-medium px-8 py-3 bg-apple-blue hover:opacity-90 rounded-apple-button shadow-sm hover:shadow-md"
@@ -56,36 +61,58 @@ function Hero() {
             >
               {t("hero.bookConsultation")} <MoveRight className="w-5 h-5" />
             </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="gap-2 transition-all duration-200 ease-out text-[17px] font-medium px-8 py-3 rounded-apple-button shadow-sm hover:shadow-md border-apple-blue text-apple-blue hover:bg-apple-blue hover:text-white"
-              onClick={() => window.open("https://ai.ejencukai.my", "_blank")}
-            >
-              {t("hero.askAI")} 🤖
-            </Button>
-            <Link to="/ebook">
+            <Link to="/ebook" onClick={() => trackEvent("hero_cta_click", { cta: "ebook" })}>
               <Button
                 size="lg"
                 variant="outline"
                 className="gap-2 transition-all duration-200 ease-out text-[17px] font-medium px-8 py-3 rounded-apple-button shadow-sm hover:shadow-md border-apple-gray-4 text-apple-gray-1 hover:border-apple-gray-1"
               >
-                {t("hero.buyEbook")} 📖
+                {t("hero.buyEbook")}
               </Button>
             </Link>
           </motion.div>
+
+          {/* Seasonal urgency — switches to a planning message outside filing
+              season so this slot never advertises a date that has passed. */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-[15px] text-apple-gray-2 mb-12"
+          >
+            {getDeadlineNotice(language)}
+          </motion.p>
 
           {/* Trust Indicators - Minimal */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.45 }}
-            className="flex flex-wrap items-center justify-center gap-8 md:gap-12"
+            className="flex flex-wrap items-center justify-center gap-6 md:gap-10 mb-8"
           >
-            <span className="text-sm text-apple-gray-3 font-normal">LHDN Registered</span>
-            <span className="text-sm text-apple-gray-3 font-normal">30+ Years Experience</span>
-            <span className="text-sm text-apple-gray-3 font-normal">100% Compliant</span>
+            <span className="text-sm text-apple-gray-3 font-normal">
+              {language === "bm" ? "Ejen cukai berdaftar LHDN" : "LHDN-registered tax agent"}
+            </span>
+            <span className="text-sm text-apple-gray-3 font-normal">
+              {language === "bm" ? "30+ tahun pengalaman" : "30+ years experience"}
+            </span>
+            <span className="text-sm text-apple-gray-3 font-normal">
+              {language === "bm" ? "Balas dalam 24 jam" : "Reply within 24 hours"}
+            </span>
           </motion.div>
+
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            onClick={() => {
+              trackEvent("hero_cta_click", { cta: "ask_ai" });
+              window.open("https://ai.ejencukai.my", "_blank", "noopener");
+            }}
+            className="text-[15px] text-apple-blue hover:opacity-70 transition-opacity duration-150"
+          >
+            {t("hero.askAI")} →
+          </motion.button>
         </div>
       </div>
     </div>

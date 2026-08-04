@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { MoveRight, TrendingUp, DollarSign, Globe, Target, Rocket, PieChart } from "lucide-react";
-import { Button } from "./ui/button";
+import { TrendingUp, DollarSign, Globe, Target, Rocket, PieChart } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { Navbar } from "./Navbar";
 import { InvestorForm } from "./InvestorForm";

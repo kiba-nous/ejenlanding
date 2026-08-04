@@ -101,8 +101,8 @@ function InvestorForm() {
                 src="https://tally.so/embed/3q6YNG?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
                 width="100%"
                 frameBorder="0"
-                marginHeight="0"
-                marginWidth="0"
+                marginHeight={0}
+                marginWidth={0}
                 title="I'm interested to invest."
                 style={{
                   pointerEvents: 'auto',

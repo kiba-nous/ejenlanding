@@ -1,23 +1,21 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 
-interface NavbarProps {
-  currentSection?: string;
-  onSectionChange?: (section: string) => void;
-}
-
-function Navbar({ currentSection, onSectionChange }: NavbarProps) {
+// The active section is derived from the router, so no caller has ever needed
+// to pass it in.
+function Navbar() {
   const { language, setLanguage } = useLanguage();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Customer-facing pages only. /business, /tax-firms and /investors remain
+  // live routes for direct sharing, but they speak to different audiences and
+  // were crowding out the pages that actually sell.
   const sections = [
     { id: 'home', label: language === 'en' ? 'Home' : 'Laman Utama', path: '/' },
-    { id: 'business', label: language === 'en' ? 'Business' : 'Perniagaan', path: '/business' },
-    { id: 'tax-firms', label: language === 'en' ? 'Tax Firms' : 'Firma Cukai', path: '/tax-firms' },
-    { id: 'investors', label: language === 'en' ? 'Investors' : 'Pelabur', path: '/investors' },
+    { id: 'consultation', label: language === 'en' ? 'Consultation' : 'Konsultasi', path: '/konsultasi-peribadi' },
     { id: 'ebook', label: language === 'en' ? 'E-Book' : 'E-Book', path: '/ebook' },
   ];
 

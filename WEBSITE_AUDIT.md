@@ -2,7 +2,12 @@
 
 **Date:** 4 August 2026
 **Scope:** `ejencukai.my` React landing site (`src/`), Tally forms, Chip-in payment flow, WhatsApp handoff
-**Status:** Audit only — no code has been changed. Every code block below is a *proposal*.
+**Status:** ⚙️ **Partially implemented** — see [§11 What shipped](#11-what-shipped) for exactly what is now in the code and what is still open. Sections below are the original audit; code blocks in them are proposals unless §11 says otherwise.
+
+**Decisions since the audit:**
+- Consultation price is **RM149 per hour** (60-minute session), not the RM99/RM129 suggested in §2.3.
+- Calendly is **`https://calendly.com/ejencukaimy`** — the open question in §5.5 is resolved.
+- The Chip-in consultation product **has not been created yet**; the code ships with a WhatsApp fallback until it exists. See `CONSULTATION_SETUP.md`.
 
 ---
 
@@ -707,24 +712,24 @@ if (!ebookUrl) {
 
 ### Week 1 — bleeding stops here (all small)
 
-- [ ] Fix e-book thank-you leak — at minimum rotate Drive IDs (§7.1)
-- [ ] Tally: branch Individu/Perniagaan, cut to 4 required fields (§4.2)
-- [ ] Tally: redirect to WhatsApp with piped answers (§4.2)
-- [ ] Delete stale waitlist stats + fix © year (§3.1)
-- [ ] Remove Investors from navbar (§3.2)
-- [ ] Add meta description + OG tags + `og-image.png` (§6.1)
-- [ ] Add 404 catch-all route (§6.3)
-- [ ] Add GA4 events for WhatsApp + form + checkout (§2.10)
+- [ ] **Fix e-book thank-you leak — rotate the two Drive file IDs (§7.1)** ← still open, needs you
+- [x] ~~Tally: branch Individu/Perniagaan, cut to 4 required fields~~ → superseded: Tally replaced by a native 3-step form (§4.3)
+- [x] Form redirects to WhatsApp with a pre-filled message (§4.2/§4.3)
+- [x] Delete stale waitlist stats + dynamic © year (§3.1)
+- [x] Remove Investors from navbar (§3.2)
+- [x] Add meta description + OG tags (§6.1) — ⚠️ `public/og-image.png` still needs creating
+- [x] Add 404 catch-all route (§6.3)
+- [x] Add GA4 events for WhatsApp + form + checkout (§2.10)
 
 ### Weeks 2–4 — build the money
 
-- [ ] Collect 5–8 testimonials, build the testimonial section (§2.1)
+- [ ] **Collect 5–8 testimonials** — component is built and wired, waiting on real quotes (§2.1)
 - [ ] Restore `/about` with agent name, photo, LHDN licence no. (§2.2)
-- [ ] Build `/konsultasi-peribadi` + Chip-in product + `/booking/thank-you` + Calendly (§5)
-- [ ] Native `QuickConsultForm` replacing the Tally iframe (§4.3)
-- [ ] CTAs on every pricing card (§2.7)
-- [ ] Rewrite footer links to real services (§3.4)
-- [ ] Deadline/urgency banner (§2.4)
+- [x] Build `/konsultasi-peribadi` + `/booking/thank-you` + Calendly (§5) — ⚠️ Chip-in product still to create
+- [x] Native `QuickConsultForm` replacing the Tally iframe (§4.3)
+- [x] CTAs on every pricing card (§2.7)
+- [x] Rewrite footer links to real services (§3.4)
+- [x] Deadline/urgency banner (§2.4)
 
 ### Month 2+ — compounding
 
@@ -755,8 +760,50 @@ You currently can't measure any of these. Fixing that (§2.10) is a prerequisite
 
 ## Open questions for you
 
-1. **Is the SaaS/marketplace still happening?** The answer decides §3.3 (keep vs delete `/business`, `/tax-firms`, `WaitlistForm`).
-2. **What's the real Calendly URL and event slug?** Nothing in the codebase references Calendly — §5 uses a placeholder.
-3. **Price for the personal consultation?** RM99 or RM129 is my recommendation; RM99 converts better, RM129 filters harder.
-4. **Do you have past clients who'd give a testimonial?** Even 3 unlocks the highest-impact item on this list.
+1. **Is the SaaS/marketplace still happening?** The answer decides §3.3 (keep vs delete `/business`, `/tax-firms`, `WaitlistForm`). *Still open* — the pages are out of the navbar but still live.
+2. ~~What's the real Calendly URL?~~ ✅ `https://calendly.com/ejencukaimy`
+3. ~~Price for the personal consultation?~~ ✅ RM149 / hour
+4. **Do you have past clients who'd give a testimonial?** Even 3 unlocks the highest-impact item on this list. The section is built and will appear the moment you add real quotes.
 5. **What's your LHDN tax agent licence number**, and can it be published? It's your strongest trust asset and it's currently nowhere on the site.
+
+---
+
+## 11. What shipped
+
+Implemented on `main`. Build, type-check and lint all pass.
+
+### New
+
+| File | What it does |
+|------|--------------|
+| `src/config/site.ts` | Single source of truth for phone, e-mail, Chip-in links, Calendly, price, and the seasonal deadline logic |
+| `src/utils/analytics.ts` | GA4 wrapper + `wa.me` URL builder. Never throws into a caller — a blocked tag can't break checkout |
+| `src/components/QuickConsultForm.tsx` | 3-step native form replacing the Tally iframe |
+| `src/components/ConsultationPage.tsx` | `/konsultasi-peribadi` — RM149/hour sales page + detail capture |
+| `src/components/BookingThankYou.tsx` | `/booking/thank-you` — inline Calendly with prefill and booking confirmation |
+| `src/components/ConsultationBanner.tsx` | Homepage entry point for the consultation |
+| `src/components/Testimonials.tsx` | Built, wired, renders **nothing** until real quotes are added |
+| `src/components/NotFound.tsx` | 404 catch-all |
+| `public/robots.txt`, `public/sitemap.xml` | Thank-you pages `Disallow`ed |
+| `CONSULTATION_SETUP.md` | The 3 manual steps: Chip-in product, Calendly event, Netlify Forms |
+
+### Changed
+
+- **`/form`** — nine required fields → three steps, two typed inputs; branches so individuals are never asked for company details; saves the lead, *then* hands off to WhatsApp
+- **Hero** — three competing CTAs → one primary + one secondary; "Tanya AI" demoted to a text link; trust strip translated and "100% Compliant" replaced with "Balas dalam 24 jam"; seasonal deadline line added
+- **Navbar** — Business / Tax Firms / Investors removed (routes still live); Konsultasi added
+- **Footer** — dead SaaS feature list → real linked services; Support → WhatsApp; © year now dynamic
+- **PricingTiers** — every one of the 11 cards now has a WhatsApp CTA pre-filled with that service name
+- **EbookPage** — checkout tracking, same-tab checkout, contact details from config
+- **WhatsAppButton** — `wa.link` → `wa.me` with a pre-filled opener + click tracking
+- **`index.html`** — meta description, OG/Twitter cards, canonical, `ProfessionalService` JSON-LD, `lang="ms"`, favicon → logo, plus the hidden Netlify Forms target
+- **`chip-in-webhook.js`** — recognises the consultation product; fixed the §7.2 `ReferenceError` on the missing-URL path
+- Removed the pre-existing unused imports/props flagged in §3.7, clearing all 9 lint errors and 14 type errors that were already in the repo
+
+### Deliberately not done
+
+- **E-book leak (§7.1)** — needs you to rotate the Drive file IDs; a `sessionStorage` guard would have broken real buyers, since the e-book checkout opens in a new tab with fresh storage
+- **Testimonials content** — inventing quotes would be fabricated social proof
+- **`/about` page** — needs your name, photo and LHDN licence number
+- **`/business` + `/tax-firms` fate** — blocked on open question 1
+- **BM copy review** — needs a native speaker, not a translation pass from me
