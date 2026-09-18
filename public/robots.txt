@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Post-purchase pages — no search value, and indexing them would advertise
+# the delivery URLs.
+Disallow: /ebook/thank-you/
+Disallow: /booking/thank-you
+
+Sitemap: https://ejencukai.my/sitemap.xml

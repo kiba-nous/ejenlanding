@@ -1,326 +1,307 @@
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { BookOpen, Briefcase, CheckCircle2, FileText, Lock, MessageCircle, Zap } from 'lucide-react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
-import {
-  CheckCircle, BookOpen, Shield, ArrowLeft,
-  ChevronDown, ChevronUp,
-} from 'lucide-react';
-import { useState } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { usePageMeta } from '../hooks/usePageMeta';
+import { trackEvent, buildWhatsAppUrl } from '../utils/analytics';
+import { CHIPIN, CONTACT_EMAIL, WHATSAPP_DISPLAY } from '../config/site';
+import { Accordion } from './ui/Accordion';
+import { Button } from './ui/button';
+import { Badge, CheckItem, SectionHeading } from './ui/Section';
+import { reveal } from './ui/motion';
 
-const CHIPIN_BE_URL = 'https://pay.chip-in.asia/borangbe';
-const CHIPIN_B_URL  = 'https://pay.chip-in.asia/borangb';
+const PRODUCTS = {
+  be: { price: 25, url: CHIPIN.ebookBE },
+  b: { price: 29, url: CHIPIN.ebookB },
+} as const;
 
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 24 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.55, delay, ease: 'easeOut' },
-});
+type ProductKey = keyof typeof PRODUCTS;
 
-const beFeatures = [
-  'Panduan bahagian demi bahagian Borang BE',
-  'Senarai pelepasan cukai: EPF, insurans, perubatan, pendidikan dan lebih',
-  'Contoh pengiraan cukai penuh',
-  'Kesilapan lazim dan cara elak',
-];
-
-const bFeatures = [
-  'Cara isytihar pendapatan perniagaan dengan betul',
-  'Perbelanjaan perniagaan yang boleh ditolak',
-  'Cara handle pendapatan campuran (gaji dan perniagaan)',
-  'Contoh kes usahawan dan pengiraan cukai penuh',
-];
-
-const faqs = [
-  {
-    q: 'Apa beza Borang BE dan Borang B?',
-    a: 'Borang BE untuk pekerja makan gaji sahaja. Borang B untuk individu yang ada pendapatan perniagaan, sama ada sepenuh masa atau sampingan. Jika ada kedua-dua, anda perlu Borang B.',
-  },
-  {
-    q: 'Macam mana saya terima e-book selepas beli?',
-    a: 'Pautan Ebook di website Ejen Cukai akan muncul setelah anda membayar. Hubungi kami jika anda perlukan bantuan untuk akses e-book.',
-  },
-  {
-    q: 'Saya langsung tidak faham tentang cukai. Sesuai ke?',
-    a: 'Ya, itulah sebabnya e-book ini ditulis. Setiap langkah dijelaskan dengan bahasa biasa, disertakan contoh pengiraan supaya mudah difahami.',
-  },
-];
-
-function FAQ({ q, a }: { q: string; a: string }) {
-  const [open, setOpen] = useState(false);
+/**
+ * Stylised book cover. Pure CSS so it stays sharp and themed; the e-books
+ * have no cover artwork of their own.
+ */
+function BookCover({ variant, title, subtitle }: { variant: ProductKey; title: string; subtitle: string }) {
+  const dark = variant === 'b';
   return (
-    <div className="border-b border-apple-gray-4 last:border-0">
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between gap-4 py-5 text-left"
-      >
-        <span className="text-[15px] font-medium text-apple-gray-1">{q}</span>
-        {open
-          ? <ChevronUp className="w-4 h-4 text-apple-gray-3 shrink-0" />
-          : <ChevronDown className="w-4 h-4 text-apple-gray-3 shrink-0" />
-        }
-      </button>
-      {open && (
-        <p className="pb-5 text-[14px] text-apple-gray-2 leading-relaxed">{a}</p>
-      )}
+    <div
+      className={`relative aspect-[3/4] w-40 shrink-0 overflow-hidden rounded-r-xl rounded-l-md shadow-float sm:w-44 ${
+        dark ? 'bg-ink-900 text-white' : 'bg-brand-gradient text-white'
+      }`}
+      aria-hidden="true"
+    >
+      <div className="absolute inset-y-0 left-0 w-2 bg-black/20" />
+      <div className="absolute inset-y-0 left-2 w-px bg-white/30" />
+      <div className="flex h-full flex-col justify-between p-5 pl-7">
+        <div>
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-80">EjenCukai</p>
+          <p className="mt-6 text-[26px] font-extrabold leading-none tracking-tight">{title}</p>
+          <p className="mt-2 text-[11px] leading-snug opacity-80">{subtitle}</p>
+        </div>
+        <FileText className="h-7 w-7 opacity-70" />
+      </div>
     </div>
   );
 }
 
+function checkout(product: ProductKey) {
+  trackEvent('ebook_checkout_click', { product, value: PRODUCTS[product].price, currency: 'MYR' });
+}
+
 export function EbookPage() {
+  const { pick } = useLanguage();
+  const year = new Date().getFullYear() - 1;
+
+  usePageMeta({
+    title: pick('E-Book Panduan Borang BE & B', 'E-Book: Borang BE & B Guides'),
+    description: pick(
+      'Panduan langkah demi langkah untuk isi Borang BE dan Borang B sendiri, ditulis oleh ejen cukai berdaftar. Dari RM25, akses selamanya.',
+      'Step-by-step guides to filing Borang BE and Borang B yourself, written by a registered tax agent. From RM25, lifetime access.'
+    ),
+  });
+
+  const beFeatures = [
+    pick('Panduan bahagian demi bahagian Borang BE', 'Section-by-section walkthrough of Borang BE'),
+    pick('Senarai pelepasan: KWSP, insurans, perubatan, pendidikan dan lebih', 'Relief checklist: EPF, insurance, medical, education and more'),
+    pick('Contoh pengiraan cukai penuh', 'A full worked tax computation'),
+    pick('Kesilapan lazim dan cara elak', 'Common mistakes and how to avoid them'),
+  ];
+
+  const bFeatures = [
+    pick('Cara isytihar pendapatan perniagaan dengan betul', 'How to declare business income correctly'),
+    pick('Perbelanjaan perniagaan yang boleh ditolak', 'Which business expenses are deductible'),
+    pick('Cara handle pendapatan campuran (gaji + perniagaan)', 'Handling mixed income (salary + business)'),
+    pick('Contoh kes usahawan dan pengiraan penuh', 'Entrepreneur case study with full computation'),
+  ];
+
+  const faqs = [
+    {
+      q: pick('Apa beza Borang BE dan Borang B?', 'What’s the difference between Borang BE and B?'),
+      a: pick(
+        'Borang BE untuk pekerja makan gaji sahaja. Borang B untuk individu yang ada pendapatan perniagaan, sama ada sepenuh masa atau sampingan. Jika ada kedua-dua, anda perlu Borang B.',
+        'Borang BE is for salaried employees only. Borang B is for individuals with business income, full-time or on the side. If you have both, you need Borang B.'
+      ),
+    },
+    {
+      q: pick('Macam mana saya terima e-book selepas beli?', 'How do I receive the e-book after paying?'),
+      a: pick(
+        'Selepas pembayaran berjaya di Chip-in, anda akan dibawa ke halaman dengan pautan e-book serta-merta. Hubungi kami jika anda perlukan bantuan untuk akses.',
+        'After a successful Chip-in payment you’re taken to a page with the e-book link immediately. Contact us if you need help accessing it.'
+      ),
+    },
+    {
+      q: pick('Saya langsung tidak faham tentang cukai. Sesuai ke?', 'I know nothing about tax. Is this for me?'),
+      a: pick(
+        'Ya, itulah sebabnya e-book ini ditulis. Setiap langkah dijelaskan dengan bahasa biasa, disertakan contoh pengiraan supaya mudah difahami.',
+        'Yes, that’s exactly who it’s written for. Every step is explained in plain language with worked examples.'
+      ),
+    },
+    {
+      q: pick('Boleh saya minta bantuan lepas baca?', 'Can I get help after reading?'),
+      a: pick(
+        'Boleh. Jika anda masih tidak pasti untuk kes sendiri, tempah konsultasi 60 minit (RM149) atau serahkan pemfailan kepada kami.',
+        'Yes. If you’re still unsure about your own case, book a 60-minute consultation (RM149) or hand the filing over to us.'
+      ),
+    },
+  ];
+
+  const pains = [
+    pick('Tidak tahu pelepasan apa yang boleh dituntut', 'Not knowing which reliefs you can claim'),
+    pick('Risau buat kesilapan dan kena audit LHDN', 'Worrying about mistakes and an LHDN audit'),
+    pick('Terpaksa bayar lebih cukai setiap tahun', 'Paying more tax than necessary every year'),
+  ];
+
   return (
     <>
       <Navbar />
 
-      <div className="min-h-screen bg-white">
-
+      <main id="main" className="bg-white">
         {/* Hero */}
-        <div className="relative w-full overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-apple-gray-6 via-white to-white" />
-          <div className="relative container mx-auto px-6 pt-20 pb-16 md:pt-28 md:pb-20 text-center max-w-3xl">
+        <section className="relative overflow-hidden">
+          <div className="absolute inset-0 -z-10 bg-hero-glow" aria-hidden="true" />
+          <div className="container-x grid items-center gap-12 py-14 md:py-20 lg:grid-cols-12">
+            <div className="lg:col-span-7">
+              <motion.div {...reveal(0)}>
+                <Badge>
+                  <BookOpen className="h-3.5 w-3.5" />
+                  E-Book · {pick('Tahun Taksiran', 'Year of Assessment')} {year}
+                </Badge>
+              </motion.div>
+              <motion.h1 {...reveal(0.05)} className="mt-5 text-balance text-display-sm text-ink-900 md:text-display-lg">
+                {pick(
+                  <>Isi borang cukai anda <span className="bg-brand-gradient bg-clip-text text-transparent">dengan betul.</span></>,
+                  <>Fill in your tax form <span className="bg-brand-gradient bg-clip-text text-transparent">the right way.</span></>
+                )}
+              </motion.h1>
+              <motion.p {...reveal(0.1)} className="mt-5 max-w-xl text-pretty text-[17px] leading-relaxed text-ink-600">
+                {pick(
+                  'Panduan praktikal ditulis oleh ejen cukai berdaftar, khusus untuk pekerja bergaji dan usahawan Malaysia. Bahasa mudah, langkah demi langkah, selesai dalam satu petang.',
+                  'A practical guide written by a registered tax agent, for salaried workers and business owners in Malaysia. Plain language, step by step, done in an afternoon.'
+                )}
+              </motion.p>
 
-            <motion.div {...fadeUp(0)} className="inline-flex items-center gap-2 bg-apple-blue/10 text-apple-blue px-4 py-1.5 rounded-full mb-6">
-              <BookOpen className="w-4 h-4" />
-              <span className="text-sm font-medium">E-Book EjenCukai · Tahun Taksiran 2025</span>
-            </motion.div>
+              <motion.div {...reveal(0.15)} className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Button href={PRODUCTS.be.url} external={false} size="lg" onClick={() => checkout('be')}>
+                  Borang BE · RM{PRODUCTS.be.price}
+                </Button>
+                <Button href={PRODUCTS.b.url} external={false} size="lg" variant="dark" onClick={() => checkout('b')}>
+                  Borang B · RM{PRODUCTS.b.price}
+                </Button>
+              </motion.div>
 
-            <motion.h1 {...fadeUp(0.08)} className="text-4xl md:text-5xl font-light text-apple-gray-1 mb-5 leading-tight">
-              Isi Borang Cukai Anda{' '}
-              <span className="font-semibold">Dengan Betul.</span>
-            </motion.h1>
+              <motion.ul {...reveal(0.2)} className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[13px] text-ink-500">
+                <li className="flex items-center gap-1.5"><Lock className="h-3.5 w-3.5" /> {pick('Bayar selamat via Chip-in', 'Secure payment via Chip-in')}</li>
+                <li className="flex items-center gap-1.5"><Zap className="h-3.5 w-3.5" /> {pick('Pautan muncul serta-merta', 'Link appears instantly')}</li>
+                <li className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5" /> {pick('PDF, akses selamanya', 'PDF, lifetime access')}</li>
+              </motion.ul>
+            </div>
 
-            <motion.p {...fadeUp(0.14)} className="text-[17px] text-apple-gray-2 leading-relaxed mb-8 max-w-xl mx-auto">
-              Panduan praktikal ditulis oleh <strong className="text-apple-gray-1 font-medium">pakar cukai</strong>, khusus untuk pekerja bergaji dan usahawan Malaysia. Bahasa mudah, langkah demi langkah, selesai dalam satu petang.
-            </motion.p>
-
-            <motion.div {...fadeUp(0.2)} className="flex flex-col sm:flex-row gap-3 justify-center max-w-sm mx-auto">
-              <a
-                href={CHIPIN_BE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 text-center bg-apple-blue hover:opacity-90 text-white text-[15px] font-semibold py-3.5 px-6 rounded-apple-button transition-opacity duration-200 shadow-sm"
-              >
-                Borang BE · RM25
-              </a>
-              <a
-                href={CHIPIN_B_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 text-center bg-apple-gray-1 hover:opacity-80 text-white text-[15px] font-semibold py-3.5 px-6 rounded-apple-button transition-opacity duration-200 shadow-sm"
-              >
-                Borang B · RM29
-              </a>
-            </motion.div>
-
-            <motion.p {...fadeUp(0.26)} className="mt-4 text-[13px] text-apple-gray-3">
-              Pembayaran selamat melalui Chip-in. Link E-book akan muncul serta-merta.
-            </motion.p>
-          </div>
-        </div>
-
-        {/* Pain Points */}
-        <div className="bg-apple-gray-6 border-y border-apple-gray-4">
-          <div className="container mx-auto px-6 py-12 max-w-2xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <h2 className="text-xl font-medium text-apple-gray-1 mb-5">
-                Ramai yang terlepas pelepasan cukai bukan sebab tidak layak, tapi sebab tidak tahu cara tuntutnya.
-              </h2>
-              <ul className="space-y-2.5">
-                {[
-                  'Tidak tahu pelepasan apa yang boleh dituntut',
-                  'Risau buat kesilapan dan kena audit LHDN',
-                  'Terpaksa bayar lebih cukai setiap tahun',
-                ].map((p) => (
-                  <li key={p} className="flex items-start gap-3 text-[15px] text-apple-gray-2">
-                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-apple-blue shrink-0" />
-                    {p}
-                  </li>
-                ))}
-              </ul>
+            <motion.div {...reveal(0.2)} className="flex justify-center gap-5 lg:col-span-5 lg:justify-end">
+              <div className="translate-y-6 -rotate-6">
+                <BookCover variant="be" title="Borang BE" subtitle={pick('Panduan cukai individu bergaji', 'Salaried individual tax guide')} />
+              </div>
+              <div className="rotate-6">
+                <BookCover variant="b" title="Borang B" subtitle={pick('Panduan cukai individu berbisnes', 'Business individual tax guide')} />
+              </div>
             </motion.div>
           </div>
-        </div>
+        </section>
 
-        {/* Product Cards */}
-        <div className="container mx-auto px-6 py-16 max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-10"
-          >
-            <h2 className="text-3xl font-light text-apple-gray-1">
-              Pilih panduan yang <span className="font-semibold">sesuai untuk anda</span>
-            </h2>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* BE */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.05 }}
-              className="bg-apple-gray-6 border border-apple-gray-4 rounded-apple p-8 flex flex-col"
-            >
-              <span className="inline-block text-xs font-semibold text-apple-blue bg-apple-blue/10 px-3 py-1 rounded-full uppercase tracking-wide mb-4 self-start">
-                Borang BE
-              </span>
-              <h3 className="text-xl font-semibold text-apple-gray-1 mb-1">Panduan Cukai Individu Bergaji</h3>
-              <p className="text-[14px] text-apple-gray-3 mb-5">Untuk pekerja makan gaji</p>
-              <ul className="space-y-2.5 mb-6 flex-grow">
-                {beFeatures.map((f) => (
-                  <li key={f} className="flex items-start gap-2.5 text-[14px] text-apple-gray-2">
-                    <CheckCircle className="w-4 h-4 text-apple-blue mt-0.5 shrink-0" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <p className="text-3xl font-light text-apple-gray-1 mb-1">RM25</p>
-              <p className="text-[13px] text-apple-gray-3 mb-5">Bayar sekali · Akses selamanya</p>
-              <a
-                href={CHIPIN_BE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full text-center bg-apple-blue hover:opacity-90 text-white text-[15px] font-semibold py-4 px-6 rounded-apple-button transition-opacity duration-200"
-              >
-                Dapatkan Borang BE · RM25
-              </a>
-            </motion.div>
-
-            {/* B */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="bg-apple-gray-1 rounded-apple p-8 flex flex-col"
-            >
-              <span className="inline-block text-xs font-semibold text-white/80 bg-white/15 px-3 py-1 rounded-full uppercase tracking-wide mb-4 self-start">
-                Borang B
-              </span>
-              <h3 className="text-xl font-semibold text-white mb-1">Panduan Cukai Individu Berbisnes</h3>
-              <p className="text-[14px] text-white/50 mb-5">Untuk usahawan dan peniaga</p>
-              <ul className="space-y-2.5 mb-6 flex-grow">
-                {bFeatures.map((f) => (
-                  <li key={f} className="flex items-start gap-2.5 text-[14px] text-white/80">
-                    <CheckCircle className="w-4 h-4 text-white/50 mt-0.5 shrink-0" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <p className="text-3xl font-light text-white mb-1">RM29</p>
-              <p className="text-[13px] text-white/50 mb-5">Bayar sekali · Akses selamanya</p>
-              <a
-                href={CHIPIN_B_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full text-center bg-white hover:bg-apple-gray-5 text-apple-gray-1 text-[15px] font-semibold py-4 px-6 rounded-apple-button transition-colors duration-200"
-              >
-                Dapatkan Borang B · RM29
-              </a>
-            </motion.div>
+        {/* Pain points */}
+        <section className="border-y border-ink-100 bg-ink-50">
+          <div className="container-x grid items-center gap-8 py-12 md:grid-cols-12">
+            <motion.h2 {...reveal()} className="text-balance text-[22px] font-bold leading-snug text-ink-900 md:col-span-6 md:text-[26px]">
+              {pick(
+                'Ramai terlepas pelepasan bukan sebab tidak layak, tapi sebab tidak tahu cara tuntut.',
+                'Most people miss reliefs not because they don’t qualify, but because they don’t know how to claim.'
+              )}
+            </motion.h2>
+            <motion.ul {...reveal(0.08)} className="space-y-2.5 md:col-span-6">
+              {pains.map((p) => (
+                <li key={p} className="flex items-start gap-3 text-[15px] text-ink-700">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500" aria-hidden="true" />
+                  {p}
+                </li>
+              ))}
+            </motion.ul>
           </div>
+        </section>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-6 text-[13px] text-apple-gray-3"
-          >
-            <span className="flex items-center gap-1.5"><Shield className="w-3.5 h-3.5" /> Pembayaran selamat via Chip-in</span>
-            <span className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5" /> Link E-book muncul serta-merta</span>
-            <span className="flex items-center gap-1.5"><CheckCircle className="w-3.5 h-3.5" /> Format PDF, akses Google Drive selamanya</span>
-          </motion.div>
-        </div>
+        {/* Product cards */}
+        <section className="py-16 md:py-24">
+          <div className="container-x">
+            <SectionHeading
+              eyebrow={pick('Pilih panduan anda', 'Pick your guide')}
+              title={pick('Yang mana satu untuk saya?', 'Which one is for me?')}
+              subtitle={pick(
+                'Makan gaji sahaja: Borang BE. Ada pendapatan perniagaan atau freelance, walaupun sampingan: Borang B.',
+                'Salary only: Borang BE. Any business or freelance income, even on the side: Borang B.'
+              )}
+            />
+
+            <div className="mt-12 grid gap-6 md:grid-cols-2">
+              <motion.article {...reveal(0)} className="card flex flex-col rounded-xl3 p-8">
+                <div className="flex items-center justify-between">
+                  <Badge>Borang BE</Badge>
+                  <FileText className="h-5 w-5 text-ink-300" />
+                </div>
+                <h3 className="mt-5 text-[22px] font-bold text-ink-900">{pick('Panduan Cukai Individu Bergaji', 'Salaried Individual Tax Guide')}</h3>
+                <p className="mt-1 text-[14px] text-ink-500">{pick('Untuk pekerja makan gaji', 'For salaried employees')}</p>
+                <ul className="mt-6 flex-grow space-y-2.5">
+                  {beFeatures.map((f) => <CheckItem key={f}>{f}</CheckItem>)}
+                </ul>
+                <div className="mt-8 flex items-end justify-between border-t border-ink-100 pt-6">
+                  <div>
+                    <p className="text-[30px] font-extrabold tracking-tight text-ink-900">RM{PRODUCTS.be.price}</p>
+                    <p className="text-[12.5px] text-ink-500">{pick('Bayar sekali · Akses selamanya', 'One-time · Lifetime access')}</p>
+                  </div>
+                  <Button href={PRODUCTS.be.url} external={false} size="lg" onClick={() => checkout('be')}>
+                    {pick('Dapatkan', 'Get it')}
+                  </Button>
+                </div>
+              </motion.article>
+
+              <motion.article {...reveal(0.08)} className="relative flex flex-col overflow-hidden rounded-xl3 bg-ink-900 p-8 text-white">
+                <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-brand-gradient opacity-30 blur-3xl" aria-hidden="true" />
+                <div className="relative flex items-center justify-between">
+                  <Badge tone="inverse">Borang B</Badge>
+                  <Briefcase className="h-5 w-5 text-white/40" />
+                </div>
+                <h3 className="relative mt-5 text-[22px] font-bold">{pick('Panduan Cukai Individu Berbisnes', 'Business Individual Tax Guide')}</h3>
+                <p className="relative mt-1 text-[14px] text-white/60">{pick('Untuk usahawan, peniaga dan freelancer', 'For entrepreneurs, traders and freelancers')}</p>
+                <ul className="relative mt-6 flex-grow space-y-2.5 [&_li]:text-white/85 [&_span:first-child]:bg-white/10 [&_span:first-child]:text-brand-300">
+                  {bFeatures.map((f) => <CheckItem key={f}>{f}</CheckItem>)}
+                </ul>
+                <div className="relative mt-8 flex items-end justify-between border-t border-white/10 pt-6">
+                  <div>
+                    <p className="text-[30px] font-extrabold tracking-tight">RM{PRODUCTS.b.price}</p>
+                    <p className="text-[12.5px] text-white/60">{pick('Bayar sekali · Akses selamanya', 'One-time · Lifetime access')}</p>
+                  </div>
+                  <Button href={PRODUCTS.b.url} external={false} size="lg" variant="white" onClick={() => checkout('b')}>
+                    {pick('Dapatkan', 'Get it')}
+                  </Button>
+                </div>
+              </motion.article>
+            </div>
+          </div>
+        </section>
 
         {/* FAQ */}
-        <div className="bg-apple-gray-6 border-y border-apple-gray-4">
-          <div className="container mx-auto px-6 py-14 max-w-2xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <h2 className="text-2xl font-medium text-apple-gray-1 mb-6">Soalan lazim</h2>
-              <div className="border-t border-apple-gray-4">
-                {faqs.map((faq) => (
-                  <FAQ key={faq.q} q={faq.q} a={faq.a} />
-                ))}
-              </div>
-              <div className="mt-6 text-[14px] text-apple-gray-3 space-y-1">
-                <p>Ada soalan lain? Hubungi kami:</p>
-                <p>
-                  <a href="mailto:contact@ejencukai.my" className="text-apple-blue hover:opacity-70 transition-opacity duration-150">
-                    contact@ejencukai.my
-                  </a>
-                  {' '}·{' '}
-                  <a href="https://wa.me/60103216650" target="_blank" rel="noopener noreferrer" className="text-apple-blue hover:opacity-70 transition-opacity duration-150">
-                    +6010 321 6650
-                  </a>
+        <section className="border-t border-ink-100 bg-ink-50 py-16 md:py-20">
+          <div className="container-x grid gap-10 lg:grid-cols-12">
+            <div className="lg:col-span-4">
+              <SectionHeading align="left" eyebrow={pick('Soalan lazim', 'FAQ')} title={pick('Sebelum anda beli.', 'Before you buy.')} />
+              <p className="mt-6 text-[14px] text-ink-500">
+                {pick('Ada soalan lain?', 'Other questions?')}{' '}
+                <a href={`mailto:${CONTACT_EMAIL}`} className="font-semibold text-brand-700 hover:underline">{CONTACT_EMAIL}</a>
+                {' '}·{' '}
+                <a
+                  href={buildWhatsAppUrl(pick('Hi EjenCukai! Saya ada soalan tentang E-Book cukai.', 'Hi EjenCukai! I have a question about the tax e-book.'))}
+                  onClick={() => trackEvent('whatsapp_click', { location: 'ebook_faq' })}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-brand-700 hover:underline"
+                >
+                  {WHATSAPP_DISPLAY}
+                </a>
+              </p>
+            </div>
+            <motion.div {...reveal(0.05)} className="lg:col-span-8">
+              <Accordion items={faqs} className="border-t border-ink-200" />
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Final CTA */}
+        <section className="py-16 md:py-20">
+          <div className="container-x">
+            <motion.div {...reveal()} className="relative overflow-hidden rounded-xl3 bg-ink-950 px-6 py-12 text-center text-white md:px-16 md:py-16">
+              <div className="absolute inset-0 bg-[radial-gradient(70%_60%_at_50%_0%,rgba(79,179,255,0.28),transparent_70%)]" aria-hidden="true" />
+              <div className="relative mx-auto max-w-xl">
+                <h2 className="text-balance text-display-sm">
+                  {pick('Jangan terlepas pelepasan anda lagi tahun ini.', 'Don’t miss your reliefs again this year.')}
+                </h2>
+                <p className="mt-3 text-[15px] text-white/70">
+                  {pick('Pautan e-book muncul serta-merta selepas pembayaran.', 'The e-book link appears immediately after payment.')}
+                </p>
+                <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                  <Button href={PRODUCTS.be.url} external={false} size="lg" variant="white" onClick={() => checkout('be')}>
+                    Borang BE · RM{PRODUCTS.be.price}
+                  </Button>
+                  <Button href={PRODUCTS.b.url} external={false} size="lg" onClick={() => checkout('b')}>
+                    Borang B · RM{PRODUCTS.b.price}
+                  </Button>
+                </div>
+                <p className="mt-6 text-[13px] text-white/50">
+                  <MessageCircle className="mr-1 inline h-3.5 w-3.5" />
+                  {pick('Masih tak pasti borang mana? Tanya kami di WhatsApp.', 'Still unsure which form? Ask us on WhatsApp.')}
                 </p>
               </div>
             </motion.div>
           </div>
-        </div>
-
-        {/* Final CTA */}
-        <div className="bg-apple-gray-1">
-          <div className="container mx-auto px-6 py-14 max-w-2xl text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <h2 className="text-2xl font-light text-white mb-2">
-                Jangan terlepas pelepasan anda <span className="font-semibold">lagi tahun ini</span>
-              </h2>
-              <p className="text-[14px] text-white/50 mb-8">
-                Link E-book akan muncul serta-merta selepas pembayaran.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-sm mx-auto">
-                <a
-                  href={CHIPIN_BE_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 text-center bg-white hover:bg-apple-gray-5 text-apple-gray-1 text-[15px] font-semibold py-4 px-6 rounded-apple-button transition-colors duration-200"
-                >
-                  Borang BE · RM25
-                </a>
-                <a
-                  href={CHIPIN_B_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 text-center bg-apple-blue hover:opacity-90 text-white text-[15px] font-semibold py-4 px-6 rounded-apple-button transition-opacity duration-200"
-                >
-                  Borang B · RM29
-                </a>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Back link */}
-        <div className="flex justify-center py-8">
-          <Link
-            to="/"
-            className="flex items-center gap-1.5 text-apple-gray-3 hover:text-apple-gray-1 text-sm transition-colors duration-150"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            Kembali ke laman utama
-          </Link>
-        </div>
-
-      </div>
+        </section>
+      </main>
 
       <Footer />
     </>

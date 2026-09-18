@@ -1,12 +1,87 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  * {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-white text-ink-900 antialiased;
+    font-feature-settings: 'ss01', 'cv11';
+  }
+
+  ::selection {
+    @apply bg-brand-200 text-ink-900;
+  }
+
+  /* Keyboard focus only — mouse clicks don't get a ring. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-white;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-[13px] font-semibold uppercase tracking-[0.12em] text-brand-700;
+  }
+
+  .card {
+    @apply rounded-xl2 border border-ink-200/80 bg-white shadow-card;
+  }
+
+  .field {
+    @apply w-full rounded-xl border border-ink-200 bg-white px-4 py-3 text-[15px] text-ink-900 placeholder:text-ink-400
+      transition-colors duration-150 hover:border-ink-300 focus:border-brand-500 focus:outline-none focus:ring-4 focus:ring-brand-100;
+  }
+
+  .field-label {
+    @apply mb-1.5 block text-[13px] font-semibold text-ink-700;
+  }
+
+  .prose-legal h2 {
+    @apply mt-10 mb-3 text-xl font-bold text-ink-900;
+  }
+  .prose-legal h3 {
+    @apply mt-6 mb-2 text-base font-semibold text-ink-900;
+  }
+  .prose-legal p,
+  .prose-legal li {
+    @apply text-[15px] leading-relaxed text-ink-600;
+  }
+  .prose-legal ul {
+    @apply my-3 list-disc space-y-1.5 pl-6;
+  }
+  .prose-legal strong {
+    @apply font-semibold text-ink-800;
+  }
+  .prose-legal a {
+    @apply text-brand-600 underline-offset-2 hover:underline;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
   }
 }

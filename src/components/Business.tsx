@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { MoveRight, Headphones, Search, UserCheck, BookOpen, Clock, Users } from "lucide-react";
-import { Button } from "./ui/button";
+import { Headphones, Search, UserCheck, BookOpen, Clock, Users } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { Navbar } from "./Navbar";
 import { WaitlistForm } from "./WaitlistForm";

@@ -1,169 +1,173 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { useLanguage } from '../contexts/LanguageContext';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Menu, X, MessageCircle } from 'lucide-react';
+import { useLanguage, Language } from '../contexts/LanguageContext';
+import { Button } from './ui/button';
 
-interface NavbarProps {
-  currentSection?: string;
-  onSectionChange?: (section: string) => void;
+interface NavItem {
+  label: string;
+  to: string;
+  /** Match on pathname only; hash links stay unhighlighted. */
+  path?: string;
 }
 
-function Navbar({ currentSection, onSectionChange }: NavbarProps) {
+function LanguageToggle({ compact = false }: { compact?: boolean }) {
   const { language, setLanguage } = useLanguage();
-  const location = useLocation();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const options: Language[] = ['bm', 'en'];
+  return (
+    <div
+      role="group"
+      aria-label="Language"
+      className={`flex items-center rounded-full bg-ink-100 p-0.5 ${compact ? 'text-[11px]' : 'text-[12px]'}`}
+    >
+      {options.map((lang) => (
+        <button
+          key={lang}
+          type="button"
+          onClick={() => setLanguage(lang)}
+          aria-pressed={language === lang}
+          className={`rounded-full font-semibold uppercase tracking-wide transition-all duration-150 ${
+            compact ? 'px-2 py-1' : 'px-2.5 py-1'
+          } ${language === lang ? 'bg-white text-ink-900 shadow-sm' : 'text-ink-500 hover:text-ink-900'}`}
+        >
+          {lang}
+        </button>
+      ))}
+    </div>
+  );
+}
 
-  const sections = [
-    { id: 'home', label: language === 'en' ? 'Home' : 'Laman Utama', path: '/' },
-    { id: 'business', label: language === 'en' ? 'Business' : 'Perniagaan', path: '/business' },
-    { id: 'tax-firms', label: language === 'en' ? 'Tax Firms' : 'Firma Cukai', path: '/tax-firms' },
-    { id: 'investors', label: language === 'en' ? 'Investors' : 'Pelabur', path: '/investors' },
-    { id: 'ebook', label: language === 'en' ? 'E-Book' : 'E-Book', path: '/ebook' },
+function Navbar() {
+  const { pick } = useLanguage();
+  const location = useLocation();
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  const items: NavItem[] = [
+    { label: pick('Perkhidmatan', 'Services'), to: '/#perkhidmatan' },
+    { label: pick('Konsultasi', 'Consultation'), to: '/konsultasi-peribadi', path: '/konsultasi-peribadi' },
+    { label: 'E-Book', to: '/ebook', path: '/ebook' },
+    { label: pick('Soalan Lazim', 'FAQ'), to: '/#faq' },
   ];
 
-  const getCurrentSection = () => {
-    const currentPath = location.pathname;
-    const section = sections.find(s => s.path === currentPath);
-    return section ? section.id : 'home';
-  };
+  // Close the sheet on navigation and on Escape; lock page scroll while open.
+  useEffect(() => setOpen(false), [location.pathname, location.hash]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    document.addEventListener('keydown', onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const isActive = (item: NavItem) => item.path && location.pathname === item.path;
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-apple-gray-4">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex justify-between items-center h-11 md:h-12">
-          {/* Logo */}
-          <Link to="/" className="flex items-center transition-opacity duration-200 hover:opacity-70">
-            <img src="/logo.png" alt="Ejen Cukai" className="h-8 md:h-10 w-auto" />
-          </Link>
+    <header
+      className={`sticky top-0 z-50 border-b bg-white/85 backdrop-blur-xl transition-[border-color,box-shadow] duration-200 ${
+        scrolled ? 'border-ink-200/80 shadow-[0_1px_0_rgba(19,26,37,0.02),0_8px_24px_-16px_rgba(19,26,37,0.18)]' : 'border-transparent'
+      }`}
+    >
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-[60] focus:rounded-full focus:bg-brand-600 focus:px-4 focus:py-2 focus:text-white"
+      >
+        {pick('Langkau ke kandungan', 'Skip to content')}
+      </a>
 
-          {/* Navigation Links */}
-          <div className="hidden md:flex items-center gap-8">
-            <div className="flex items-center space-x-8">
-              {sections.map((section) => (
-                <Link
-                  key={section.id}
-                  to={section.path}
-                  className={`text-[15px] font-normal transition-colors duration-200 ${
-                    getCurrentSection() === section.id
-                      ? 'text-apple-gray-1'
-                      : 'text-apple-gray-2 hover:text-apple-gray-1'
-                  }`}
-                >
-                  {section.label}
-                </Link>
-              ))}
-            </div>
+      <nav className="container-x flex h-16 items-center justify-between gap-6" aria-label="Main">
+        <Link to="/" className="flex shrink-0 items-center transition-opacity hover:opacity-80" aria-label="EjenCukai home">
+          <img src="/logo.png" alt="EjenCukai" width={800} height={300} className="h-9 w-auto md:h-10" />
+        </Link>
 
-            {/* Language Toggle */}
-            <div className="flex items-center gap-1 bg-apple-gray-5 rounded-apple-sm p-0.5">
-              <button
-                onClick={() => setLanguage("en")}
-                className={`px-2.5 py-1 text-[13px] font-medium rounded-apple-sm transition-all duration-150 ${
-                  language === "en"
-                    ? "bg-white text-apple-gray-1 shadow-sm"
-                    : "text-apple-gray-2 hover:text-apple-gray-1"
-                }`}
-              >
-                EN
-              </button>
-              <button
-                onClick={() => setLanguage("bm")}
-                className={`px-2.5 py-1 text-[13px] font-medium rounded-apple-sm transition-all duration-150 ${
-                  language === "bm"
-                    ? "bg-white text-apple-gray-1 shadow-sm"
-                    : "text-apple-gray-2 hover:text-apple-gray-1"
-                }`}
-              >
-                BM
-              </button>
-            </div>
-
-            {/* CTA Button */}
-            <Link to="/form">
-              <button className="px-4 py-1.5 text-[15px] font-medium text-white bg-apple-blue hover:opacity-90 rounded-apple-button transition-opacity duration-200">
-                {language === 'en' ? 'Book Consultation' : 'Tempah Konsultasi'}
-              </button>
-            </Link>
-          </div>
-
-          {/* Mobile: Language Toggle & Menu button */}
-          <div className="md:hidden flex items-center gap-3">
-            <div className="flex items-center gap-1 bg-apple-gray-5 rounded-apple-sm p-0.5">
-              <button
-                onClick={() => setLanguage("en")}
-                className={`px-2 py-0.5 text-[11px] font-medium rounded-apple-sm transition-all duration-150 ${
-                  language === "en"
-                    ? "bg-white text-apple-gray-1"
-                    : "text-apple-gray-2"
-                }`}
-              >
-                EN
-              </button>
-              <button
-                onClick={() => setLanguage("bm")}
-                className={`px-2 py-0.5 text-[11px] font-medium rounded-apple-sm transition-all duration-150 ${
-                  language === "bm"
-                    ? "bg-white text-apple-gray-1"
-                    : "text-apple-gray-2"
-                }`}
-              >
-                BM
-              </button>
-            </div>
-
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-apple-gray-2 hover:text-apple-gray-1 transition-colors duration-150 p-1"
-              aria-expanded={isMobileMenuOpen}
-              aria-label="Toggle mobile menu"
+        {/* Desktop */}
+        <div className="hidden items-center gap-1 md:flex">
+          {items.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              aria-current={isActive(item) ? 'page' : undefined}
+              className={`rounded-full px-3.5 py-2 text-[14px] font-medium transition-colors ${
+                isActive(item) ? 'bg-ink-100 text-ink-900' : 'text-ink-600 hover:bg-ink-50 hover:text-ink-900'
+              }`}
             >
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                {isMobileMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
+              {item.label}
+            </Link>
+          ))}
         </div>
 
-        {/* Mobile Navigation Menu */}
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-            className="md:hidden border-t border-apple-gray-4"
+        <div className="hidden items-center gap-3 md:flex">
+          <LanguageToggle />
+          <Button to="/form" size="sm" className="px-5">
+            <MessageCircle className="h-4 w-4" />
+            {pick('Hubungi kami', 'Contact us')}
+          </Button>
+        </div>
+
+        {/* Mobile controls */}
+        <div className="flex items-center gap-2 md:hidden">
+          <LanguageToggle compact />
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? pick('Tutup menu', 'Close menu') : pick('Buka menu', 'Open menu')}
+            className="grid h-10 w-10 place-items-center rounded-full text-ink-700 transition-colors hover:bg-ink-100"
           >
-            <div className="py-4 space-y-1">
-              {sections.map((section) => (
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile sheet */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            id="mobile-menu"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.18, ease: 'easeOut' }}
+            className="absolute inset-x-0 top-full border-b border-ink-200 bg-white shadow-card-hover md:hidden"
+          >
+            <div className="container-x flex flex-col gap-1 py-4">
+              {items.map((item) => (
                 <Link
-                  key={section.id}
-                  to={section.path}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`block px-4 py-2.5 text-[15px] font-normal transition-colors duration-150 ${
-                    getCurrentSection() === section.id
-                      ? 'text-apple-blue bg-apple-gray-5'
-                      : 'text-apple-gray-1 hover:bg-apple-gray-5'
+                  key={item.to}
+                  to={item.to}
+                  aria-current={isActive(item) ? 'page' : undefined}
+                  className={`rounded-xl px-4 py-3 text-[16px] font-medium transition-colors ${
+                    isActive(item) ? 'bg-brand-50 text-brand-700' : 'text-ink-800 hover:bg-ink-50'
                   }`}
                 >
-                  {section.label}
+                  {item.label}
                 </Link>
               ))}
-
-              {/* Mobile CTA Button */}
-              <Link to="/form" onClick={() => setIsMobileMenuOpen(false)}>
-                <button className="w-full mt-3 mx-4 px-4 py-2.5 text-[15px] font-medium text-white bg-apple-blue hover:opacity-90 rounded-apple-sm transition-opacity duration-200">
-                  {language === 'en' ? 'Book Consultation' : 'Tempah Konsultasi'}
-                </button>
-              </Link>
+              <div className="mt-3 border-t border-ink-100 pt-4">
+                <Button to="/form" size="lg" className="w-full">
+                  <MessageCircle className="h-4 w-4" />
+                  {pick('Hubungi kami di WhatsApp', 'Contact us on WhatsApp')}
+                </Button>
+              </div>
             </div>
           </motion.div>
         )}
-      </div>
-    </nav>
+      </AnimatePresence>
+    </header>
   );
 }
 

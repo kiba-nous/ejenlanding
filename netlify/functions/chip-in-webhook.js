@@ -85,11 +85,20 @@ exports.handler = async (event) => {
       url:   process.env.EBOOK_B_URL,
       label: 'Panduan Asas Cukai Individu Berbisnes (Borang B)',
     },
+    consult: {
+      // Scheduling happens on the thank-you page via Calendly, so there is no
+      // delivery URL to look up for this product.
+      url:   null,
+      label: 'Konsultasi Cukai Peribadi (RM149 / jam)',
+      requiresUrl: false,
+    },
   }
 
-  // Check 'be' before 'b' to avoid substring false-match
+  // Order matters: '/thank-you/be' must be checked before '/thank-you/b',
+  // otherwise the shorter path swallows the longer one.
   let productKey = null
-  if (successRedirect.includes('/thank-you/be')) productKey = 'be'
+  if (successRedirect.includes('/booking/thank-you')) productKey = 'consult'
+  else if (successRedirect.includes('/thank-you/be')) productKey = 'be'
   else if (successRedirect.includes('/thank-you/b')) productKey = 'b'
 
   console.log('Product key:', productKey)
@@ -101,13 +110,15 @@ exports.handler = async (event) => {
     return { statusCode: 200, body: 'Unknown product' }
   }
 
-  const { url: ebookUrl, label: ebookLabel } = product
+  const { url: productUrl, label: productLabel, requiresUrl = true } = product
 
-  if (!ebookUrl) {
-    console.error(`Ebook URL not set for slug: ${slug}`)
+  if (requiresUrl && !productUrl) {
+    // Previously logged an undefined `slug`, which threw a ReferenceError on
+    // this path instead of reporting the misconfiguration.
+    console.error(`Delivery URL not set for product: ${productKey}`)
     return { statusCode: 200, body: 'OK' }
   }
 
-  console.log(`Payment confirmed for ${buyerEmail} — ${ebookLabel}`)
+  console.log(`Payment confirmed for ${buyerEmail} — ${productLabel}`)
   return { statusCode: 200, body: 'OK' }
 }
