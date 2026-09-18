@@ -33,7 +33,7 @@ const translations: Record<Language, Record<string, string>> = {
     'waitlist.privacy': "By joining, you agree to receive updates about Ejen Cukai. We respect your privacy and won't spam you.",
 
     'footer.company': 'Company',
-    'footer.copyright': 'EjenCukai. All rights reserved.',
+    'footer.copyright': 'Employou Technologies (IP0602426-H). All rights reserved.',
   },
   bm: {
     'form.title': 'Beritahu kami keperluan anda',
@@ -44,7 +44,7 @@ const translations: Record<Language, Record<string, string>> = {
     'waitlist.privacy': 'Dengan menyertai, anda bersetuju untuk menerima kemas kini tentang Ejen Cukai. Kami menghormati privasi anda dan tidak akan menghantar spam.',
 
     'footer.company': 'Syarikat',
-    'footer.copyright': 'EjenCukai. Hak cipta terpelihara.',
+    'footer.copyright': 'Employou Technologies (IP0602426-H). Hak cipta terpelihara.',
   },
 };
 

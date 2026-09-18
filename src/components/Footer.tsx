@@ -104,7 +104,7 @@ function Footer() {
 
         <div className="mt-12 flex flex-col gap-4 border-t border-ink-200 pt-6 md:flex-row md:items-center md:justify-between">
           <p className="text-[13px] text-ink-500">
-            © {new Date().getFullYear()} EjenCukai. {pick('Hak cipta terpelihara.', 'All rights reserved.')}{' '}
+            © {new Date().getFullYear()} Employou Technologies (IP0602426-H). {pick('Hak cipta terpelihara.', 'All rights reserved.')}{' '}
             <span className="hidden sm:inline">·</span>{' '}
             <span className="block sm:inline">{pick('Pemfailan disemak oleh profesional cukai.', 'Filings reviewed by tax professionals.')}</span>
           </p>
