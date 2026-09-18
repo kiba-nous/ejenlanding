@@ -46,8 +46,8 @@ function Footer() {
             <img src="/logo.png" alt="EjenCukai" width={800} height={300} className="h-9 w-auto" />
             <p className="mt-4 max-w-xs text-[14px] leading-relaxed text-ink-600">
               {pick(
-                'Ejen cukai berdaftar LHDN. Kami uruskan Borang BE, Borang B dan cukai syarikat supaya anda tak perlu risau.',
-                'LHDN-registered tax agent. We handle Borang BE, Borang B and corporate tax so you don’t have to worry.'
+                'Platform pemfailan cukai. Kami hubungkan anda dengan profesional cukai dan rakan ejen berdaftar LHDN untuk Borang BE, Borang B dan cukai syarikat.',
+                'A tax filing platform. We connect you with tax professionals and a partner LHDN-registered agent for Borang BE, Borang B and corporate tax.'
               )}
             </p>
             <ul className="mt-6 space-y-2.5">
@@ -106,7 +106,7 @@ function Footer() {
           <p className="text-[13px] text-ink-500">
             © {new Date().getFullYear()} EjenCukai. {pick('Hak cipta terpelihara.', 'All rights reserved.')}{' '}
             <span className="hidden sm:inline">·</span>{' '}
-            <span className="block sm:inline">{pick('Ejen cukai berdaftar LHDN, Seksyen 153 ACP 1967.', 'LHDN-registered tax agent, Section 153 ITA 1967.')}</span>
+            <span className="block sm:inline">{pick('Pemfailan disemak oleh profesional cukai.', 'Filings reviewed by tax professionals.')}</span>
           </p>
           <div className="flex items-center gap-2">
             <a

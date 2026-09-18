@@ -19,10 +19,10 @@ import { useLanguage } from '../contexts/LanguageContext';
 function Home() {
   const { pick } = useLanguage();
   usePageMeta({
-    title: 'EjenCukai | Ejen Cukai Berdaftar LHDN | Fail Borang BE, B & Syarikat',
+    title: 'EjenCukai | Platform Pemfailan Cukai Bersama Ejen Berdaftar LHDN',
     description: pick(
-      'Ejen cukai berdaftar LHDN dengan 30+ tahun pengalaman. Kami uruskan pemfailan Borang BE, Borang B dan cukai syarikat anda dengan tepat, patuh dan tanpa risiko denda.',
-      'LHDN-registered tax agent with 30+ years of experience. We handle your Borang BE, Borang B and corporate tax filing accurately and compliantly.'
+      'Platform pemfailan cukai Malaysia. Kami hubungkan anda dengan profesional cukai dan rakan ejen cukai berdaftar LHDN untuk Borang BE, Borang B dan cukai syarikat.',
+      'A Malaysian tax filing platform. We connect you with tax professionals and a partner LHDN-registered tax agent for Borang BE, Borang B and corporate tax.'
     ),
   });
 

@@ -25,19 +25,19 @@ function HowItWorks() {
       icon: SearchCheck,
       title: pick('Kami semak & sebut harga', 'We review & quote'),
       body: pick(
-        'Ejen kami semak pendapatan dan pelepasan anda, kemudian beri sebut harga tetap sebelum mula.',
-        'Our agent reviews your income and reliefs, then gives a fixed quote before any work starts.'
+        'Profesional cukai kami semak pendapatan dan pelepasan anda, kemudian kami beri sebut harga bertulis sebelum mula.',
+        'Our tax professionals review your income and reliefs, then we give you a written quote before any work starts.'
       ),
-      meta: pick('Dalam 24 jam', 'Within 24 hours'),
+      meta: pick('Biasanya dalam 24 jam', 'Usually within 24 hours'),
     },
     {
       icon: Send,
-      title: pick('Kami failkan, anda sahkan', 'We file, you confirm'),
+      title: pick('Anda sahkan, kami hantar', 'You confirm, we submit'),
       body: pick(
-        'Anda semak pengiraan, kami hantar ke LHDN dan kongsikan bukti penghantaran.',
-        'You check the computation, we submit to LHDN and share the acknowledgement.'
+        'Anda semak pengiraan dan pilih sama ada hantar atas nama sendiri atau melalui ejen. Kami kongsikan bukti penghantaran.',
+        'You check the computation and choose to submit under your own name or through the agent. We share the acknowledgement.'
       ),
-      meta: pick('1–3 hari bekerja', '1–3 working days'),
+      meta: pick('Biasanya 1–3 hari bekerja', 'Usually 1–3 working days'),
     },
   ];
 

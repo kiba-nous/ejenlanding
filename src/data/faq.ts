@@ -27,7 +27,11 @@ export const HOME_FAQ: Record<'bm' | 'en', FaqItem[]> = {
     },
     {
       q: 'Berapa lama proses pemfailan?',
-      a: 'Kebanyakan Borang BE siap dalam 1 hingga 3 hari bekerja selepas dokumen lengkap diterima. Borang B dan cukai syarikat bergantung kepada kerumitan rekod, biasanya 5 hingga 10 hari bekerja.',
+      a: 'Biasanya Borang BE siap dalam 1 hingga 3 hari bekerja selepas dokumen lengkap diterima. Borang B dan cukai syarikat bergantung kepada kerumitan rekod, selalunya 5 hingga 10 hari bekerja. Kami maklumkan anggaran masa bersama sebut harga.',
+    },
+    {
+      q: 'Siapa yang uruskan pemfailan saya, dan atas nama siapa?',
+      a: 'EjenCukai ialah platform. Kami susun dokumen dan uruskan proses, manakala semakan dibuat oleh profesional cukai. Kes yang lebih kompleks dikendalikan bersama rakan ejen cukai berdaftar LHDN dengan pengalaman lebih 30 tahun. Anda boleh pilih untuk hantar borang atas nama anda sendiri melalui MyTax, atau melalui ejen. Kedua-duanya dibincangkan sebelum penghantaran.',
     },
     {
       q: 'Bagaimana cara bayar dan berapa kosnya?',
@@ -49,7 +53,11 @@ export const HOME_FAQ: Record<'bm' | 'en', FaqItem[]> = {
     },
     {
       q: 'How long does filing take?',
-      a: 'Most Borang BE filings are done within 1 to 3 working days once your documents are in. Borang B and corporate returns depend on the state of your records, usually 5 to 10 working days.',
+      a: 'Borang BE is usually done within 1 to 3 working days once your documents are in. Borang B and corporate returns depend on the state of your records, often 5 to 10 working days. We confirm the estimate with your quote.',
+    },
+    {
+      q: 'Who handles my filing, and under whose name?',
+      a: 'EjenCukai is a platform. We organise your documents and run the process, while the review is done by a tax professional. More complex cases are handled together with a partner LHDN-registered tax agent with over 30 years of experience. You can choose to submit under your own name through MyTax, or through the agent. Either way, it is agreed before submission.',
     },
     {
       q: 'How do I pay and what does it cost?',

@@ -850,6 +850,10 @@ Hero with an illustrative case card → trust stats → **How it works** (new) �
 
 The first deploy from this branch failed at Netlify's functions bundling step, not the Vite build: `chip-in-webhook.js` is CommonJS while `package.json` declares `"type": "module"`, and `@netlify/build` 37 now rejects that. The function is renamed to **`chip-in-webhook.cjs`**; the endpoint stays `/.netlify/functions/chip-in-webhook`, so nothing changes in the Chip-in dashboard. A `.nvmrc` pins Node 20 for reproducible builds.
 
+### Copy corrections (claims)
+
+EjenCukai is a **platform**; the LHDN licence and the 30+ years belong to a **partner agent**, and some clients submit under their **own name** via MyTax. Every claim was rewritten accordingly: "ejen cukai berdaftar" → "bersama / rakan ejen cukai berdaftar"; "nama kami tertera pada borang anda" removed; "kami failkan" → "anda sahkan, kami hantar" with the own-name option stated; "balas dalam 24 jam" → "biasanya … pada hari bekerja"; "harga tetap" → "sebut harga bertulis"; turnaround times qualified with "biasanya"; the e-book is no longer described as written by a registered agent; the hero card is labelled an illustration. A new FAQ item explains who handles the filing and under whose name.
+
 ### Still open (unchanged from §11)
 
 E-book delivery URLs are public (rotate Drive IDs / issue tokens from the webhook), testimonials need real quotes, `/about` needs the founder's details, and the BM copy still deserves a native-speaker pass. The privacy policy and terms still describe a SaaS with Google sign-in that this site does not have — they were restyled, not rewritten.

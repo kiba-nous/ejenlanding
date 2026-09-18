@@ -26,8 +26,8 @@ function FinalCta() {
             </h2>
             <p className="mt-4 text-pretty text-[16px] leading-relaxed text-white/70">
               {pick(
-                'Hantar butiran anda sekarang. Kami balas dengan sebut harga dalam 24 jam, dan anda hanya bayar selepas setuju.',
-                'Send your details now. We reply with a quote within 24 hours, and you only pay once you agree.'
+                'Hantar butiran anda sekarang. Kami biasanya balas dengan sebut harga dalam 24 jam pada hari bekerja, dan anda hanya bayar selepas setuju.',
+                'Send your details now. We usually reply with a quote within 24 hours on working days, and you only pay once you agree.'
               )}
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">

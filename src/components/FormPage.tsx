@@ -17,13 +17,13 @@ function FormPage() {
   usePageMeta({
     title: pick('Hubungi kami', 'Contact us'),
     description: pick(
-      'Beritahu kami keperluan cukai anda dalam tiga langkah. Kami balas melalui WhatsApp dalam 24 jam dengan sebut harga.',
-      'Tell us what you need in three steps. We reply on WhatsApp within 24 hours with a quote.'
+      'Beritahu kami keperluan cukai anda dalam tiga langkah. Kami biasanya balas melalui WhatsApp dalam 24 jam pada hari bekerja dengan sebut harga.',
+      'Tell us what you need in three steps. We usually reply on WhatsApp within 24 hours on working days with a quote.'
     ),
   });
 
   const reassurance = [
-    { icon: Clock, text: pick('Balas dalam 24 jam, waktu bekerja', 'Reply within 24 hours on working days') },
+    { icon: Clock, text: pick('Biasanya balas dalam 24 jam pada hari bekerja', 'Usually a reply within 24 hours on working days') },
     { icon: BadgeCheck, text: pick('Sebut harga bertulis sebelum kerja bermula', 'Written quote before any work starts') },
     { icon: ShieldCheck, text: pick('Butiran anda hanya untuk membalas pertanyaan ini', 'Your details are only used to answer this enquiry') },
   ];

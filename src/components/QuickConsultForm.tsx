@@ -288,7 +288,7 @@ function QuickConsultForm() {
           <motion.form key="s3" {...stepMotion} onSubmit={handleSubmit} noValidate>
             <h2 className="text-[22px] font-bold text-ink-900">{pick('Ke mana kami boleh balas?', 'Where should we reply?')}</h2>
             <p className="mt-1 text-[14px] text-ink-500">
-              {pick('Dua medan sahaja. Kami balas melalui WhatsApp dalam 24 jam.', 'Just two fields. We reply on WhatsApp within 24 hours.')}
+              {pick('Dua medan sahaja. Kami biasanya balas dalam 24 jam pada hari bekerja.', 'Just two fields. We usually reply within 24 hours on working days.')}
             </p>
 
             {service && (

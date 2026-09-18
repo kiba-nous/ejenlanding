@@ -26,7 +26,7 @@ const STORAGE_KEY = 'ejc_lang';
 const translations: Record<Language, Record<string, string>> = {
   en: {
     'form.title': 'Tell us what you need',
-    'form.subtitle': 'Three quick steps. We reply on WhatsApp within 24 hours.',
+    'form.subtitle': 'Three quick steps. We usually reply on WhatsApp within 24 hours on working days.',
 
     'waitlist.title': 'Join the Waitlist',
     'waitlist.subtitle': 'Be among the first to experience AI-powered tax compliance. Get early access and exclusive pricing when we launch.',
@@ -37,7 +37,7 @@ const translations: Record<Language, Record<string, string>> = {
   },
   bm: {
     'form.title': 'Beritahu kami keperluan anda',
-    'form.subtitle': 'Tiga langkah ringkas. Kami balas melalui WhatsApp dalam 24 jam.',
+    'form.subtitle': 'Tiga langkah ringkas. Kami biasanya balas melalui WhatsApp dalam 24 jam pada hari bekerja.',
 
     'waitlist.title': 'Sertai Senarai Menunggu',
     'waitlist.subtitle': 'Jadilah antara yang pertama merasai pematuhan cukai berkuasa AI. Dapatkan akses awal dan harga eksklusif apabila kami melancarkan.',

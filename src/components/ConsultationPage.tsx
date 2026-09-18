@@ -156,13 +156,13 @@ export function ConsultationPage() {
   usePageMeta({
     title: pick('Konsultasi Cukai Peribadi RM149', 'Personal Tax Consultation RM149'),
     description: pick(
-      'Sesi 60 minit satu-dengan-satu bersama ejen cukai berdaftar LHDN. Semak pelepasan, jawab soalan, rancang langkah seterusnya. RM149 sejam.',
-      'A 60-minute one-on-one with an LHDN-registered tax agent. Review reliefs, get answers, plan next steps. RM149 per hour.'
+      'Sesi 60 minit satu-dengan-satu bersama profesional cukai. Semak pelepasan, jawab soalan, rancang langkah seterusnya. RM149 sejam.',
+      'A 60-minute one-on-one with a tax professional. Review reliefs, get answers, plan next steps. RM149 per hour.'
     ),
   });
 
   const included = [
-    pick('Semakan situasi cukai anda bersama ejen cukai', 'A review of your tax situation with a tax agent'),
+    pick('Semakan situasi cukai anda bersama profesional cukai', 'A review of your tax situation with a tax professional'),
     pick('Senarai pelepasan dan potongan yang anda layak tuntut', 'A list of reliefs and deductions you can claim'),
     pick('Jawapan kepada soalan khusus tentang borang, resit dan rekod', 'Answers to your specific questions on forms, receipts and records'),
     pick('Cadangan langkah seterusnya untuk tahun taksiran semasa', 'Recommended next steps for the current assessment year'),
@@ -227,7 +227,7 @@ export function ConsultationPage() {
   const format = [
     { icon: Video, text: pick('Video atau telefon', 'Video or phone') },
     { icon: Clock, text: `${CONSULTATION.durationMinutes} ${pick('minit', 'minutes')}` },
-    { icon: ShieldCheck, text: pick('Ejen berdaftar LHDN', 'LHDN-registered agent') },
+    { icon: ShieldCheck, text: pick('Profesional cukai', 'Tax professional') },
   ];
 
   return (

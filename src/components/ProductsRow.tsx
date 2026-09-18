@@ -84,8 +84,8 @@ function ProductsRow() {
             </h3>
             <p className="relative mt-3 text-[15px] leading-relaxed text-ink-600">
               {pick(
-                'Panduan langkah demi langkah ditulis oleh ejen cukai. Bahagian demi bahagian, senarai pelepasan dan contoh pengiraan penuh.',
-                'A step-by-step guide written by a tax agent. Section by section, a relief checklist and full worked examples.'
+                'Panduan langkah demi langkah dalam bahasa mudah. Bahagian demi bahagian, senarai pelepasan dan contoh pengiraan penuh.',
+                'A step-by-step guide in plain language. Section by section, a relief checklist and full worked examples.'
               )}
             </p>
             <ul className="relative mt-6 space-y-2.5">

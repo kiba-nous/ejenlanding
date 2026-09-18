@@ -35,7 +35,7 @@ function CaseCard() {
           </span>
           <div>
             <p className="text-[15px] font-bold text-ink-900">Borang B · {pick('Tahun Taksiran', 'YA')} {new Date().getFullYear() - 1}</p>
-            <p className="text-[12.5px] text-ink-500">{pick('Contoh kes', 'Example case')}</p>
+            <p className="text-[12.5px] text-ink-500">{pick('Contoh ilustrasi', 'Illustrative example')}</p>
           </div>
         </div>
 
@@ -59,7 +59,7 @@ function CaseCard() {
             <p className="text-[12.5px] font-medium text-ink-500">{pick('Cukai selepas pelepasan', 'Tax after reliefs')}</p>
             <p className="mt-1 text-[28px] font-extrabold leading-none tracking-tight text-ink-900">RM 640</p>
           </div>
-          <p className="text-[13px] font-bold text-emerald-700">{pick('Jimat RM 1,340', 'Saved RM 1,340')}</p>
+          <p className="text-[12.5px] font-medium text-ink-500">{pick('Sebelum pelepasan: RM 1,980', 'Before reliefs: RM 1,980')}</p>
         </div>
       </motion.div>
     </div>
@@ -76,7 +76,7 @@ function Hero() {
       <div className="container-x grid items-center gap-16 py-20 md:py-28 lg:grid-cols-12 lg:gap-12 lg:py-36">
         <div className="lg:col-span-7">
           <motion.p {...fadeUp(0)} className="eyebrow">
-            {pick('Ejen cukai berdaftar LHDN', 'LHDN-registered tax agent')}
+            {pick('Platform pemfailan cukai Malaysia', 'Malaysian tax filing platform')}
           </motion.p>
 
           <motion.h1
@@ -91,8 +91,8 @@ function Hero() {
 
           <motion.p {...fadeUp(0.12)} className="mt-6 max-w-lg text-pretty text-[17px] leading-relaxed text-ink-600 md:text-[18px]">
             {pick(
-              'Hantar dokumen melalui WhatsApp. Kami kira, semak dan failkan cukai anda, dengan penjelasan yang mudah difahami.',
-              'Send your documents over WhatsApp. We calculate, review and file your taxes, with explanations you can actually follow.'
+              'Hantar dokumen melalui WhatsApp. Kami susun, profesional cukai semak, dan setiap pengiraan diterangkan dalam bahasa mudah.',
+              'Send your documents over WhatsApp. We organise them, a tax professional reviews, and every computation is explained in plain language.'
             )}
           </motion.p>
 
@@ -108,7 +108,7 @@ function Hero() {
           </motion.div>
 
           <motion.p {...fadeUp(0.26)} className="mt-8 text-[14px] text-ink-500">
-            {pick('30+ tahun pengalaman · Balas dalam 24 jam', '30+ years of experience · Reply within 24 hours')}
+            {pick('Profesional cukai & rakan ejen berdaftar LHDN · Balas pada hari bekerja', 'Tax professionals & a partner LHDN-registered agent · Replies on working days')}
           </motion.p>
         </div>
 

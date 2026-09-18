@@ -18,7 +18,7 @@ function HomeFaq() {
             align="left"
             eyebrow={pick('Soalan lazim', 'FAQ')}
             title={pick('Soalan yang selalu kami terima.', 'Questions we get every week.')}
-            subtitle={pick('Tak jumpa jawapan? Tanya terus, kami balas dalam 24 jam.', 'Can’t find your answer? Ask us directly, we reply within 24 hours.')}
+            subtitle={pick('Tak jumpa jawapan? Tanya terus di WhatsApp.', 'Can’t find your answer? Ask us directly on WhatsApp.')}
           />
           <motion.a
             {...reveal(0.1)}

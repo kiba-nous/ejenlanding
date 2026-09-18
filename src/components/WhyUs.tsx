@@ -5,7 +5,9 @@ import { SectionHeading } from './ui/Section';
 import { reveal } from './ui/motion';
 
 /**
- * Three reasons, each something the visitor can hold us to.
+ * Three reasons, each something we can actually stand behind: EjenCukai is
+ * the platform; review is done by tax professionals, with complex cases
+ * handled alongside a partner LHDN-registered agent.
  */
 function WhyUs() {
   const { pick } = useLanguage();
@@ -13,18 +15,18 @@ function WhyUs() {
   const reasons = [
     {
       icon: Award,
-      title: pick('Berdaftar dan bertanggungjawab', 'Registered and accountable'),
+      title: pick('Disemak profesional cukai', 'Reviewed by tax professionals'),
       body: pick(
-        'Ejen cukai berlesen LHDN di bawah Seksyen 153. Nama kami tertera pada borang anda.',
-        'LHDN-licensed under Section 153. Our name goes on your form.'
+        'Setiap pemfailan disemak oleh profesional cukai. Kes yang lebih kompleks dikendalikan bersama rakan ejen cukai berdaftar LHDN. EjenCukai ialah platform yang menguruskan prosesnya.',
+        'Every filing is reviewed by a tax professional. More complex cases are handled together with a partner LHDN-registered tax agent. EjenCukai is the platform that runs the process.'
       ),
     },
     {
       icon: ReceiptText,
-      title: pick('Harga tetap sebelum mula', 'A fixed price before we start'),
+      title: pick('Sebut harga sebelum mula', 'A quote before we start'),
       body: pick(
-        'Sebut harga bertulis di WhatsApp. Anda hanya bayar selepas bersetuju.',
-        'A written quote on WhatsApp. You only pay after agreeing.'
+        'Sebut harga bertulis di WhatsApp berdasarkan kes anda. Anda hanya bayar selepas bersetuju.',
+        'A written quote on WhatsApp based on your case. You only pay after agreeing.'
       ),
     },
     {
@@ -42,7 +44,7 @@ function WhyUs() {
       <div className="container-x">
         <SectionHeading
           eyebrow={pick('Kenapa EjenCukai', 'Why EjenCukai')}
-          title={pick('Ejen cukai yang anda boleh pegang janjinya.', 'A tax agent you can hold to their word.')}
+          title={pick('Proses yang jelas dari mula hingga akhir.', 'A clear process from start to finish.')}
         />
 
         <ul className="mt-12 grid gap-6 md:grid-cols-3">

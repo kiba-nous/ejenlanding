@@ -19,10 +19,10 @@ function ServicesPricing() {
   const { language, pick } = useLanguage();
 
   const included = [
-    pick('Semakan penuh pendapatan, pelepasan dan rekod anda', 'Full review of your income, reliefs and records'),
-    pick('Pengiraan dan pemfailan ke LHDN, dengan bukti penghantaran', 'Computation and submission to LHDN, with acknowledgement'),
+    pick('Semakan pendapatan, pelepasan dan rekod anda oleh profesional cukai', 'Review of your income, reliefs and records by a tax professional'),
+    pick('Pengiraan dan penghantaran ke LHDN, atas nama anda atau melalui ejen', 'Computation and submission to LHDN, under your name or through the agent'),
     pick('Sebut harga bertulis sebelum kerja bermula', 'Written quote before any work starts'),
-    pick('Sokongan WhatsApp sepanjang tahun taksiran', 'WhatsApp support throughout the year of assessment'),
+    pick('Sokongan WhatsApp untuk soalan susulan', 'WhatsApp support for follow-up questions'),
   ];
 
   const groups = [
@@ -37,8 +37,8 @@ function ServicesPricing() {
           eyebrow={pick('Harga', 'Pricing')}
           title={pick('Satu harga permulaan. Sebut harga sebelum mula.', 'One starting price. A quote before we begin.')}
           subtitle={pick(
-            'Setiap kes berbeza, jadi kami tidak senaraikan harga ikut perkhidmatan. Kami semak dahulu, kemudian beri harga tetap.',
-            'Every case is different, so we don’t list a price per service. We review first, then give you a fixed price.'
+            'Setiap kes berbeza, jadi kami tidak senaraikan harga ikut perkhidmatan. Kami semak dahulu, kemudian beri sebut harga bertulis.',
+            'Every case is different, so we don’t list a price per service. We review first, then give you a written quote.'
           )}
         />
 
@@ -68,7 +68,7 @@ function ServicesPricing() {
                 {pick('Dapatkan sebut harga', 'Get a quote')}
               </Button>
               <p className="mt-3 text-center text-[12.5px] text-ink-500">
-                {pick('Percuma. Balas dalam 24 jam.', 'Free. Reply within 24 hours.')}
+                {pick('Percuma. Biasanya balas dalam 24 jam pada hari bekerja.', 'Free. Usually a reply within 24 hours on working days.')}
               </p>
             </div>
           </motion.div>

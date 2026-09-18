@@ -56,8 +56,8 @@ export function EbookPage() {
   usePageMeta({
     title: pick('E-Book Panduan Borang BE & B', 'E-Book: Borang BE & B Guides'),
     description: pick(
-      'Panduan langkah demi langkah untuk isi Borang BE dan Borang B sendiri, ditulis oleh ejen cukai berdaftar. Dari RM25, akses selamanya.',
-      'Step-by-step guides to filing Borang BE and Borang B yourself, written by a registered tax agent. From RM25, lifetime access.'
+      'Panduan langkah demi langkah untuk isi Borang BE dan Borang B sendiri, dalam bahasa mudah. Dari RM25, akses selamanya.',
+      'Step-by-step guides to filing Borang BE and Borang B yourself, in plain language. From RM25, lifetime access.'
     ),
   });
 
@@ -136,8 +136,8 @@ export function EbookPage() {
               </motion.h1>
               <motion.p {...reveal(0.1)} className="mt-5 max-w-xl text-pretty text-[17px] leading-relaxed text-ink-600">
                 {pick(
-                  'Panduan praktikal ditulis oleh ejen cukai berdaftar, khusus untuk pekerja bergaji dan usahawan Malaysia. Bahasa mudah, langkah demi langkah, selesai dalam satu petang.',
-                  'A practical guide written by a registered tax agent, for salaried workers and business owners in Malaysia. Plain language, step by step, done in an afternoon.'
+                  'Panduan praktikal khusus untuk pekerja bergaji dan usahawan Malaysia. Bahasa mudah, langkah demi langkah, selesai dalam satu petang.',
+                  'A practical guide for salaried workers and business owners in Malaysia. Plain language, step by step, done in an afternoon.'
                 )}
               </motion.p>
 
