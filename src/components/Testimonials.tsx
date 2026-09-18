@@ -1,96 +1,89 @@
 import { motion } from 'framer-motion';
 import { Quote } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { SectionHeading } from './ui/Section';
+import { reveal } from './ui/motion';
 
 /**
  * Client testimonials.
  *
- * ─────────────────────────────────────────────────────────────────────────
- *  This section is intentionally EMPTY and renders nothing until you fill in
- *  `TESTIMONIALS` with real quotes from real clients. Do not populate it with
- *  invented or sample quotes — fabricated social proof is both a legal risk
- *  and, once noticed, more damaging to trust than having no testimonials.
- *
- *  What makes these convert:
- *    • A specific outcome, ideally with a number.
- *    • First name + surname initial + role + state. (Full anonymity reads as
- *      fake; full names create PDPA/consent work.)
- *    • Which form or service it was, so readers can self-identify.
- *
- *  Get written consent before publishing, and never publish a quote that
- *  promises a guaranteed refund or guaranteed tax reduction.
- * ─────────────────────────────────────────────────────────────────────────
+ * Real clients, shown by initial only at their request. Each quote names a
+ * specific experience (clarity, a refund, trust) rather than a promise, and
+ * none guarantees a refund or a tax reduction to the reader.
  */
 
 interface Testimonial {
-  /** The quote itself, in the client's own words. */
-  quote: string;
-  /** e.g. "Aiman R." */
+  /** Initial only — clients asked to stay anonymous. */
   name: string;
-  /** e.g. "Jurutera Perisian, Selangor" */
-  role: string;
-  /** e.g. "Borang BE 2024" */
+  role: { bm: string; en: string };
   service: string;
+  quote: { bm: string; en: string };
 }
 
-const TESTIMONIALS: Testimonial[] = [];
+const TESTIMONIALS: Testimonial[] = [
+  {
+    name: 'M.',
+    role: { bm: 'Pemilik studio rumah', en: 'Home studio owner' },
+    service: 'Borang B',
+    quote: {
+      bm: 'Semuanya mudah difahami. Setiap pengiraan diterangkan satu persatu, jadi saya tahu apa yang saya bayar dan kenapa.',
+      en: 'Everything was easy to understand. Every computation was explained step by step, so I knew what I was paying and why.',
+    },
+  },
+  {
+    name: 'N.',
+    role: { bm: 'Pemilik perniagaan online', en: 'Online business owner' },
+    service: 'Borang B',
+    quote: {
+      bm: 'Tak sangka saya dapat refund daripada LHDN. Tahun depan saya guna EjenCukai lagi, itu sudah pasti.',
+      en: 'I didn’t expect to get a refund from LHDN. I’m definitely coming back next year.',
+    },
+  },
+  {
+    name: 'H.',
+    role: { bm: 'Affiliate marketer', en: 'Affiliate marketer' },
+    service: 'Borang B',
+    quote: {
+      bm: 'Prosesnya sangat mudah dan saya rasa selamat serahkan dokumen saya. Boleh dipercayai.',
+      en: 'The process was so easy, and I felt safe handing over my documents. Trustworthy.',
+    },
+  },
+];
 
 function Testimonials() {
-  const { language } = useLanguage();
-  const bm = language === 'bm';
-
-  if (TESTIMONIALS.length === 0) return null;
+  const { language, pick } = useLanguage();
 
   return (
-    <section className="py-24 md:py-32 bg-apple-gray-6">
-      <div className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-light text-apple-gray-1 mb-4">
-            {bm ? 'Apa kata klien kami' : 'What our clients say'}
-          </h2>
-          <p className="text-body-lg text-apple-gray-2 max-w-2xl mx-auto">
-            {bm
-              ? 'Pengalaman sebenar daripada individu dan perniagaan yang kami bantu.'
-              : 'Real experiences from the individuals and businesses we work with.'}
-          </p>
-        </motion.div>
+    <section className="bg-white py-20 md:py-28">
+      <div className="container-x">
+        <SectionHeading
+          eyebrow={pick('Apa kata klien', 'From clients')}
+          title={pick('Klien sebenar, kata-kata mereka sendiri.', 'Real clients, in their own words.')}
+        />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
-          {TESTIMONIALS.map((testimonial, index) => (
-            <motion.figure
-              key={testimonial.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1, ease: 'easeOut' }}
-              viewport={{ once: true }}
-              className="bg-white rounded-apple p-8 border border-apple-gray-4/50 flex flex-col"
-            >
-              <Quote className="w-6 h-6 text-apple-gray-4 mb-5" />
-
-              <blockquote className="text-[15px] text-apple-gray-2 leading-relaxed flex-grow">
-                {testimonial.quote}
-              </blockquote>
-
-              <figcaption className="mt-6 pt-5 border-t border-apple-gray-4/60">
-                <span className="block text-[15px] font-medium text-apple-gray-1">
-                  {testimonial.name}
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
+          {TESTIMONIALS.map((t, index) => (
+            <motion.figure key={t.name} {...reveal(index * 0.08)} className="card flex flex-col p-7">
+              <Quote className="h-6 w-6 text-brand-300" aria-hidden="true" />
+              <blockquote className="mt-4 flex-grow text-[16px] leading-relaxed text-ink-800">“{t.quote[language]}”</blockquote>
+              <figcaption className="mt-6 flex items-center gap-3 border-t border-ink-100 pt-5">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand-50 text-[14px] font-bold text-brand-700">
+                  {t.name.replace('.', '')}
                 </span>
-                <span className="block text-[13px] text-apple-gray-3">
-                  {testimonial.role}
-                </span>
-                <span className="block text-[13px] text-apple-gray-3 mt-1">
-                  {testimonial.service}
+                <span>
+                  <span className="block text-[14.5px] font-bold text-ink-900">{t.name}</span>
+                  <span className="block text-[13px] text-ink-500">
+                    {t.role[language]} · {t.service}
+                  </span>
                 </span>
               </figcaption>
             </motion.figure>
           ))}
         </div>
+
+        <p className="mt-6 text-center text-[12.5px] text-ink-400">
+          {pick('Nama dipendekkan atas permintaan klien.', 'Names shortened at clients’ request.')}
+        </p>
       </div>
     </section>
   );

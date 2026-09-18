@@ -1,121 +1,122 @@
-import { motion } from "framer-motion";
-import { MoveRight } from "lucide-react";
-import { useNavigate, Link } from "react-router-dom";
-import { Button } from "./ui/button";
-import { useLanguage } from "../contexts/LanguageContext";
-import { getDeadlineNotice } from "../config/site";
-import { trackEvent } from "../utils/analytics";
+import { motion } from 'framer-motion';
+import { ArrowRight, Check, FileCheck2, MessageCircle } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { trackEvent } from '../utils/analytics';
+import { Button } from './ui/button';
 
-function Hero() {
-  const { t, language } = useLanguage();
-  const navigate = useNavigate();
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 16 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.5, delay, ease: 'easeOut' as const },
+});
 
-  const openConsultationForm = () => {
-    trackEvent("hero_cta_click", { cta: "consultation" });
-    navigate("/form");
-  };
+/**
+ * Illustrative "case card". Built from DOM rather than an image so it renders
+ * crisp at every size and needs no asset. Figures are labelled as an example
+ * on the card itself.
+ */
+function CaseCard() {
+  const { pick } = useLanguage();
+
+  const rows = [
+    { label: pick('Dokumen diterima', 'Documents received'), done: true },
+    { label: pick('Pelepasan disemak', 'Reliefs checked'), done: true },
+    { label: pick('Dihantar ke LHDN', 'Submitted to LHDN'), done: false },
+  ];
 
   return (
-    <div className="relative w-full overflow-hidden bg-white">
-      {/* Subtle gradient background - Apple style */}
-      <div className="absolute inset-0 bg-gradient-to-b from-apple-gray-6 via-white to-white"></div>
+    <div className="relative mx-auto w-full max-w-sm lg:max-w-none">
+      <div className="absolute -inset-8 -z-10 rounded-[2.5rem] bg-brand-gradient opacity-[0.08] blur-2xl" aria-hidden="true" />
 
-      <div className="relative container mx-auto px-6 py-32 md:py-40 lg:py-48">
-        <div className="flex flex-col items-center justify-center text-center max-w-4xl mx-auto">
+      <motion.div {...fadeUp(0.25)} className="card overflow-hidden rounded-xl3 shadow-float" aria-hidden="true">
+        <div className="flex items-center gap-3 border-b border-ink-100 px-6 py-5">
+          <span className="grid h-10 w-10 place-items-center rounded-xl bg-brand-50 text-brand-600">
+            <FileCheck2 className="h-5 w-5" />
+          </span>
+          <div>
+            <p className="text-[15px] font-bold text-ink-900">Borang B · {pick('Tahun Taksiran', 'YA')} {new Date().getFullYear() - 1}</p>
+            <p className="text-[12.5px] text-ink-500">{pick('Contoh kes', 'Example case')}</p>
+          </div>
+        </div>
 
-          {/* Main Headline */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="mb-6"
-          >
-            <h1 className="text-5xl md:text-hero-lg lg:text-hero-xl font-light text-apple-gray-1">
-              {t("hero.title")}
-            </h1>
-          </motion.div>
-
-          {/* Description */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
-            className="text-body-lg md:text-xl text-apple-gray-2 mb-12 max-w-2xl"
-          >
-            {t("hero.description")}
-          </motion.p>
-
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-            className="mb-6 flex flex-col sm:flex-row gap-4 items-center justify-center"
-          >
-            {/* One primary, one secondary. A third equal-weight button was
-                splitting attention — "Tanya AI" now sits below as a text link. */}
-            <Button
-              size="lg"
-              className="gap-2 transition-all duration-200 ease-out text-[17px] font-medium px-8 py-3 bg-apple-blue hover:opacity-90 rounded-apple-button shadow-sm hover:shadow-md"
-              onClick={openConsultationForm}
-            >
-              {t("hero.bookConsultation")} <MoveRight className="w-5 h-5" />
-            </Button>
-            <Link to="/ebook" onClick={() => trackEvent("hero_cta_click", { cta: "ebook" })}>
-              <Button
-                size="lg"
-                variant="outline"
-                className="gap-2 transition-all duration-200 ease-out text-[17px] font-medium px-8 py-3 rounded-apple-button shadow-sm hover:shadow-md border-apple-gray-4 text-apple-gray-1 hover:border-apple-gray-1"
+        <ul className="divide-y divide-ink-100 px-6">
+          {rows.map((r) => (
+            <li key={r.label} className="flex items-center gap-3 py-4">
+              <span
+                className={`grid h-6 w-6 place-items-center rounded-full ${
+                  r.done ? 'bg-brand-600 text-white' : 'border-2 border-dashed border-ink-300 text-transparent'
+                }`}
               >
-                {t("hero.buyEbook")}
-              </Button>
-            </Link>
-          </motion.div>
+                <Check className="h-3.5 w-3.5" strokeWidth={3} />
+              </span>
+              <span className={`text-[15px] font-medium ${r.done ? 'text-ink-800' : 'text-ink-400'}`}>{r.label}</span>
+            </li>
+          ))}
+        </ul>
 
-          {/* Seasonal urgency — switches to a planning message outside filing
-              season so this slot never advertises a date that has passed. */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-[15px] text-apple-gray-2 mb-12"
-          >
-            {getDeadlineNotice(language)}
+        <div className="mx-6 mb-6 mt-2 flex items-end justify-between rounded-2xl bg-ink-50 p-5">
+          <div>
+            <p className="text-[12.5px] font-medium text-ink-500">{pick('Cukai selepas pelepasan', 'Tax after reliefs')}</p>
+            <p className="mt-1 text-[28px] font-extrabold leading-none tracking-tight text-ink-900">RM 640</p>
+          </div>
+          <p className="text-[13px] font-bold text-emerald-700">{pick('Jimat RM 1,340', 'Saved RM 1,340')}</p>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+function Hero() {
+  const { pick } = useLanguage();
+
+  return (
+    <section className="relative overflow-hidden bg-white">
+      <div className="absolute inset-0 -z-10 bg-hero-glow" aria-hidden="true" />
+
+      <div className="container-x grid items-center gap-16 py-20 md:py-28 lg:grid-cols-12 lg:gap-12 lg:py-36">
+        <div className="lg:col-span-7">
+          <motion.p {...fadeUp(0)} className="eyebrow">
+            {pick('Ejen cukai berdaftar LHDN', 'LHDN-registered tax agent')}
           </motion.p>
 
-          {/* Trust Indicators - Minimal */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.45 }}
-            className="flex flex-wrap items-center justify-center gap-6 md:gap-10 mb-8"
+          <motion.h1
+            {...fadeUp(0.06)}
+            className="mt-5 text-balance text-display-md text-ink-900 sm:text-display-lg xl:text-display-xl"
           >
-            <span className="text-sm text-apple-gray-3 font-normal">
-              {language === "bm" ? "Ejen cukai berdaftar LHDN" : "LHDN-registered tax agent"}
-            </span>
-            <span className="text-sm text-apple-gray-3 font-normal">
-              {language === "bm" ? "30+ tahun pengalaman" : "30+ years experience"}
-            </span>
-            <span className="text-sm text-apple-gray-3 font-normal">
-              {language === "bm" ? "Balas dalam 24 jam" : "Reply within 24 hours"}
-            </span>
+            {pick(
+              <>Fail cukai dengan betul, <span className="bg-brand-gradient bg-clip-text text-transparent">tanpa pening kepala.</span></>,
+              <>File your taxes right, <span className="bg-brand-gradient bg-clip-text text-transparent">without the headache.</span></>
+            )}
+          </motion.h1>
+
+          <motion.p {...fadeUp(0.12)} className="mt-6 max-w-lg text-pretty text-[17px] leading-relaxed text-ink-600 md:text-[18px]">
+            {pick(
+              'Hantar dokumen melalui WhatsApp. Kami kira, semak dan failkan cukai anda, dengan penjelasan yang mudah difahami.',
+              'Send your documents over WhatsApp. We calculate, review and file your taxes, with explanations you can actually follow.'
+            )}
+          </motion.p>
+
+          <motion.div {...fadeUp(0.18)} className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <Button to="/form" size="lg" onClick={() => trackEvent('hero_cta_click', { cta: 'consultation' })}>
+              <MessageCircle className="h-[18px] w-[18px]" />
+              {pick('Mula di WhatsApp', 'Start on WhatsApp')}
+            </Button>
+            <Button to="/#perkhidmatan" size="lg" variant="ghost" onClick={() => trackEvent('hero_cta_click', { cta: 'pricing' })}>
+              {pick('Lihat harga', 'See pricing')}
+              <ArrowRight className="h-4 w-4" />
+            </Button>
           </motion.div>
 
-          <motion.button
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            onClick={() => {
-              trackEvent("hero_cta_click", { cta: "ask_ai" });
-              window.open("https://ai.ejencukai.my", "_blank", "noopener");
-            }}
-            className="text-[15px] text-apple-blue hover:opacity-70 transition-opacity duration-150"
-          >
-            {t("hero.askAI")} →
-          </motion.button>
+          <motion.p {...fadeUp(0.26)} className="mt-8 text-[14px] text-ink-500">
+            {pick('30+ tahun pengalaman · Balas dalam 24 jam', '30+ years of experience · Reply within 24 hours')}
+          </motion.p>
+        </div>
+
+        <div className="lg:col-span-5">
+          <CaseCard />
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

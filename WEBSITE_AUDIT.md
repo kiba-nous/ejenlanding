@@ -807,3 +807,45 @@ Implemented on `main`. Build, type-check and lint all pass.
 - **`/about` page** — needs your name, photo and LHDN licence number
 - **`/business` + `/tax-firms` fate** — blocked on open question 1
 - **BM copy review** — needs a native speaker, not a translation pass from me
+
+---
+
+## 12. Redesign — 19 September 2026 (`audit` branch)
+
+Full visual and UX rework on top of §11. Build, type-check and lint pass; every page was screenshot-checked at 1440px and 390px.
+
+### Design system
+
+- **Tokens** (`tailwind.config.js`): `brand` scale derived from the logo's sky-blue → cyan; `ink` cool neutrals; card/float shadows; `display-*` type scale. The old `apple-*` names remain as aliases so the unlinked `/business`, `/tax-firms` and `/investors` pages still render.
+- **Type**: Plus Jakarta Sans (bold display, regular body) loaded via `<link rel="preconnect">` instead of a render-blocking CSS `@import`.
+- **Primitives** (`src/components/ui/`): `Button` (renders `<Link>`, `<a>` or `<button>` — no more `<Link><button>` nesting), `Accordion` (ARIA-wired, shared by all FAQ blocks), `SectionHeading`, `Badge`, `CheckItem`, `reveal()` motion preset.
+
+### Homepage (new order)
+
+Hero with an illustrative case card → trust stats → **How it works** (new) → **Services & fees** in Individu/Perniagaan tabs (replaces the 4-card "Our services" and the 11-card pricing wall; mobile page length went from ~11,300px to ~10,400px with far more content) → Consultation + E-book side by side → Why us + free tools (AI, receipt app) → **FAQ** (new, 6 questions) → final CTA.
+
+### Bugs fixed
+
+| Bug | Fix |
+|-----|-----|
+| Consultation and E-book pages ignored the EN toggle | Every string on both pages is now bilingual |
+| Language reset to BM on every reload | Persisted in `localStorage`; `<html lang>` follows the choice |
+| Every route shared one `<title>`/description | `usePageMeta` hook sets per-page title, description, and `noindex` on thank-you/404 pages |
+| Client-side navigation kept the old scroll position | `ScrollToTop` component; hash links (`/#faq`) scroll to the section |
+| Mobile menu CTA (`w-full mx-4`) overflowed; no Escape/close-on-navigate; exit animation never ran | Rebuilt with `AnimatePresence`, body scroll lock, Escape, auto-close on route change |
+| `<button>` nested inside `<Link>` (invalid HTML, double tab stop) | `Button` component handles all three cases |
+| Legal pages printed "Last updated: {today}" | Fixed date from git history; shared `LegalLayout` |
+| Play Store link opened without `noopener` | All external links use `rel="noopener noreferrer"` |
+| Floating WhatsApp button covered the form's submit button on phones | Hidden on `/form`, which already ends in a WhatsApp handoff |
+| Two copies of the FAQ component, one without ARIA | Single `Accordion` |
+| `hero.title` copy targeted businesses although individuals are the main audience | New hero copy, one primary CTA |
+
+### Follow-up, same day
+
+- **Pricing model changed.** Per-service prices are gone. Real engagements varied too much for them to hold, so the site now advertises a single starting figure, **RM1,950 per year of assessment** (`FILING` in `src/config/site.ts`), with the service list shown as two plain columns and the quote given on WhatsApp. The FAQ and JSON-LD `priceRange` follow.
+- **Testimonials are live.** Three real clients (a home studio owner, an online business owner and an affiliate marketer, all Borang B), shown by initial only at their request. Edit them in `src/components/Testimonials.tsx`.
+- **Decluttered.** Hero lost the floating bubbles, deadline chip, dotted background and trust list; the trust-stats strip, the free-tools strip and the extra CTA under "How it works" were removed; "Why us" is three cards instead of four plus a licence card; FAQ is five questions; product cards carry two bullets each.
+
+### Still open (unchanged from §11)
+
+E-book delivery URLs are public (rotate Drive IDs / issue tokens from the webhook), testimonials need real quotes, `/about` needs the founder's details, and the BM copy still deserves a native-speaker pass. The privacy policy and terms still describe a SaaS with Google sign-in that this site does not have — they were restyled, not rewritten.

@@ -1,16 +1,19 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { ArrowLeft, Check, MessageCircle } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useSearchParams } from 'react-router-dom';
+import { ArrowLeft, Building2, Check, MessageCircle, User } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { trackEvent, buildWhatsAppUrl } from '../utils/analytics';
 import { WHATSAPP_DISPLAY } from '../config/site';
+import { Button } from './ui/button';
 
 /**
- * Three-step consultation form that hands off to WhatsApp.
+ * Three-step enquiry form that hands off to WhatsApp.
  *
- * Replaces a 9-required-field Tally embed. Individuals are never asked for
- * company details — the service list branches on the answer to step 1 — and
- * only two fields are ever typed.
+ * Individuals are never asked for company details — the service list
+ * branches on the answer to step 1 — and only two fields are ever typed.
+ * `?jenis=individu|perniagaan` pre-selects step 1 so links from the footer
+ * or pricing land straight on the service list.
  */
 
 type ClientType = 'individu' | 'perniagaan';
@@ -24,7 +27,7 @@ interface ServiceOption {
 const SERVICES: Record<ClientType, ServiceOption[]> = {
   individu: [
     { id: 'be', bm: 'Fail Borang BE (makan gaji)', en: 'File Borang BE (salaried)' },
-    { id: 'b', bm: 'Fail Borang B (ada perniagaan)', en: 'File Borang B (with business income)' },
+    { id: 'b', bm: 'Fail Borang B (ada perniagaan / freelance)', en: 'File Borang B (business / freelance income)' },
     { id: 'planning', bm: 'Perancangan cukai peribadi', en: 'Personal tax planning' },
     { id: 'refund', bm: 'Pulangan cukai / rayuan CP500', en: 'Tax refund / CP500 appeal' },
     { id: 'lain', bm: 'Lain-lain', en: 'Something else' },
@@ -32,7 +35,7 @@ const SERVICES: Record<ClientType, ServiceOption[]> = {
   perniagaan: [
     { id: 'corporate', bm: 'Cukai syarikat / perniagaan', en: 'Corporate tax filing' },
     { id: 'planning-biz', bm: 'Perancangan cukai syarikat', en: 'Corporate tax planning' },
-    { id: 'einvois', bm: 'E-Invois LHDN', en: 'LHDN e-Invoicing' },
+    { id: 'einvois', bm: 'e-Invois LHDN', en: 'LHDN e-Invoicing' },
     { id: 'audit', bm: 'Audit / siasatan cukai', en: 'Tax audit or investigation' },
     { id: 'lain-biz', bm: 'Lain-lain', en: 'Something else' },
   ],
@@ -65,12 +68,22 @@ async function saveLead(fields: Record<string, string>): Promise<void> {
   }
 }
 
-function QuickConsultForm() {
-  const { language } = useLanguage();
-  const bm = language === 'bm';
+const stepMotion = {
+  initial: { opacity: 0, x: 16 },
+  animate: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: -16 },
+  transition: { duration: 0.22, ease: 'easeOut' as const },
+};
 
-  const [step, setStep] = useState(1);
-  const [clientType, setClientType] = useState<ClientType | null>(null);
+function QuickConsultForm() {
+  const { bm, pick } = useLanguage();
+  const [params] = useSearchParams();
+
+  const preset = params.get('jenis');
+  const presetType: ClientType | null = preset === 'individu' || preset === 'perniagaan' ? preset : null;
+
+  const [step, setStep] = useState(presetType ? 2 : 1);
+  const [clientType, setClientType] = useState<ClientType | null>(presetType);
   const [service, setService] = useState<ServiceOption | null>(null);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -102,17 +115,13 @@ function QuickConsultForm() {
     if (submitting) return;
 
     if (name.trim().length < 2) {
-      setError(bm ? 'Sila masukkan nama anda.' : 'Please enter your name.');
+      setError(pick('Sila masukkan nama anda.', 'Please enter your name.'));
       return;
     }
 
     const normalised = normalisePhone(phone);
     if (normalised.length < 10) {
-      setError(
-        bm
-          ? 'Nombor WhatsApp tidak sah. Contoh: 012-345 6789'
-          : 'That WhatsApp number looks incomplete. Example: 012-345 6789'
-      );
+      setError(pick('Nombor WhatsApp tidak sah. Contoh: 012-345 6789', 'That WhatsApp number looks incomplete. Example: 012-345 6789'));
       return;
     }
 
@@ -120,9 +129,7 @@ function QuickConsultForm() {
     setSubmitting(true);
 
     const serviceLabel = service ? (bm ? service.bm : service.en) : '';
-    const clientLabel = clientType === 'individu'
-      ? (bm ? 'Individu' : 'Individual')
-      : (bm ? 'Perniagaan / Syarikat' : 'Business / Company');
+    const clientLabel = clientType === 'individu' ? pick('Individu', 'Individual') : pick('Perniagaan / Syarikat', 'Business / Company');
 
     // 1. Persist first — the record must survive a failed handoff.
     await saveLead({
@@ -131,22 +138,19 @@ function QuickConsultForm() {
       jenis_klien: clientLabel,
       perkhidmatan: serviceLabel,
       nota: note.trim(),
-      sumber: new URLSearchParams(window.location.search).get('sumber') ?? 'form',
+      sumber: params.get('sumber') ?? 'form',
     });
 
-    trackEvent('form_submit', {
-      client_type: clientType ?? '',
-      service: service?.id ?? '',
-    });
+    trackEvent('form_submit', { client_type: clientType ?? '', service: service?.id ?? '' });
 
     const message = [
       bm ? `Hi EjenCukai! Saya ${name.trim()}.` : `Hi EjenCukai! I'm ${name.trim()}.`,
       '',
-      `${bm ? 'Jenis klien' : 'Client type'}: ${clientLabel}`,
-      `${bm ? 'Perkhidmatan' : 'Service'}: ${serviceLabel}`,
-      ...(note.trim() ? ['', `${bm ? 'Nota' : 'Note'}: ${note.trim()}`] : []),
+      `${pick('Jenis klien', 'Client type')}: ${clientLabel}`,
+      `${pick('Perkhidmatan', 'Service')}: ${serviceLabel}`,
+      ...(note.trim() ? ['', `${pick('Nota', 'Note')}: ${note.trim()}`] : []),
       '',
-      bm ? 'Boleh bantu saya?' : 'Could you help me with this?',
+      pick('Boleh bantu saya?', 'Could you help me with this?'),
     ].join('\n');
 
     const url = buildWhatsAppUrl(message);
@@ -161,210 +165,203 @@ function QuickConsultForm() {
 
   if (handedOff) {
     return (
-      <div className="text-center py-8">
-        <div className="flex justify-center mb-6">
-          <div className="bg-apple-blue/10 rounded-full p-4">
-            <Check className="w-8 h-8 text-apple-blue" />
-          </div>
+      <div className="py-6 text-center">
+        <div className="mx-auto mb-6 grid h-16 w-16 place-items-center rounded-full bg-emerald-50 text-emerald-600">
+          <Check className="h-8 w-8" strokeWidth={2.5} />
         </div>
-        <h3 className="text-2xl font-light text-apple-gray-1 mb-3">
-          {bm ? 'Terima kasih!' : 'Thank you!'}
-        </h3>
-        <p className="text-[15px] text-apple-gray-2 mb-8 max-w-sm mx-auto leading-relaxed">
-          {bm
-            ? 'Kami sedang membuka WhatsApp untuk anda. Jika ia tidak terbuka, tekan butang di bawah.'
-            : "We're opening WhatsApp for you. If it didn't open, use the button below."}
+        <h2 className="text-[24px] font-bold text-ink-900">{pick('Terima kasih!', 'Thank you!')}</h2>
+        <p className="mx-auto mt-3 max-w-sm text-[15px] leading-relaxed text-ink-600">
+          {pick(
+            'Kami sedang membuka WhatsApp untuk anda. Jika ia tidak terbuka, tekan butang di bawah.',
+            "We're opening WhatsApp for you. If it didn't open, use the button below."
+          )}
         </p>
-        <a
-          href={whatsappUrl}
-          className="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:opacity-90 text-white text-[15px] font-medium py-3 px-6 rounded-apple-button transition-opacity duration-200"
-        >
-          <MessageCircle className="w-4 h-4" />
-          {bm ? 'Buka WhatsApp' : 'Open WhatsApp'}
-        </a>
-        <p className="mt-6 text-[13px] text-apple-gray-3">
-          {bm ? 'Atau hubungi kami terus di ' : 'Or reach us directly at '}
-          <span className="text-apple-gray-1">{WHATSAPP_DISPLAY}</span>
+        <div className="mt-8">
+          <Button href={whatsappUrl} variant="whatsapp" size="lg">
+            <MessageCircle className="h-[18px] w-[18px]" />
+            {pick('Buka WhatsApp', 'Open WhatsApp')}
+          </Button>
+        </div>
+        <p className="mt-6 text-[13px] text-ink-500">
+          {pick('Atau hubungi kami terus di ', 'Or reach us directly at ')}
+          <span className="font-semibold text-ink-900">{WHATSAPP_DISPLAY}</span>
         </p>
       </div>
     );
   }
 
   const options = clientType ? SERVICES[clientType] : [];
+  const stepTitles = [pick('Untuk siapa', 'Who for'), pick('Perkhidmatan', 'Service'), pick('Hubungi', 'Contact')];
 
   return (
     <div>
       {/* Progress */}
-      <div className="flex items-center gap-2 mb-8">
-        {[1, 2, 3].map((n) => (
-          <div
-            key={n}
-            className={`h-1 flex-1 rounded-full transition-colors duration-300 ${
-              n <= step ? 'bg-apple-blue' : 'bg-apple-gray-4'
-            }`}
-          />
-        ))}
-      </div>
+      <ol className="mb-8 flex items-center gap-2" aria-label={pick('Langkah', 'Steps')}>
+        {stepTitles.map((label, i) => {
+          const n = i + 1;
+          const state = n < step ? 'done' : n === step ? 'current' : 'todo';
+          return (
+            <li key={label} className="flex flex-1 flex-col gap-2" aria-current={state === 'current' ? 'step' : undefined}>
+              <span
+                className={`h-1.5 rounded-full transition-colors duration-300 ${
+                  state === 'todo' ? 'bg-ink-200' : 'bg-brand-600'
+                }`}
+              />
+              <span className={`text-[12px] font-semibold ${state === 'current' ? 'text-ink-900' : 'text-ink-400'}`}>
+                {n}. {label}
+              </span>
+            </li>
+          );
+        })}
+      </ol>
 
       {step > 1 && (
         <button
           type="button"
           onClick={back}
-          className="flex items-center gap-1.5 text-[13px] text-apple-gray-3 hover:text-apple-gray-1 transition-colors duration-150 mb-6"
+          className="mb-5 inline-flex items-center gap-1.5 text-[13px] font-medium text-ink-500 transition-colors hover:text-ink-900"
         >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          {bm ? 'Kembali' : 'Back'}
+          <ArrowLeft className="h-3.5 w-3.5" />
+          {pick('Kembali', 'Back')}
         </button>
       )}
 
-      {/* Step 1 — who is this for */}
-      {step === 1 && (
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
-          <h3 className="text-xl font-medium text-apple-gray-1 mb-1">
-            {bm ? 'Bantuan ini untuk siapa?' : 'Who is this for?'}
-          </h3>
-          <p className="text-[14px] text-apple-gray-3 mb-6">
-            {bm ? 'Pilih satu untuk mula.' : 'Pick one to get started.'}
-          </p>
-          <div className="grid sm:grid-cols-2 gap-3">
-            {(['individu', 'perniagaan'] as ClientType[]).map((type) => (
-              <button
-                key={type}
-                type="button"
-                onClick={() => chooseClientType(type)}
-                className="text-left border border-apple-gray-4 hover:border-apple-blue hover:bg-apple-blue/5 rounded-apple-sm p-5 transition-colors duration-150"
-              >
-                <span className="block text-[15px] font-medium text-apple-gray-1 mb-1">
-                  {type === 'individu'
-                    ? bm ? 'Diri sendiri' : 'Myself'
-                    : bm ? 'Perniagaan saya' : 'My business'}
-                </span>
-                <span className="block text-[13px] text-apple-gray-3">
-                  {type === 'individu'
-                    ? bm ? 'Gaji, freelance, sewa' : 'Salary, freelance, rental'
-                    : bm ? 'Sdn Bhd, enterprise, LLP' : 'Sdn Bhd, enterprise, LLP'}
-                </span>
-              </button>
-            ))}
-          </div>
-        </motion.div>
-      )}
-
-      {/* Step 2 — which service */}
-      {step === 2 && (
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
-          <h3 className="text-xl font-medium text-apple-gray-1 mb-1">
-            {bm ? 'Anda perlukan bantuan untuk apa?' : 'What do you need help with?'}
-          </h3>
-          <p className="text-[14px] text-apple-gray-3 mb-6">
-            {bm ? 'Tidak pasti? Pilih "Lain-lain".' : 'Not sure? Choose "Something else".'}
-          </p>
-          <div className="space-y-2.5">
-            {options.map((option) => (
-              <button
-                key={option.id}
-                type="button"
-                onClick={() => chooseService(option)}
-                className="w-full text-left border border-apple-gray-4 hover:border-apple-blue hover:bg-apple-blue/5 rounded-apple-sm px-5 py-4 text-[15px] text-apple-gray-1 transition-colors duration-150"
-              >
-                {bm ? option.bm : option.en}
-              </button>
-            ))}
-          </div>
-        </motion.div>
-      )}
-
-      {/* Step 3 — contact details */}
-      {step === 3 && (
-        <motion.form
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          onSubmit={handleSubmit}
-        >
-          <h3 className="text-xl font-medium text-apple-gray-1 mb-1">
-            {bm ? 'Ke mana kami boleh balas?' : 'Where should we reply?'}
-          </h3>
-          <p className="text-[14px] text-apple-gray-3 mb-6">
-            {bm
-              ? 'Dua medan sahaja. Kami balas melalui WhatsApp dalam 24 jam.'
-              : 'Just two fields. We reply on WhatsApp within 24 hours.'}
-          </p>
-
-          <div className="space-y-4">
-            <div>
-              <label htmlFor="qcf-name" className="block text-[13px] font-medium text-apple-gray-2 mb-1.5">
-                {bm ? 'Nama' : 'Name'}
-              </label>
-              <input
-                id="qcf-name"
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                autoComplete="name"
-                placeholder={bm ? 'Nama penuh anda' : 'Your full name'}
-                className="w-full px-4 py-3 text-[15px] border border-apple-gray-4 rounded-apple-sm focus:outline-none focus:ring-2 focus:ring-apple-blue focus:border-transparent transition-all duration-150"
-              />
+      <AnimatePresence mode="wait" initial={false}>
+        {/* Step 1 — who is this for */}
+        {step === 1 && (
+          <motion.div key="s1" {...stepMotion}>
+            <h2 className="text-[22px] font-bold text-ink-900">{pick('Bantuan ini untuk siapa?', 'Who is this for?')}</h2>
+            <p className="mt-1 text-[14px] text-ink-500">{pick('Pilih satu untuk mula.', 'Pick one to get started.')}</p>
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              {(
+                [
+                  { type: 'individu', icon: User, title: pick('Diri sendiri', 'Myself'), hint: pick('Gaji, freelance, sewa', 'Salary, freelance, rental') },
+                  { type: 'perniagaan', icon: Building2, title: pick('Perniagaan saya', 'My business'), hint: 'Sdn Bhd, enterprise, LLP' },
+                ] as const
+              ).map((opt) => (
+                <button
+                  key={opt.type}
+                  type="button"
+                  onClick={() => chooseClientType(opt.type)}
+                  className="group flex items-start gap-4 rounded-2xl border border-ink-200 bg-white p-5 text-left transition-all hover:border-brand-400 hover:bg-brand-50/50 hover:shadow-card"
+                >
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-ink-100 text-ink-700 transition-colors group-hover:bg-brand-600 group-hover:text-white">
+                    <opt.icon className="h-5 w-5" />
+                  </span>
+                  <span>
+                    <span className="block text-[16px] font-bold text-ink-900">{opt.title}</span>
+                    <span className="mt-0.5 block text-[13px] text-ink-500">{opt.hint}</span>
+                  </span>
+                </button>
+              ))}
             </div>
+          </motion.div>
+        )}
 
-            <div>
-              <label htmlFor="qcf-phone" className="block text-[13px] font-medium text-apple-gray-2 mb-1.5">
-                {bm ? 'Nombor WhatsApp' : 'WhatsApp number'}
-              </label>
-              <input
-                id="qcf-phone"
-                type="tel"
-                inputMode="tel"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                autoComplete="tel"
-                placeholder="012-345 6789"
-                className="w-full px-4 py-3 text-[15px] border border-apple-gray-4 rounded-apple-sm focus:outline-none focus:ring-2 focus:ring-apple-blue focus:border-transparent transition-all duration-150"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="qcf-note" className="block text-[13px] font-medium text-apple-gray-2 mb-1.5">
-                {bm ? 'Nota ringkas' : 'Short note'}{' '}
-                <span className="font-normal text-apple-gray-3">
-                  {bm ? '(pilihan)' : '(optional)'}
-                </span>
-              </label>
-              <textarea
-                id="qcf-note"
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
-                rows={3}
-                placeholder={bm ? 'Ceritakan sedikit tentang situasi anda...' : 'Tell us a bit about your situation...'}
-                className="w-full px-4 py-3 text-[15px] border border-apple-gray-4 rounded-apple-sm focus:outline-none focus:ring-2 focus:ring-apple-blue focus:border-transparent transition-all duration-150 resize-none"
-              />
-            </div>
-          </div>
-
-          {error && (
-            <p role="alert" className="mt-4 text-[13px] text-red-600">
-              {error}
+        {/* Step 2 — which service */}
+        {step === 2 && (
+          <motion.div key="s2" {...stepMotion}>
+            <h2 className="text-[22px] font-bold text-ink-900">{pick('Anda perlukan bantuan untuk apa?', 'What do you need help with?')}</h2>
+            <p className="mt-1 text-[14px] text-ink-500">
+              {pick('Tidak pasti? Pilih "Lain-lain".', 'Not sure? Choose "Something else".')}
             </p>
-          )}
+            <div className="mt-6 space-y-2.5">
+              {options.map((option) => (
+                <button
+                  key={option.id}
+                  type="button"
+                  onClick={() => chooseService(option)}
+                  className="group flex w-full items-center justify-between gap-4 rounded-2xl border border-ink-200 bg-white px-5 py-4 text-left text-[15px] font-medium text-ink-800 transition-all hover:border-brand-400 hover:bg-brand-50/50"
+                >
+                  {bm ? option.bm : option.en}
+                  <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-ink-200 text-transparent transition-all group-hover:border-brand-500 group-hover:bg-brand-600 group-hover:text-white">
+                    <Check className="h-3.5 w-3.5" strokeWidth={3} />
+                  </span>
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        )}
 
-          <button
-            type="submit"
-            disabled={submitting}
-            className="w-full mt-6 flex items-center justify-center gap-2 bg-apple-blue hover:opacity-90 disabled:opacity-60 text-white text-[15px] font-semibold py-4 px-6 rounded-apple-button transition-opacity duration-200"
-          >
-            <MessageCircle className="w-4 h-4" />
-            {submitting
-              ? bm ? 'Sebentar...' : 'One moment...'
-              : bm ? 'Hantar & buka WhatsApp' : 'Send & open WhatsApp'}
-          </button>
+        {/* Step 3 — contact details */}
+        {step === 3 && (
+          <motion.form key="s3" {...stepMotion} onSubmit={handleSubmit} noValidate>
+            <h2 className="text-[22px] font-bold text-ink-900">{pick('Ke mana kami boleh balas?', 'Where should we reply?')}</h2>
+            <p className="mt-1 text-[14px] text-ink-500">
+              {pick('Dua medan sahaja. Kami balas melalui WhatsApp dalam 24 jam.', 'Just two fields. We reply on WhatsApp within 24 hours.')}
+            </p>
 
-          <p className="mt-4 text-[12px] text-apple-gray-3 text-center leading-relaxed">
-            {bm
-              ? 'Maklumat anda hanya digunakan untuk membalas pertanyaan ini.'
-              : 'Your details are only used to respond to this enquiry.'}
-          </p>
-        </motion.form>
-      )}
+            {service && (
+              <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-brand-50 px-3 py-1.5 text-[12.5px] font-semibold text-brand-700">
+                <Check className="h-3.5 w-3.5" />
+                {bm ? service.bm : service.en}
+              </p>
+            )}
+
+            <div className="mt-6 space-y-4">
+              <div>
+                <label htmlFor="qcf-name" className="field-label">{pick('Nama', 'Name')}</label>
+                <input
+                  id="qcf-name"
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  autoComplete="name"
+                  placeholder={pick('Nama penuh anda', 'Your full name')}
+                  className="field"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="qcf-phone" className="field-label">{pick('Nombor WhatsApp', 'WhatsApp number')}</label>
+                <input
+                  id="qcf-phone"
+                  type="tel"
+                  inputMode="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  autoComplete="tel"
+                  placeholder="012-345 6789"
+                  className="field"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="qcf-note" className="field-label">
+                  {pick('Nota ringkas', 'Short note')}{' '}
+                  <span className="font-normal text-ink-400">{pick('(pilihan)', '(optional)')}</span>
+                </label>
+                <textarea
+                  id="qcf-note"
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                  rows={3}
+                  placeholder={pick('Ceritakan sedikit tentang situasi anda...', 'Tell us a bit about your situation...')}
+                  className="field resize-none"
+                />
+              </div>
+            </div>
+
+            {error && (
+              <p role="alert" className="mt-4 rounded-xl bg-red-50 px-4 py-2.5 text-[13.5px] font-medium text-red-700">
+                {error}
+              </p>
+            )}
+
+            <Button type="submit" variant="whatsapp" size="lg" disabled={submitting} className="mt-6 w-full">
+              <MessageCircle className="h-[18px] w-[18px]" />
+              {submitting ? pick('Sebentar...', 'One moment...') : pick('Hantar & buka WhatsApp', 'Send & open WhatsApp')}
+            </Button>
+
+            <p className="mt-4 text-center text-[12.5px] leading-relaxed text-ink-500">
+              {pick(
+                'Maklumat anda hanya digunakan untuk membalas pertanyaan ini.',
+                'Your details are only used to respond to this enquiry.'
+              )}
+            </p>
+          </motion.form>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

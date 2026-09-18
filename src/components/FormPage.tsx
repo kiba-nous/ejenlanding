@@ -1,42 +1,67 @@
+import { BadgeCheck, Clock, ShieldCheck } from 'lucide-react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { QuickConsultForm } from './QuickConsultForm';
 import { useLanguage } from '../contexts/LanguageContext';
+import { usePageMeta } from '../hooks/usePageMeta';
 
 /**
  * Free enquiry page.
  *
- * Previously a Tally iframe with nine required fields — including company
- * name, type and industry, which made it unanswerable for individual clients.
- * Now a native three-step form that branches on client type and hands off to
- * WhatsApp on submit.
+ * A native three-step form that branches on client type and hands off to
+ * WhatsApp on submit. The side column answers "what happens next" so the
+ * visitor isn't guessing while they type.
  */
 function FormPage() {
-  const { t } = useLanguage();
+  const { pick } = useLanguage();
+  usePageMeta({
+    title: pick('Hubungi kami', 'Contact us'),
+    description: pick(
+      'Beritahu kami keperluan cukai anda dalam tiga langkah. Kami balas melalui WhatsApp dalam 24 jam dengan sebut harga.',
+      'Tell us what you need in three steps. We reply on WhatsApp within 24 hours with a quote.'
+    ),
+  });
+
+  const reassurance = [
+    { icon: Clock, text: pick('Balas dalam 24 jam, waktu bekerja', 'Reply within 24 hours on working days') },
+    { icon: BadgeCheck, text: pick('Sebut harga bertulis sebelum kerja bermula', 'Written quote before any work starts') },
+    { icon: ShieldCheck, text: pick('Butiran anda hanya untuk membalas pertanyaan ini', 'Your details are only used to answer this enquiry') },
+  ];
 
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-white py-20 md:py-28">
-        <div className="container mx-auto px-6">
-          <div className="max-w-xl mx-auto">
-            {/* Header */}
-            <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-5xl font-light text-apple-gray-1 mb-4">
-                {t('form.title')}
-              </h1>
-              <p className="text-body-lg text-apple-gray-2">
-                {t('form.subtitle')}
-              </p>
-            </div>
+      <main id="main" className="relative min-h-screen bg-ink-50">
+        <div className="absolute inset-x-0 top-0 -z-10 h-80 bg-hero-glow" aria-hidden="true" />
+        <div className="container-x grid gap-10 py-14 md:py-20 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-5">
+            <span className="eyebrow">{pick('Pertanyaan percuma', 'Free enquiry')}</span>
+            <h1 className="mt-4 text-balance text-display-sm text-ink-900 md:text-display-md">
+              {pick('Beritahu kami keperluan anda.', 'Tell us what you need.')}
+            </h1>
+            <p className="mt-4 text-pretty text-[16px] leading-relaxed text-ink-600">
+              {pick(
+                'Tiga langkah ringkas. Anda akan dibawa ke WhatsApp dengan mesej yang sudah siap, tinggal tekan hantar.',
+                'Three short steps. You’ll be taken to WhatsApp with a ready-made message, just press send.'
+              )}
+            </p>
+            <ul className="mt-8 space-y-3">
+              {reassurance.map(({ icon: Icon, text }) => (
+                <li key={text} className="flex items-start gap-3 text-[14.5px] text-ink-700">
+                  <Icon className="mt-0.5 h-[18px] w-[18px] shrink-0 text-brand-600" />
+                  {text}
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            {/* Form */}
-            <div className="bg-white rounded-apple border border-apple-gray-4 p-6 md:p-10">
+          <div className="lg:col-span-7">
+            <div className="card rounded-xl3 p-6 md:p-10">
               <QuickConsultForm />
             </div>
           </div>
         </div>
-      </div>
+      </main>
       <Footer />
     </>
   );

@@ -43,6 +43,18 @@ export const CHIPIN = {
 export const CALENDLY_BASE = 'https://calendly.com/ejencukaimy';
 export const CALENDLY_EVENT_URL = CALENDLY_BASE;
 
+/**
+ * Filing and advisory work is quoted per year of assessment. Real cases have
+ * varied too much in complexity for a per-service price list to be honest,
+ * so the site advertises one starting figure and quotes the rest on WhatsApp.
+ */
+export const FILING = {
+  fromMYR: 1950,
+  fromLabel: 'RM1,950',
+  unitBm: 'tahun taksiran',
+  unitEn: 'year of assessment',
+} as const;
+
 /** Paid personal tax consultation. */
 export const CONSULTATION = {
   priceMYR: 149,
