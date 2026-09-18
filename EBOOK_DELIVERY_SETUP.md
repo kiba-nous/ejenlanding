@@ -29,7 +29,7 @@ Buyer clicks "Beli Sekarang" on ejencukai.my/ebook
 ejencukai-repo/
 ├── netlify/
 │   └── functions/
-│       └── chip-in-webhook.js    ← serverless webhook receiver
+│       └── chip-in-webhook.cjs    ← serverless webhook receiver
 ├── src/
 │   └── components/
 │       ├── EbookPage.tsx         ← landing page with buy buttons
@@ -73,7 +73,7 @@ In your Chip-in Merchant Portal:
 
 ## Step 2 — Create the Netlify Function
 
-Create `netlify/functions/chip-in-webhook.js`:
+Create `netlify/functions/chip-in-webhook.cjs`:
 
 ```js
 const crypto = require('crypto')
@@ -309,7 +309,7 @@ slugs. Adjust the field path if Chip-in uses a different key name.
 
 ## Deployment Checklist
 
-- [ ] `netlify/functions/chip-in-webhook.js` created
+- [ ] `netlify/functions/chip-in-webhook.cjs` created
 - [ ] All 6 environment variables set in Netlify dashboard
 - [ ] `CHIPIN_SLUG_BE` and `CHIPIN_SLUG_B` match your payment link slugs exactly
 - [ ] `EBOOK_BE_URL` and `EBOOK_B_URL` are Drive view links — tested in browser

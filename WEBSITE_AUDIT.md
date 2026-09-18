@@ -471,7 +471,7 @@ Mirror exactly what you already do for the e-books (`EBOOK_DELIVERY_SETUP.md`):
 3. Keep the callback URL pointed at your existing webhook: `https://ejencukai.my/.netlify/functions/chip-in-webhook`.
 4. Enable **collect buyer name + email** at checkout — you'll want them for prefill and for reconciliation.
 
-Then extend the webhook's product map (`netlify/functions/chip-in-webhook.js:79-93`). Note the existing matcher checks `/thank-you/be` before `/thank-you/b` to avoid a substring collision; adding `/booking/thank-you` is a distinct path so it's safe:
+Then extend the webhook's product map (`netlify/functions/chip-in-webhook.cjs:79-93`). Note the existing matcher checks `/thank-you/be` before `/thank-you/b` to avoid a substring collision; adding `/booking/thank-you` is a distinct path so it's safe:
 
 ```js
 let productKey = null
@@ -660,11 +660,11 @@ The routes `/ebook/thank-you/be` and `/ebook/thank-you/b` are public with no pay
 
 This is a live revenue leak on a product you're actively selling. Fixes, cheapest first:
 
-1. **Signed/expiring link** — have `chip-in-webhook.js` generate a short-lived token on `purchase.paid`, store it (Netlify Blobs / Supabase), and redirect to `/ebook/thank-you/be?t=<token>`; the page calls a function to exchange the token for the Drive URL. The URL never ships in the bundle.
-2. **Email delivery** — send the link by email from the webhook. Note that commit `c164903` ("remove auto email") deliberately removed this, so the webhook now verifies the signature, logs, and returns `OK` without delivering anything (`chip-in-webhook.js:111-112`). Delivery depends entirely on the thank-you page today.
+1. **Signed/expiring link** — have `chip-in-webhook.cjs` generate a short-lived token on `purchase.paid`, store it (Netlify Blobs / Supabase), and redirect to `/ebook/thank-you/be?t=<token>`; the page calls a function to exchange the token for the Drive URL. The URL never ships in the bundle.
+2. **Email delivery** — send the link by email from the webhook. Note that commit `c164903` ("remove auto email") deliberately removed this, so the webhook now verifies the signature, logs, and returns `OK` without delivering anything (`chip-in-webhook.cjs:111-112`). Delivery depends entirely on the thank-you page today.
 3. **At minimum**, rotate both Drive file IDs — the current ones may already be circulating.
 
-### 7.2 `chip-in-webhook.js:107` references an undefined variable
+### 7.2 `chip-in-webhook.cjs:107` references an undefined variable
 
 ```js
 if (!ebookUrl) {
@@ -675,7 +675,7 @@ if (!ebookUrl) {
 
 ### 7.3 Webhook returns 200 on signature failure
 
-`chip-in-webhook.js:30, 35, 50` return `200 OK` when the signature is missing, the key is unset, or verification fails. That's a deliberate choice to stop Chip-in retrying, and it's defensible — but it means a misconfigured `CHIPIN_PUBLIC_KEY` fails **completely silently**. Since the webhook no longer delivers anything (§7.1), you'd have no signal at all. Add an alert (email/Slack/Sentry) on verification failure.
+`chip-in-webhook.cjs:30, 35, 50` return `200 OK` when the signature is missing, the key is unset, or verification fails. That's a deliberate choice to stop Chip-in retrying, and it's defensible — but it means a misconfigured `CHIPIN_PUBLIC_KEY` fails **completely silently**. Since the webhook no longer delivers anything (§7.1), you'd have no signal at all. Add an alert (email/Slack/Sentry) on verification failure.
 
 ### 7.4 `.env` handling — OK
 
@@ -797,7 +797,7 @@ Implemented on `main`. Build, type-check and lint all pass.
 - **EbookPage** — checkout tracking, same-tab checkout, contact details from config
 - **WhatsAppButton** — `wa.link` → `wa.me` with a pre-filled opener + click tracking
 - **`index.html`** — meta description, OG/Twitter cards, canonical, `ProfessionalService` JSON-LD, `lang="ms"`, favicon → logo, plus the hidden Netlify Forms target
-- **`chip-in-webhook.js`** — recognises the consultation product; fixed the §7.2 `ReferenceError` on the missing-URL path
+- **`chip-in-webhook.cjs`** — recognises the consultation product; fixed the §7.2 `ReferenceError` on the missing-URL path
 - Removed the pre-existing unused imports/props flagged in §3.7, clearing all 9 lint errors and 14 type errors that were already in the repo
 
 ### Deliberately not done
@@ -845,6 +845,10 @@ Hero with an illustrative case card → trust stats → **How it works** (new) �
 - **Pricing model changed.** Per-service prices are gone. Real engagements varied too much for them to hold, so the site now advertises a single starting figure, **RM1,950 per year of assessment** (`FILING` in `src/config/site.ts`), with the service list shown as two plain columns and the quote given on WhatsApp. The FAQ and JSON-LD `priceRange` follow.
 - **Testimonials are live.** Three real clients (a home studio owner, an online business owner and an affiliate marketer, all Borang B), shown by initial only at their request. Edit them in `src/components/Testimonials.tsx`.
 - **Decluttered.** Hero lost the floating bubbles, deadline chip, dotted background and trust list; the trust-stats strip, the free-tools strip and the extra CTA under "How it works" were removed; "Why us" is three cards instead of four plus a licence card; FAQ is five questions; product cards carry two bullets each.
+
+### Deploy fix
+
+The first deploy from this branch failed at Netlify's functions bundling step, not the Vite build: `chip-in-webhook.js` is CommonJS while `package.json` declares `"type": "module"`, and `@netlify/build` 37 now rejects that. The function is renamed to **`chip-in-webhook.cjs`**; the endpoint stays `/.netlify/functions/chip-in-webhook`, so nothing changes in the Chip-in dashboard. A `.nvmrc` pins Node 20 for reproducible builds.
 
 ### Still open (unchanged from §11)
 
