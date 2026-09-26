@@ -55,7 +55,7 @@ function HowItWorks() {
 
         <ol className="relative mt-14 grid gap-6 md:grid-cols-3 md:gap-8">
           {/* connector line (desktop) */}
-          <div className="absolute left-[16.6%] right-[16.6%] top-9 hidden h-px bg-gradient-to-r from-transparent via-ink-200 to-transparent md:block" aria-hidden="true" />
+          <div className="absolute left-[16.6%] right-[16.6%] top-9 hidden h-px bg-ink-200 md:block" aria-hidden="true" />
 
           {steps.map((step, i) => (
             <motion.li key={step.title} {...reveal(i * 0.08)} className="relative flex flex-col">

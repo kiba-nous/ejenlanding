@@ -237,7 +237,6 @@ export function ConsultationPage() {
       <main id="main" className="bg-white">
         {/* Hero + booking form */}
         <section className="relative overflow-hidden">
-          <div className="absolute inset-0 -z-10 bg-hero-glow" aria-hidden="true" />
           <div className="container-x grid items-start gap-12 py-14 md:py-20 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-7">
               <motion.div {...reveal(0)}>
@@ -249,8 +248,8 @@ export function ConsultationPage() {
 
               <motion.h1 {...reveal(0.05)} className="mt-5 text-balance text-display-sm text-ink-900 md:text-display-lg">
                 {pick(
-                  <>Cakap terus dengan <span className="bg-brand-gradient bg-clip-text text-transparent">pakar cukai.</span></>,
-                  <>Talk directly to a <span className="bg-brand-gradient bg-clip-text text-transparent">tax expert.</span></>
+                  <>Cakap terus dengan <span className="text-brand-600">pakar cukai.</span></>,
+                  <>Talk directly to a <span className="text-brand-600">tax expert.</span></>
                 )}
               </motion.h1>
 
@@ -352,7 +351,6 @@ export function ConsultationPage() {
         <section className="pb-20">
           <div className="container-x">
             <motion.div {...reveal()} className="relative overflow-hidden rounded-xl3 bg-ink-950 px-6 py-12 text-center text-white md:px-16 md:py-16">
-              <div className="absolute inset-0 bg-[radial-gradient(70%_60%_at_50%_0%,rgba(79,179,255,0.28),transparent_70%)]" aria-hidden="true" />
               <div className="relative mx-auto max-w-xl">
                 <h2 className="text-balance text-display-sm">
                   {pick('Selesaikan keraguan cukai anda dalam satu jam.', 'Clear up your tax doubts in one hour.')}

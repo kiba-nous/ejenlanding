@@ -16,7 +16,6 @@ function FinalCta() {
           {...reveal()}
           className="relative overflow-hidden rounded-xl3 bg-ink-950 px-6 py-14 text-center text-white md:px-16 md:py-20"
         >
-          <div className="absolute inset-0 bg-[radial-gradient(70%_60%_at_50%_0%,rgba(79,179,255,0.28),transparent_70%)]" aria-hidden="true" />
           <div className="absolute inset-0 bg-dots opacity-[0.15] [background-size:22px_22px]" aria-hidden="true" />
 
           <div className="relative mx-auto max-w-2xl">

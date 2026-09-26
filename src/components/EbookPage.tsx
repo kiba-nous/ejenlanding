@@ -27,7 +27,7 @@ function BookCover({ variant, title, subtitle }: { variant: ProductKey; title: s
   return (
     <div
       className={`relative aspect-[3/4] w-40 shrink-0 overflow-hidden rounded-r-xl rounded-l-md shadow-float sm:w-44 ${
-        dark ? 'bg-ink-900 text-white' : 'bg-brand-gradient text-white'
+        dark ? 'bg-ink-900 text-white' : 'bg-brand-600 text-white'
       }`}
       aria-hidden="true"
     >
@@ -119,7 +119,6 @@ export function EbookPage() {
       <main id="main" className="bg-white">
         {/* Hero */}
         <section className="relative overflow-hidden">
-          <div className="absolute inset-0 -z-10 bg-hero-glow" aria-hidden="true" />
           <div className="container-x grid items-center gap-12 py-14 md:py-20 lg:grid-cols-12">
             <div className="lg:col-span-7">
               <motion.div {...reveal(0)}>
@@ -130,8 +129,8 @@ export function EbookPage() {
               </motion.div>
               <motion.h1 {...reveal(0.05)} className="mt-5 text-balance text-display-sm text-ink-900 md:text-display-lg">
                 {pick(
-                  <>Isi borang cukai anda <span className="bg-brand-gradient bg-clip-text text-transparent">dengan betul.</span></>,
-                  <>Fill in your tax form <span className="bg-brand-gradient bg-clip-text text-transparent">the right way.</span></>
+                  <>Isi borang cukai anda <span className="text-brand-600">dengan betul.</span></>,
+                  <>Fill in your tax form <span className="text-brand-600">the right way.</span></>
                 )}
               </motion.h1>
               <motion.p {...reveal(0.1)} className="mt-5 max-w-xl text-pretty text-[17px] leading-relaxed text-ink-600">
@@ -223,7 +222,6 @@ export function EbookPage() {
               </motion.article>
 
               <motion.article {...reveal(0.08)} className="relative flex flex-col overflow-hidden rounded-xl3 bg-ink-900 p-8 text-white">
-                <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-brand-gradient opacity-30 blur-3xl" aria-hidden="true" />
                 <div className="relative flex items-center justify-between">
                   <Badge tone="inverse">Borang B</Badge>
                   <Briefcase className="h-5 w-5 text-white/40" />
@@ -277,7 +275,6 @@ export function EbookPage() {
         <section className="py-16 md:py-20">
           <div className="container-x">
             <motion.div {...reveal()} className="relative overflow-hidden rounded-xl3 bg-ink-950 px-6 py-12 text-center text-white md:px-16 md:py-16">
-              <div className="absolute inset-0 bg-[radial-gradient(70%_60%_at_50%_0%,rgba(79,179,255,0.28),transparent_70%)]" aria-hidden="true" />
               <div className="relative mx-auto max-w-xl">
                 <h2 className="text-balance text-display-sm">
                   {pick('Jangan terlepas pelepasan anda lagi tahun ini.', 'Don’t miss your reliefs again this year.')}

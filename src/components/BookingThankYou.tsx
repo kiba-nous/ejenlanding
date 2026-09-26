@@ -137,7 +137,6 @@ export function BookingThankYou() {
 
       <main id="main" className="bg-white">
         <div className="relative">
-          <div className="absolute inset-x-0 top-0 -z-10 h-72 bg-hero-glow" aria-hidden="true" />
           <div className="container-x max-w-3xl pb-8 pt-14 text-center">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: 'easeOut' }}>
               <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-emerald-50 text-emerald-600">

@@ -45,7 +45,6 @@ export function EbookThankYou({ ebook }: { ebook: EbookKey }) {
       <Navbar />
 
       <main id="main" className="relative flex min-h-[80vh] items-center justify-center bg-ink-50 px-5 py-20">
-        <div className="absolute inset-x-0 top-0 -z-0 h-72 bg-hero-glow" aria-hidden="true" />
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}

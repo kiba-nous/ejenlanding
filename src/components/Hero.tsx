@@ -26,7 +26,7 @@ function CaseCard() {
 
   return (
     <div className="relative mx-auto w-full max-w-sm lg:max-w-none">
-      <div className="absolute -inset-8 -z-10 rounded-[2.5rem] bg-brand-gradient opacity-[0.08] blur-2xl" aria-hidden="true" />
+      <div className="absolute -inset-8 -z-10 rounded-[2.5rem] bg-brand-50" aria-hidden="true" />
 
       <motion.div {...fadeUp(0.25)} className="card overflow-hidden rounded-xl3 shadow-float" aria-hidden="true">
         <div className="flex items-center gap-3 border-b border-ink-100 px-6 py-5">
@@ -71,8 +71,6 @@ function Hero() {
 
   return (
     <section className="relative overflow-hidden bg-white">
-      <div className="absolute inset-0 -z-10 bg-hero-glow" aria-hidden="true" />
-
       <div className="container-x grid items-center gap-16 py-20 md:py-28 lg:grid-cols-12 lg:gap-12 lg:py-36">
         <div className="lg:col-span-7">
           <motion.p {...fadeUp(0)} className="eyebrow">
@@ -84,8 +82,8 @@ function Hero() {
             className="mt-5 text-balance text-display-md text-ink-900 sm:text-display-lg xl:text-display-xl"
           >
             {pick(
-              <>Fail cukai dengan betul, <span className="bg-brand-gradient bg-clip-text text-transparent">tanpa pening kepala.</span></>,
-              <>File your taxes right, <span className="bg-brand-gradient bg-clip-text text-transparent">without the headache.</span></>
+              <>Fail cukai dengan betul, <span className="text-brand-600">tanpa pening kepala.</span></>,
+              <>File your taxes right, <span className="text-brand-600">without the headache.</span></>
             )}
           </motion.h1>
 

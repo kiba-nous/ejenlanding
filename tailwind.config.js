@@ -3,7 +3,7 @@
 /**
  * Design tokens.
  *
- * `brand`  — derived from the logo's sky-blue → cyan gradient. 600 is the
+ * `brand`  — flat sky-blue scale taken from the logo. 600 is the
  *            button/link colour (AA on white); 400 matches the logo mark.
  * `ink`    — cool, slightly blue-tinted neutrals so grey text sits well next
  *            to the brand blue instead of looking muddy.
@@ -89,9 +89,7 @@ export default {
         ring: '0 0 0 1px rgba(19, 26, 37, 0.06)',
       },
       backgroundImage: {
-        'brand-gradient': `linear-gradient(135deg, ${brand[600]} 0%, #25C6E6 100%)`,
-        'hero-glow':
-          'radial-gradient(60% 50% at 80% 10%, rgba(79,179,255,0.22) 0%, rgba(79,179,255,0) 70%), radial-gradient(40% 40% at 10% 90%, rgba(37,198,230,0.16) 0%, rgba(37,198,230,0) 70%)',
+        // Dot texture only — the design uses flat colour, no gradients.
         'dots': 'radial-gradient(rgba(19,26,37,0.08) 1px, transparent 1px)',
       },
       keyframes: {

@@ -32,7 +32,6 @@ function FormPage() {
     <>
       <Navbar />
       <main id="main" className="relative min-h-screen bg-ink-50">
-        <div className="absolute inset-x-0 top-0 -z-10 h-80 bg-hero-glow" aria-hidden="true" />
         <div className="container-x grid gap-10 py-14 md:py-20 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-5">
             <span className="eyebrow">{pick('Pertanyaan percuma', 'Free enquiry')}</span>

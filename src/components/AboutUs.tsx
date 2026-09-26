@@ -102,7 +102,7 @@ function AboutUs() {
   ];
 
   return (
-    <div className="relative w-full min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+    <div className="relative w-full min-h-screen bg-ink-50">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div
@@ -124,7 +124,7 @@ function AboutUs() {
           className="text-center"
         >
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-            <span className="bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
+            <span className="text-brand-600">
               {language === 'en' ? 'About Ejen Cukai' : 'Tentang Ejen Cukai'}
             </span>
           </h1>

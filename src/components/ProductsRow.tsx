@@ -32,7 +32,6 @@ function ProductsRow() {
             {...reveal(0)}
             className="relative flex flex-col overflow-hidden rounded-xl3 bg-ink-900 p-8 text-white md:p-10"
           >
-            <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brand-gradient opacity-30 blur-3xl" aria-hidden="true" />
             <div className="relative flex items-center justify-between">
               <span className="grid h-11 w-11 place-items-center rounded-2xl bg-white/10">
                 <UserCheck className="h-5 w-5" />
