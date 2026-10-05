@@ -20,25 +20,34 @@ interface BaseProps {
   'aria-label'?: string;
 }
 
+// Squared-off corners rather than pills: they echo the keys on the calculator
+// logo and keep the CTAs from looking like every other template.
 const base =
-  'inline-flex items-center justify-center gap-2 rounded-full font-semibold whitespace-nowrap select-none ' +
+  'inline-flex items-center justify-center gap-2 rounded-xl font-semibold whitespace-nowrap select-none ' +
   'transition-[background-color,color,border-color,box-shadow,transform] duration-200 ease-out ' +
-  'active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60';
+  'active:translate-y-px disabled:pointer-events-none disabled:opacity-60';
 
+/**
+ * Primary is the brand blue #61C0F5 (brand-400). White text on it fails
+ * contrast (2.1:1), so it carries ink-950 text instead (9.8:1). The inset
+ * bottom edge gives it a pressable, key-like feel.
+ */
 const variants: Record<Variant, string> = {
-  primary: 'bg-brand-600 text-white shadow-[0_8px_20px_-8px_rgba(11,118,216,0.6)] hover:bg-brand-700 hover:shadow-[0_10px_24px_-8px_rgba(11,118,216,0.7)]',
-  secondary: 'bg-brand-50 text-brand-700 hover:bg-brand-100',
-  outline: 'border border-ink-200 bg-white text-ink-900 hover:border-ink-300 hover:bg-ink-50',
+  primary:
+    'bg-brand-400 text-ink-950 shadow-[inset_0_-3px_0_rgba(11,40,61,0.18),0_10px_24px_-12px_rgba(22,121,181,0.65)] ' +
+    'hover:bg-brand-500 hover:shadow-[inset_0_-3px_0_rgba(11,40,61,0.22),0_14px_28px_-12px_rgba(22,121,181,0.75)]',
+  secondary: 'bg-brand-100 text-brand-800 hover:bg-brand-200',
+  outline: 'border border-ink-300 bg-white text-ink-900 hover:border-ink-900 hover:bg-white',
   ghost: 'text-ink-700 hover:bg-ink-100 hover:text-ink-900',
-  dark: 'bg-ink-900 text-white hover:bg-ink-800',
-  white: 'bg-white text-ink-900 shadow-sm hover:bg-ink-50',
+  dark: 'bg-ink-950 text-white shadow-[inset_0_-3px_0_rgba(255,255,255,0.08)] hover:bg-ink-800',
+  white: 'bg-white text-ink-900 shadow-[inset_0_-3px_0_rgba(18,26,39,0.08)] hover:bg-ink-50',
   whatsapp: 'bg-whatsapp text-white hover:bg-whatsapp-dark shadow-[0_8px_20px_-8px_rgba(37,211,102,0.6)]',
 };
 
 const sizes: Record<Size, string> = {
   sm: 'h-9 px-4 text-[13px]',
   md: 'h-11 px-5 text-[15px]',
-  lg: 'h-13 min-h-[52px] px-7 text-[16px]',
+  lg: 'h-13 min-h-[54px] px-7 text-[16px]',
 };
 
 /**

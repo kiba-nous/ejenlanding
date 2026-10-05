@@ -6,14 +6,36 @@ interface SectionHeadingProps {
   eyebrow?: string;
   title: React.ReactNode;
   subtitle?: React.ReactNode;
-  align?: 'left' | 'center';
+  /**
+   * `split` puts the title on the left and the subtitle in a right-hand
+   * column on wide screens — an editorial layout that avoids the stacked,
+   * centred heading every section of a template site uses.
+   */
+  align?: 'left' | 'center' | 'split';
   className?: string;
 }
 
 export function SectionHeading({ eyebrow, title, subtitle, align = 'center', className = '' }: SectionHeadingProps) {
+  if (align === 'split') {
+    return (
+      <motion.div
+        {...reveal()}
+        className={`grid gap-5 border-t border-ink-900 pt-6 lg:grid-cols-12 lg:items-end lg:gap-10 ${className}`}
+      >
+        <div className="flex flex-col items-start gap-4 lg:col-span-7">
+          {eyebrow && <span className="eyebrow">{eyebrow}</span>}
+          <h2 className="text-balance text-display-sm text-ink-900 md:text-display-md">{title}</h2>
+        </div>
+        {subtitle && (
+          <p className="text-pretty text-[17px] leading-relaxed text-ink-600 lg:col-span-5 lg:pb-1">{subtitle}</p>
+        )}
+      </motion.div>
+    );
+  }
+
   const alignCls = align === 'center' ? 'text-center mx-auto items-center' : 'text-left items-start';
   return (
-    <motion.div {...reveal()} className={`flex max-w-2xl flex-col gap-3 ${alignCls} ${className}`}>
+    <motion.div {...reveal()} className={`flex max-w-2xl flex-col gap-4 ${alignCls} ${className}`}>
       {eyebrow && <span className="eyebrow">{eyebrow}</span>}
       <h2 className="text-balance text-display-sm md:text-display-md text-ink-900">{title}</h2>
       {subtitle && <p className="text-pretty text-[17px] leading-relaxed text-ink-600">{subtitle}</p>}
@@ -32,7 +54,7 @@ export function Badge({
   className?: string;
 }) {
   const tones = {
-    brand: 'bg-brand-50 text-brand-700 ring-1 ring-inset ring-brand-100',
+    brand: 'bg-brand-100 text-brand-800 ring-1 ring-inset ring-brand-200',
     neutral: 'bg-ink-100 text-ink-700',
     amber: 'bg-amber-50 text-amber-800 ring-1 ring-inset ring-amber-100',
     green: 'bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-100',
@@ -40,7 +62,7 @@ export function Badge({
   };
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[12px] font-semibold ${tones[tone]} ${className}`}
+      className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1 text-[12px] font-semibold ${tones[tone]} ${className}`}
     >
       {children}
     </span>
@@ -53,7 +75,7 @@ export function CheckItem({ children, muted = false }: { children: React.ReactNo
     <li className={`flex items-start gap-3 text-[15px] leading-relaxed ${muted ? 'text-ink-500' : 'text-ink-700'}`}>
       <span
         className={`mt-1 grid h-5 w-5 shrink-0 place-items-center rounded-full ${
-          muted ? 'bg-ink-100 text-ink-400' : 'bg-brand-50 text-brand-600'
+          muted ? 'bg-ink-100 text-ink-400' : 'bg-brand-400 text-ink-950'
         }`}
         aria-hidden="true"
       >

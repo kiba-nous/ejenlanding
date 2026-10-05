@@ -39,16 +39,18 @@ export function Accordion({ items, defaultOpen = 0, className = '' }: Props) {
                 onClick={() => setOpen(isOpen ? null : i)}
                 className="group flex w-full items-center justify-between gap-6 py-5 text-left"
               >
-                <span className="text-[16px] font-semibold text-ink-900 group-hover:text-brand-700 transition-colors">
+                <span className="text-[17px] font-semibold text-ink-900 transition-colors group-hover:text-brand-700">
                   {item.q}
                 </span>
                 <span
-                  className={`grid h-7 w-7 shrink-0 place-items-center rounded-full border border-ink-200 text-ink-500 transition-all duration-200 group-hover:border-brand-300 group-hover:text-brand-700 ${
-                    isOpen ? 'rotate-45 bg-brand-50 border-brand-200 text-brand-700' : ''
+                  className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg border text-ink-600 transition-all duration-200 ${
+                    isOpen
+                      ? 'border-brand-400 bg-brand-400 text-ink-950'
+                      : 'border-ink-200 group-hover:border-ink-900 group-hover:text-ink-900'
                   }`}
                   aria-hidden="true"
                 >
-                  <Plus className="h-4 w-4" />
+                  <Plus className={`h-4 w-4 transition-transform duration-200 ${isOpen ? 'rotate-45' : ''}`} />
                 </span>
               </button>
             </h3>

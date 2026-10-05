@@ -4,6 +4,8 @@ import { HowItWorks } from './HowItWorks';
 import { ServicesPricing } from './ServicesPricing';
 import { Testimonials } from './Testimonials';
 import { ProductsRow } from './ProductsRow';
+import { MobileApp } from './MobileApp';
+import { AskAi } from './AskAi';
 import { WhyUs } from './WhyUs';
 import { HomeFaq } from './HomeFaq';
 import { FinalCta } from './FinalCta';
@@ -14,7 +16,9 @@ import { useLanguage } from '../contexts/LanguageContext';
 /**
  * Page order follows the visitor's questions in sequence:
  * what is this → how does it work → what does it cost → who else used it →
- * what if I'm not ready → why you → remaining doubts → act.
+ * what if I'm not ready (consultation, e-book, app,
+ * AI chat) → why you →
+ * remaining doubts → act.
  */
 function Home() {
   const { pick } = useLanguage();
@@ -35,6 +39,8 @@ function Home() {
         <ServicesPricing />
         <Testimonials />
         <ProductsRow />
+        <MobileApp />
+        <AskAi />
         <WhyUs />
         <HomeFaq />
         <FinalCta />

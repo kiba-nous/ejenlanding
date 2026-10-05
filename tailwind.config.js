@@ -3,39 +3,43 @@
 /**
  * Design tokens.
  *
- * `brand`  — flat sky-blue scale taken from the logo. 600 is the
- *            button/link colour (AA on white); 400 matches the logo mark.
- * `ink`    — cool, slightly blue-tinted neutrals so grey text sits well next
- *            to the brand blue instead of looking muddy.
+ * `brand`  — sky-blue scale. 400 (#61C0F5) is the fill colour for buttons
+ *            and blocks; it only reaches AA contrast with dark text, so it
+ *            always pairs with ink-950. 500 is the logo blue (#38B6FF); 600
+ *            and 700 are the same hue, darkened, for blue text — 600 for
+ *            headline accents and icons (3.8:1), 700+ for small text (AA).
+ * `ink`    — warm "paper" tints at the light end (50–300) so pages read like
+ *            printed tax forms, deepening into navy for text (400+).
  * `apple`  — legacy aliases kept so the unlinked /business, /tax-firms and
  *            /investors pages still render. New code should not use them.
  */
 const brand = {
-  50: '#EFF8FF',
-  100: '#DBEEFF',
-  200: '#BFE2FF',
-  300: '#8FCEFF',
-  400: '#4FB3FF',
-  500: '#2196F3',
-  600: '#0B76D8',
-  700: '#085FB3',
-  800: '#0A4E8F',
-  900: '#0D3F70',
-  950: '#08213D',
+  DEFAULT: '#61C0F5',
+  50: '#F1F9FE',
+  100: '#E0F2FD',
+  200: '#C4E8FB',
+  300: '#98D6F9',
+  400: '#61C0F5',
+  500: '#38B6FF',
+  600: '#0088D6',
+  700: '#0A78B8',
+  800: '#085F91',
+  900: '#064F79',
+  950: '#053F61',
 };
 
 const ink = {
-  50: '#F7F9FC',
-  100: '#EEF2F7',
-  200: '#DDE3EC',
-  300: '#C3CCD9',
-  400: '#8E9AAD',
-  500: '#64718A',
-  600: '#485468',
-  700: '#343E50',
-  800: '#1F2735',
-  900: '#131A25',
-  950: '#0B0F16',
+  50: '#F7F6F2',
+  100: '#EFEEE8',
+  200: '#E2E0D8',
+  300: '#CAC8BF',
+  400: '#8E95A3',
+  500: '#626B7C',
+  600: '#465063',
+  700: '#323C4E',
+  800: '#1E2737',
+  900: '#121A27',
+  950: '#0A111C',
 };
 
 export default {
@@ -83,14 +87,20 @@ export default {
         'apple-button': '980px',
       },
       boxShadow: {
-        card: '0 1px 2px rgba(19, 26, 37, 0.04), 0 8px 24px -12px rgba(19, 26, 37, 0.12)',
-        'card-hover': '0 2px 4px rgba(19, 26, 37, 0.05), 0 20px 40px -16px rgba(19, 26, 37, 0.18)',
-        float: '0 24px 60px -20px rgba(8, 33, 61, 0.35)',
-        ring: '0 0 0 1px rgba(19, 26, 37, 0.06)',
+        card: '0 1px 2px rgba(18, 26, 39, 0.04), 0 8px 24px -12px rgba(18, 26, 39, 0.12)',
+        'card-hover': '0 2px 4px rgba(18, 26, 39, 0.05), 0 20px 40px -16px rgba(18, 26, 39, 0.18)',
+        float: '0 24px 60px -20px rgba(11, 40, 61, 0.35)',
+        ring: '0 0 0 1px rgba(18, 26, 39, 0.06)',
+        // Hard offset shadow: reads as a sheet of paper lifted off the desk.
+        paper: '0 1px 0 rgba(18, 26, 39, 0.04), 6px 6px 0 rgba(18, 26, 39, 0.9)',
+        'paper-sm': '3px 3px 0 rgba(18, 26, 39, 0.9)',
       },
       backgroundImage: {
-        // Dot texture only — the design uses flat colour, no gradients.
-        'dots': 'radial-gradient(rgba(19,26,37,0.08) 1px, transparent 1px)',
+        // Textures only — the design uses flat colour, no decorative gradients.
+        'dots': 'radial-gradient(rgba(18,26,39,0.08) 1px, transparent 1px)',
+        // Ledger / graph paper.
+        'ledger':
+          'linear-gradient(rgba(22,121,181,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(22,121,181,0.07) 1px, transparent 1px)',
       },
       keyframes: {
         'fade-up': {
@@ -101,10 +111,15 @@ export default {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0.55' },
         },
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
       },
       animation: {
         'fade-up': 'fade-up 0.5s ease-out both',
         'pulse-soft': 'pulse-soft 2.4s ease-in-out infinite',
+        marquee: 'marquee 40s linear infinite',
       },
     },
   },

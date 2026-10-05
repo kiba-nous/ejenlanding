@@ -27,7 +27,7 @@ function BookCover({ variant, title, subtitle }: { variant: ProductKey; title: s
   return (
     <div
       className={`relative aspect-[3/4] w-40 shrink-0 overflow-hidden rounded-r-xl rounded-l-md shadow-float sm:w-44 ${
-        dark ? 'bg-ink-900 text-white' : 'bg-brand-600 text-white'
+        dark ? 'bg-ink-900 text-white' : 'bg-brand-400 text-ink-950'
       }`}
       aria-hidden="true"
     >

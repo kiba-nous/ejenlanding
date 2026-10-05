@@ -14,7 +14,7 @@
   }
 
   ::selection {
-    @apply bg-brand-200 text-ink-900;
+    @apply bg-brand-400 text-ink-950;
   }
 
   /* Keyboard focus only — mouse clicks don't get a ring. */
@@ -39,17 +39,44 @@
     @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
   }
 
+  /* Label with a small "calculator key" square, echoing the logo. */
   .eyebrow {
-    @apply inline-flex items-center gap-2 text-[13px] font-semibold uppercase tracking-[0.12em] text-brand-700;
+    @apply inline-flex items-center gap-2.5 text-[12.5px] font-bold uppercase tracking-[0.14em] text-ink-600;
+  }
+  .eyebrow::before {
+    content: '';
+    @apply h-2.5 w-2.5 shrink-0 rounded-[3px] bg-brand-400;
+  }
+
+  /* Torn-receipt bottom edge. */
+  .receipt-edge {
+    --tooth: 14px;
+    -webkit-mask:
+      conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / var(--tooth) 100%;
+    mask:
+      conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / var(--tooth) 100%;
+  }
+
+  /* Dotted leader between a label and its value, as on a printed form. */
+  .leader {
+    @apply flex-1 translate-y-[-4px] border-b-2 border-dotted border-ink-200;
+  }
+
+  /* Faint graph-paper background, faded out at the edges. */
+  .bg-ledger-fade {
+    @apply bg-ledger;
+    background-size: 32px 32px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
   }
 
   .card {
-    @apply rounded-xl2 border border-ink-200/80 bg-white shadow-card;
+    @apply rounded-xl2 border border-ink-200 bg-white shadow-card;
   }
 
   .field {
     @apply w-full rounded-xl border border-ink-200 bg-white px-4 py-3 text-[15px] text-ink-900 placeholder:text-ink-400
-      transition-colors duration-150 hover:border-ink-300 focus:border-brand-500 focus:outline-none focus:ring-4 focus:ring-brand-100;
+      transition-colors duration-150 hover:border-ink-300 focus:border-brand-500 focus:outline-none focus:ring-4 focus:ring-brand-200/70;
   }
 
   .field-label {
@@ -73,7 +100,7 @@
     @apply font-semibold text-ink-800;
   }
   .prose-legal a {
-    @apply text-brand-600 underline-offset-2 hover:underline;
+    @apply text-brand-700 underline decoration-brand-400 decoration-2 underline-offset-2 hover:decoration-brand-600;
   }
 }
 

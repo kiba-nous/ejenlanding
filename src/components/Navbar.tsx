@@ -19,7 +19,7 @@ function LanguageToggle({ compact = false }: { compact?: boolean }) {
     <div
       role="group"
       aria-label="Language"
-      className={`flex items-center rounded-full bg-ink-100 p-0.5 ${compact ? 'text-[11px]' : 'text-[12px]'}`}
+      className={`flex items-center rounded-lg bg-ink-100 p-0.5 ${compact ? 'text-[11px]' : 'text-[12px]'}`}
     >
       {options.map((lang) => (
         <button
@@ -27,7 +27,7 @@ function LanguageToggle({ compact = false }: { compact?: boolean }) {
           type="button"
           onClick={() => setLanguage(lang)}
           aria-pressed={language === lang}
-          className={`rounded-full font-semibold uppercase tracking-wide transition-all duration-150 ${
+          className={`rounded-md font-semibold uppercase tracking-wide transition-all duration-150 ${
             compact ? 'px-2 py-1' : 'px-2.5 py-1'
           } ${language === lang ? 'bg-white text-ink-900 shadow-sm' : 'text-ink-500 hover:text-ink-900'}`}
         >
@@ -77,13 +77,13 @@ function Navbar() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b bg-white/85 backdrop-blur-xl transition-[border-color,box-shadow] duration-200 ${
-        scrolled ? 'border-ink-200/80 shadow-[0_1px_0_rgba(19,26,37,0.02),0_8px_24px_-16px_rgba(19,26,37,0.18)]' : 'border-transparent'
+      className={`sticky top-0 z-50 border-b bg-ink-50/85 backdrop-blur-xl transition-[border-color,box-shadow] duration-200 ${
+        scrolled ? 'border-ink-200 shadow-[0_8px_24px_-16px_rgba(18,26,39,0.18)]' : 'border-transparent'
       }`}
     >
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-[60] focus:rounded-full focus:bg-brand-600 focus:px-4 focus:py-2 focus:text-white"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-[60] focus:rounded-full focus:bg-brand-400 focus:px-4 focus:py-2 focus:text-ink-950"
       >
         {pick('Langkau ke kandungan', 'Skip to content')}
       </a>
@@ -100,8 +100,8 @@ function Navbar() {
               key={item.to}
               to={item.to}
               aria-current={isActive(item) ? 'page' : undefined}
-              className={`rounded-full px-3.5 py-2 text-[14px] font-medium transition-colors ${
-                isActive(item) ? 'bg-ink-100 text-ink-900' : 'text-ink-600 hover:bg-ink-50 hover:text-ink-900'
+              className={`rounded-lg px-3.5 py-2 text-[14px] font-medium transition-colors ${
+                isActive(item) ? 'bg-ink-900 text-white' : 'text-ink-600 hover:bg-ink-100 hover:text-ink-900'
               }`}
             >
               {item.label}
@@ -142,7 +142,7 @@ function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.18, ease: 'easeOut' }}
-            className="absolute inset-x-0 top-full border-b border-ink-200 bg-white shadow-card-hover md:hidden"
+            className="absolute inset-x-0 top-full border-b border-ink-200 bg-ink-50 shadow-card-hover md:hidden"
           >
             <div className="container-x flex flex-col gap-1 py-4">
               {items.map((item) => (
@@ -151,7 +151,7 @@ function Navbar() {
                   to={item.to}
                   aria-current={isActive(item) ? 'page' : undefined}
                   className={`rounded-xl px-4 py-3 text-[16px] font-medium transition-colors ${
-                    isActive(item) ? 'bg-brand-50 text-brand-700' : 'text-ink-800 hover:bg-ink-50'
+                    isActive(item) ? 'bg-brand-100 text-brand-800' : 'text-ink-800 hover:bg-ink-100'
                   }`}
                 >
                   {item.label}

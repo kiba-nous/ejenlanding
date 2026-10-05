@@ -14,6 +14,21 @@ export const WHATSAPP_DISPLAY = '+6010 321 6650';
 
 export const CONTACT_EMAIL = 'contact@ejencukai.my';
 
+/** EjenCukai receipt-scanner app on Google Play. */
+export const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=my.ejencukai.receiptscanner';
+
+/** Other EjenCukai products and demos, on their own subdomains. */
+export const PRODUCT_URLS = {
+  /** Free tax Q&A chatbot for the public. */
+  askAi: 'https://ai.ejencukai.my',
+  /** AI CRM for tax firms. */
+  agent: 'https://agent.ejencukai.my',
+  /** Investor demo. */
+  investorDemo: 'https://demo.ejencukai.my',
+  /** Earlier demo of the business-facing AI agent. */
+  businessAgentDemo: 'https://chat.ejencukai.my',
+} as const;
+
 /** Chip-in payment links. */
 export const CHIPIN = {
   ebookBE: 'https://pay.chip-in.asia/borangbe',

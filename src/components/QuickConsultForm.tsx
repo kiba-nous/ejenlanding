@@ -204,7 +204,7 @@ function QuickConsultForm() {
             <li key={label} className="flex flex-1 flex-col gap-2" aria-current={state === 'current' ? 'step' : undefined}>
               <span
                 className={`h-1.5 rounded-full transition-colors duration-300 ${
-                  state === 'todo' ? 'bg-ink-200' : 'bg-brand-600'
+                  state === 'todo' ? 'bg-ink-200' : 'bg-brand-400'
                 }`}
               />
               <span className={`text-[12px] font-semibold ${state === 'current' ? 'text-ink-900' : 'text-ink-400'}`}>
@@ -245,7 +245,7 @@ function QuickConsultForm() {
                   onClick={() => chooseClientType(opt.type)}
                   className="group flex items-start gap-4 rounded-2xl border border-ink-200 bg-white p-5 text-left transition-all hover:border-brand-400 hover:bg-brand-50/50 hover:shadow-card"
                 >
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-ink-100 text-ink-700 transition-colors group-hover:bg-brand-600 group-hover:text-white">
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-ink-100 text-ink-700 transition-colors group-hover:bg-brand-400 group-hover:text-ink-950">
                     <opt.icon className="h-5 w-5" />
                   </span>
                   <span>
@@ -274,7 +274,7 @@ function QuickConsultForm() {
                   className="group flex w-full items-center justify-between gap-4 rounded-2xl border border-ink-200 bg-white px-5 py-4 text-left text-[15px] font-medium text-ink-800 transition-all hover:border-brand-400 hover:bg-brand-50/50"
                 >
                   {bm ? option.bm : option.en}
-                  <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-ink-200 text-transparent transition-all group-hover:border-brand-500 group-hover:bg-brand-600 group-hover:text-white">
+                  <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-ink-200 text-transparent transition-all group-hover:border-brand-500 group-hover:bg-brand-400 group-hover:text-ink-950">
                     <Check className="h-3.5 w-3.5" strokeWidth={3} />
                   </span>
                 </button>

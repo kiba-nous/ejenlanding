@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { Award, MessageCircleHeart, ReceiptText } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { SectionHeading } from './ui/Section';
 import { reveal } from './ui/motion';
 
 /**
@@ -40,24 +39,42 @@ function WhyUs() {
   ];
 
   return (
-    <section className="bg-ink-50 py-20 md:py-28">
-      <div className="container-x">
-        <SectionHeading
-          eyebrow={pick('Kenapa EjenCukai', 'Why EjenCukai')}
-          title={pick('Proses yang jelas dari mula hingga akhir.', 'A clear process from start to finish.')}
-        />
+    <section className="relative overflow-hidden bg-ink-950 py-20 text-white md:py-28">
+      <div
+        className="pointer-events-none absolute inset-0 bg-ledger opacity-60 [background-size:32px_32px] [mask-image:linear-gradient(to_bottom,#000,transparent_70%)]"
+        aria-hidden="true"
+      />
+      <div className="container-x relative grid gap-12 lg:grid-cols-12 lg:gap-16">
+        <motion.div {...reveal()} className="lg:col-span-5">
+          <div className="lg:sticky lg:top-28">
+            <span className="eyebrow text-white/60">{pick('Kenapa EjenCukai', 'Why EjenCukai')}</span>
+            <h2 className="mt-4 text-balance text-display-sm md:text-display-md">
+              {pick(
+                <>Proses yang <span className="text-brand-400">jelas</span> dari mula hingga akhir.</>,
+                <>A <span className="text-brand-400">clear</span> process from start to finish.</>
+              )}
+            </h2>
+          </div>
+        </motion.div>
 
-        <ul className="mt-12 grid gap-6 md:grid-cols-3">
+        <ol className="lg:col-span-7">
           {reasons.map((r, i) => (
-            <motion.li key={r.title} {...reveal(i * 0.06)} className="card p-7">
-              <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand-50 text-brand-600">
-                <r.icon className="h-5 w-5" strokeWidth={1.75} />
+            <motion.li
+              key={r.title}
+              {...reveal(i * 0.06)}
+              className="grid grid-cols-[auto,1fr] gap-x-5 gap-y-2 border-t border-white/15 py-8 first:border-t-0 first:pt-0 md:gap-x-8"
+            >
+              <span className="row-span-2 grid h-12 w-12 place-items-center rounded-xl bg-brand-400 text-ink-950">
+                <r.icon className="h-5 w-5" strokeWidth={2} />
               </span>
-              <h3 className="mt-5 text-[17px] font-bold text-ink-900">{r.title}</h3>
-              <p className="mt-2 text-[15px] leading-relaxed text-ink-600">{r.body}</p>
+              <h3 className="flex items-baseline gap-3 text-[21px] font-bold leading-snug">
+                <span className="text-[12px] font-semibold text-brand-300">0{i + 1}</span>
+                {r.title}
+              </h3>
+              <p className="text-[15.5px] leading-relaxed text-white/70">{r.body}</p>
             </motion.li>
           ))}
-        </ul>
+        </ol>
       </div>
     </section>
   );

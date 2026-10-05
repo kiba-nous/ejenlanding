@@ -13,7 +13,7 @@ function HomeFaq() {
   return (
     <section id="faq" className="scroll-mt-20 bg-white py-20 md:py-28">
       <div className="container-x grid gap-10 lg:grid-cols-12 lg:gap-16">
-        <div className="lg:col-span-4">
+        <div className="lg:sticky lg:top-28 lg:col-span-4 lg:self-start">
           <SectionHeading
             align="left"
             eyebrow={pick('Soalan lazim', 'FAQ')}
@@ -26,14 +26,14 @@ function HomeFaq() {
             onClick={() => trackEvent('whatsapp_click', { location: 'faq' })}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-6 inline-flex h-11 items-center gap-2 rounded-full border border-ink-200 px-5 text-[14px] font-semibold text-ink-800 transition-colors hover:border-whatsapp hover:bg-emerald-50 hover:text-emerald-800"
+            className="mt-6 inline-flex h-11 items-center gap-2 rounded-xl border border-ink-300 px-5 text-[14px] font-semibold text-ink-800 transition-colors hover:border-whatsapp hover:bg-emerald-50 hover:text-emerald-800"
           >
             <MessageCircle className="h-4 w-4" />
             {pick('Tanya di WhatsApp', 'Ask on WhatsApp')}
           </motion.a>
         </div>
         <motion.div {...reveal(0.05)} className="lg:col-span-8">
-          <Accordion items={HOME_FAQ[language]} className="border-t border-ink-200" />
+          <Accordion items={HOME_FAQ[language]} className="border-t-2 border-ink-900" />
         </motion.div>
       </div>
     </section>
