@@ -72,9 +72,9 @@ function Footer() {
                 </a>
               </li>
               <li>
-                <a href={`mailto:ejencukaimy@gmail.com`} className={`inline-flex items-center gap-2.5 ${link}`}>
+                <a href={`mailto:contact@ejencukai.my`} className={`inline-flex items-center gap-2.5 ${link}`}>
                   <Mail className="h-4 w-4 text-brand-400" />
-                  ejencukaimy@gmail.com
+                  contact@ejencukai.my
                 </a>
               </li>
               <li className="inline-flex items-center gap-2.5 text-[14px] text-white/65">
