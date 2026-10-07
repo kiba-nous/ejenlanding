@@ -2,7 +2,7 @@ import { Mail, MapPin, MessageCircle, Instagram } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { trackEvent, buildWhatsAppUrl } from '../utils/analytics';
-import { CONTACT_EMAIL, PLAY_STORE_URL, PRODUCT_URLS, WHATSAPP_DISPLAY } from '../config/site';
+import { PLAY_STORE_URL, PRODUCT_URLS, WHATSAPP_DISPLAY } from '../config/site';
 
 function Footer() {
   const { pick } = useLanguage();
@@ -72,9 +72,9 @@ function Footer() {
                 </a>
               </li>
               <li>
-                <a href={`mailto:${CONTACT_EMAIL}`} className={`inline-flex items-center gap-2.5 ${link}`}>
+                <a href={`mailto:ejencukaimy@gmail.com`} className={`inline-flex items-center gap-2.5 ${link}`}>
                   <Mail className="h-4 w-4 text-brand-400" />
-                  {CONTACT_EMAIL}
+                  ejencukaimy@gmail.com
                 </a>
               </li>
               <li className="inline-flex items-center gap-2.5 text-[14px] text-white/65">
