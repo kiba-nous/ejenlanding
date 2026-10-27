@@ -51,7 +51,7 @@ function Footer() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
           {/* Brand + contact */}
           <div className="lg:col-span-3">
-            <img src="/logo.png" alt="EjenCukai" width={800} height={300} className="-ml-2 h-12 w-auto" />
+            <img src="/logo.svg" alt="EjenCukai" width={291} height={56} className="h-8 w-auto" />
             <p className="mt-5 max-w-xs text-[14px] leading-relaxed text-white/65">
               {pick(
                 'Platform pemfailan cukai. Kami hubungkan anda dengan profesional cukai dan rakan ejen berdaftar LHDN untuk Borang BE, Borang B dan cukai syarikat.',

@@ -38,7 +38,7 @@ function ChatWindow() {
 
         {/* Answer */}
         <div className="flex items-start gap-3">
-          <img src="/favicon.png" alt="" width={64} height={64} className="mt-0.5 h-8 w-8 shrink-0 rounded-lg bg-brand-50 p-1" />
+          <img src="/logo-mark.svg" alt="" width={49} height={56} className="mt-0.5 h-8 w-8 shrink-0 rounded-lg bg-brand-50 object-contain p-1.5" />
           <div className="max-w-[88%] rounded-2xl rounded-tl-md bg-ink-50 px-4 py-3 text-[14px] leading-relaxed text-ink-800">
             {pick(
               <>Anda perlu guna <strong className="text-ink-950">Borang B</strong>. Borang B untuk individu yang ada pendapatan perniagaan, termasuk jualan online, walaupun anda juga makan gaji.</>,

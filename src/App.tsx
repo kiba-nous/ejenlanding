@@ -9,6 +9,7 @@ import { Investors } from './components/Investors';
 import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { TermsOfService } from './components/TermsOfService';
 import { WhatsAppButton } from './components/WhatsAppButton';
+import { ClassPromoPopup } from './components/ClassPromoPopup';
 import { EbookPage } from './components/EbookPage';
 import { EbookThankYou } from './components/EbookThankYou';
 import { ConsultationPage } from './components/ConsultationPage';
@@ -38,6 +39,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
           <WhatsAppButton />
+          <ClassPromoPopup />
         </div>
       </Router>
     </LanguageProvider>
