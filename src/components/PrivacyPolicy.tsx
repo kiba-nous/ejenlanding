@@ -1,4 +1,5 @@
 import { LegalLayout } from './LegalLayout';
+import { CONTACT_EMAIL } from '../config/site';
 
 function PrivacyPolicy() {
   return (
@@ -106,7 +107,7 @@ function PrivacyPolicy() {
                 If you have any questions about this Privacy Policy or our data practices, please contact us:
               </p>
               <ul>
-                <li><strong>Email:</strong> contact@ejencukai.my</li>
+                <li><strong>Email:</strong> {CONTACT_EMAIL}</li>
                 <li><strong>Address:</strong> Kuala Lumpur, Malaysia</li>
               </ul>
             </section>

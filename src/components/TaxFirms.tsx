@@ -5,9 +5,12 @@ import { useLanguage } from "../contexts/LanguageContext";
 import { Navbar } from "./Navbar";
 import { WaitlistForm } from "./WaitlistForm";
 import { Footer } from "./Footer";
+import { usePageMeta } from "../hooks/usePageMeta";
+import { PRODUCT_URLS } from "../config/site";
 
 function TaxFirms() {
   const { language } = useLanguage();
+  usePageMeta({ title: language === 'en' ? 'AI Tools for Tax Firms' : 'Alat AI untuk Firma Cukai' });
   const [titleNumber, setTitleNumber] = useState(0);
 
   const titles = useMemo(
@@ -140,7 +143,7 @@ function TaxFirms() {
           >
             <button
               className="px-6 py-3 text-[17px] font-medium text-white bg-apple-blue hover:opacity-90 rounded-apple-button transition-opacity duration-200"
-              onClick={() => window.open("https://agent.ejencukai.my", "_blank")}
+              onClick={() => window.open(PRODUCT_URLS.agent, "_blank")}
             >
               {language === 'en' ? "Try Version 1.0" : "Cuba Versi 1.0"}
             </button>

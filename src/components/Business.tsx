@@ -5,9 +5,12 @@ import { useLanguage } from "../contexts/LanguageContext";
 import { Navbar } from "./Navbar";
 import { WaitlistForm } from "./WaitlistForm";
 import { Footer } from "./Footer";
+import { usePageMeta } from "../hooks/usePageMeta";
+import { PRODUCT_URLS } from "../config/site";
 
 function Business() {
   const { language } = useLanguage();
+  usePageMeta({ title: language === 'en' ? 'Business Tax Support' : 'Sokongan Cukai Perniagaan' });
   const [titleNumber, setTitleNumber] = useState(0);
 
   const titles = useMemo(
@@ -138,7 +141,7 @@ function Business() {
             </button>
             <button
               className="px-6 py-3 text-[17px] font-medium text-apple-gray-1 bg-white border border-apple-gray-4 hover:bg-apple-gray-5 rounded-apple-button transition-colors duration-200"
-              onClick={() => window.open("https://chat.ejencukai.my", "_blank")}
+              onClick={() => window.open(PRODUCT_URLS.businessAgentDemo, "_blank")}
             >
               {language === 'en' ? "See Demo" : "Lihat Demo"}
             </button>

@@ -26,7 +26,7 @@ function ChatWindow() {
         </span>
         <span className="flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-white px-3 py-1 text-[12px] font-medium text-ink-500">
           <Lock className="h-3 w-3" />
-          ai.ejencukai.my
+          {PRODUCT_URLS.askAi.replace('https://', '')}
         </span>
       </div>
 

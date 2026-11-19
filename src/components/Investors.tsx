@@ -5,9 +5,11 @@ import { useLanguage } from "../contexts/LanguageContext";
 import { Navbar } from "./Navbar";
 import { InvestorForm } from "./InvestorForm";
 import { Footer } from "./Footer";
+import { usePageMeta } from "../hooks/usePageMeta";
 
 function Investors() {
   const { language } = useLanguage();
+  usePageMeta({ title: language === 'en' ? 'Investors' : 'Pelabur' });
   const [titleNumber, setTitleNumber] = useState(0);
 
   const titles = useMemo(
