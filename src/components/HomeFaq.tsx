@@ -22,7 +22,7 @@ function HomeFaq() {
           />
           <motion.a
             {...reveal(0.1)}
-            href={buildWhatsAppUrl(pick('Hi EjenCukai! Saya ada soalan tentang cukai.', 'Hi EjenCukai! I have a question about my taxes.'))}
+            href={buildWhatsAppUrl(pick('Hi eCukai! Saya ada soalan tentang cukai.', 'Hi eCukai! I have a question about my taxes.'))}
             onClick={() => trackEvent('whatsapp_click', { location: 'faq' })}
             target="_blank"
             rel="noopener noreferrer"

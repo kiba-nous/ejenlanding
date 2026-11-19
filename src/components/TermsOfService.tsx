@@ -6,14 +6,14 @@ function TermsOfService() {
             <section>
               <h2>1. Acceptance of Terms</h2>
               <p>
-                By accessing and using Ejen Cukai ("the Service"), you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.
+                By accessing and using eCukai ("the Service"), you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.
               </p>
             </section>
 
             <section>
               <h2>2. Description of Service</h2>
               <p>
-                Ejen Cukai is a comprehensive tax compliance platform that provides:
+                eCukai is a comprehensive tax compliance platform that provides:
               </p>
               <ul>
                 <li>SST (Sales and Service Tax) compliance management</li>
@@ -57,7 +57,7 @@ function TermsOfService() {
             <section>
               <h2>5. Tax Compliance and Professional Advice</h2>
               <p>
-                While Ejen Cukai provides tools and assistance for tax compliance:
+                While eCukai provides tools and assistance for tax compliance:
               </p>
               <ul>
                 <li>The Service is not a substitute for professional tax advice</li>
@@ -78,7 +78,7 @@ function TermsOfService() {
             <section>
               <h2>7. Intellectual Property</h2>
               <p>
-                The Service and its original content, features, and functionality are owned by Ejen Cukai and are protected by international copyright, trademark, patent, trade secret, and other intellectual property laws.
+                The Service and its original content, features, and functionality are owned by eCukai and are protected by international copyright, trademark, patent, trade secret, and other intellectual property laws.
               </p>
             </section>
 
@@ -112,7 +112,7 @@ function TermsOfService() {
             <section>
               <h2>10. Limitation of Liability</h2>
               <p>
-                To the fullest extent permitted by law, Ejen Cukai shall not be liable for:
+                To the fullest extent permitted by law, eCukai shall not be liable for:
               </p>
               <ul>
                 <li>Any indirect, incidental, special, or consequential damages</li>
@@ -126,7 +126,7 @@ function TermsOfService() {
             <section>
               <h2>11. Indemnification</h2>
               <p>
-                You agree to indemnify and hold harmless Ejen Cukai from any claims, damages, or expenses arising from:
+                You agree to indemnify and hold harmless eCukai from any claims, damages, or expenses arising from:
               </p>
               <ul>
                 <li>Your use of the Service</li>

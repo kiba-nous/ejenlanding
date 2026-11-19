@@ -79,7 +79,7 @@ export function EbookThankYou({ ebook }: { ebook: EbookKey }) {
             <p>{pick('Ada masalah akses?', 'Trouble accessing it?')}</p>
             <p className="mt-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
               <a
-                href={buildWhatsAppUrl(pick('Hi EjenCukai! Saya baru beli e-book tetapi ada masalah akses.', 'Hi EjenCukai! I just bought the e-book but can’t access it.'))}
+                href={buildWhatsAppUrl(pick('Hi eCukai! Saya baru beli e-book tetapi ada masalah akses.', 'Hi eCukai! I just bought the e-book but can’t access it.'))}
                 onClick={() => trackEvent('whatsapp_click', { location: 'ebook_thank_you' })}
                 target="_blank"
                 rel="noopener noreferrer"

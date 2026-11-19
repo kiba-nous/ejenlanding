@@ -23,7 +23,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 function Home() {
   const { pick } = useLanguage();
   usePageMeta({
-    title: 'EjenCukai | Platform Pemfailan Cukai Bersama Ejen Berdaftar LHDN',
+    title: 'eCukai | Platform Pemfailan Cukai Bersama Ejen Berdaftar LHDN',
     description: pick(
       'Platform pemfailan cukai Malaysia. Kami hubungkan anda dengan profesional cukai dan rakan ejen cukai berdaftar LHDN untuk Borang BE, Borang B dan cukai syarikat.',
       'A Malaysian tax filing platform. We connect you with tax professionals and a partner LHDN-registered tax agent for Borang BE, Borang B and corporate tax.'

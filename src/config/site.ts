@@ -14,10 +14,10 @@ export const WHATSAPP_DISPLAY = '+6010 321 6650';
 
 export const CONTACT_EMAIL = 'contact@ejencukai.my';
 
-/** EjenCukai receipt-scanner app on Google Play. */
+/** eCukai receipt-scanner app on Google Play. */
 export const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=my.ejencukai.receiptscanner';
 
-/** Other EjenCukai products and demos, on their own subdomains. */
+/** Other eCukai products and demos, on their own subdomains. */
 export const PRODUCT_URLS = {
   /** Free tax Q&A chatbot for the public. */
   askAi: 'https://ai.ejencukai.my',
@@ -40,7 +40,7 @@ export const CHIPIN = {
    * 'https://pay.chip-in.asia/konsultasi').
    *
    * Set the product's Success redirect to:
-   *   https://ejencukai.my/booking/thank-you
+   *   https://ecukai.my/booking/thank-you
    *
    * While this is empty the booking page stays fully usable — the CTA falls
    * back to WhatsApp instead of checkout, so no lead is lost in the meantime.

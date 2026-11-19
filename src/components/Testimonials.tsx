@@ -35,7 +35,7 @@ const TESTIMONIALS: Testimonial[] = [
     role: { bm: 'Pemilik perniagaan online', en: 'Online business owner' },
     service: 'Borang B',
     quote: {
-      bm: 'Tak sangka saya dapat refund daripada LHDN. Tahun depan saya guna EjenCukai lagi, itu sudah pasti.',
+      bm: 'Tak sangka saya dapat refund daripada LHDN. Tahun depan saya guna eCukai lagi, itu sudah pasti.',
       en: 'I didn’t expect to get a refund from LHDN. I’m definitely coming back next year.',
     },
   },

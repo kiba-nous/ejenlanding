@@ -7,7 +7,7 @@ interface PageMeta {
   noindex?: boolean;
 }
 
-const SITE_NAME = 'EjenCukai';
+const SITE_NAME = 'eCukai';
 
 function upsertMeta(attr: 'name' | 'property', key: string, content: string) {
   let el = document.head.querySelector<HTMLMetaElement>(`meta[${attr}="${key}"]`);

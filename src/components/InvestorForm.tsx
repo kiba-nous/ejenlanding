@@ -143,8 +143,8 @@ function InvestorForm() {
         >
           <p className="text-[13px] text-apple-gray-3">
             {language === 'en'
-              ? "By submitting your interest, you agree to receive investment-related communications from Ejen Cukai."
-              : "Dengan menyerahkan minat anda, anda bersetuju untuk menerima komunikasi berkaitan pelaburan daripada Ejen Cukai."
+              ? "By submitting your interest, you agree to receive investment-related communications from eCukai."
+              : "Dengan menyerahkan minat anda, anda bersetuju untuk menerima komunikasi berkaitan pelaburan daripada eCukai."
             }
           </p>
         </motion.div>

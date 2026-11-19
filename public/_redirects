@@ -1,3 +1,10 @@
+# Old domain -> new domain. Payment webhooks (POST) can't follow a 301, so
+# function calls on the old domain are served in place instead of redirected.
+https://ejencukai.my/.netlify/functions/*      /.netlify/functions/:splat  200
+https://www.ejencukai.my/.netlify/functions/*  /.netlify/functions/:splat  200
+https://ejencukai.my/*      https://ecukai.my/:splat  301!
+https://www.ejencukai.my/*  https://ecukai.my/:splat  301!
+
 # Use 301 redirect to properly redirect to chatbot
 /chat/* https://chat.ejencukai.my/:splat 301
 

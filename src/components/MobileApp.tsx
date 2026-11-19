@@ -7,7 +7,7 @@ import { Badge, CheckItem } from './ui/Section';
 import { reveal } from './ui/motion';
 
 /**
- * The EjenCukai receipt-scanner app. Sits after the e-book and consultation
+ * The eCukai receipt-scanner app. Sits after the e-book and consultation
  * as the third self-serve tool: something a visitor can start using today,
  * long before filing season.
  *
@@ -32,7 +32,7 @@ function MobileApp() {
 
           <img
             src="/app-phone.png"
-            alt={pick('Skrin aplikasi EjenCukai', 'EjenCukai app screen')}
+            alt={pick('Skrin aplikasi eCukai', 'eCukai app screen')}
             width={568}
             height={1146}
             loading="lazy"
@@ -60,7 +60,7 @@ function MobileApp() {
         {/* Copy */}
         <motion.div {...reveal(0.08)} className="order-1 lg:order-2 lg:col-span-7 lg:pl-6">
           <div className="flex flex-wrap items-center gap-3">
-            <span className="eyebrow">{pick('Aplikasi EjenCukai', 'The EjenCukai app')}</span>
+            <span className="eyebrow">{pick('Aplikasi eCukai', 'The eCukai app')}</span>
             <Badge>
               <Sparkles className="h-3.5 w-3.5" />
               {pick('Baharu', 'New')}
@@ -74,8 +74,8 @@ function MobileApp() {
           </h2>
           <p className="mt-4 max-w-xl text-pretty text-[17px] leading-relaxed text-ink-600">
             {pick(
-              'Aplikasi EjenCukai menggunakan teknologi AI untuk mengimbas dan menyimpan resit anda secara automatik, supaya semuanya sedia bila tiba musim cukai.',
-              'The EjenCukai app uses AI to scan and save your receipts automatically, so everything is ready when tax season comes.'
+              'Aplikasi eCukai menggunakan teknologi AI untuk mengimbas dan menyimpan resit anda secara automatik, supaya semuanya sedia bila tiba musim cukai.',
+              'The eCukai app uses AI to scan and save your receipts automatically, so everything is ready when tax season comes.'
             )}
           </p>
 

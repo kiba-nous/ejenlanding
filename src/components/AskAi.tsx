@@ -106,8 +106,8 @@ function AskAi() {
           </h2>
           <p className="mt-4 max-w-xl text-pretty text-[17px] leading-relaxed text-ink-600">
             {pick(
-              'Pembantu AI EjenCukai menjawab soalan cukai pendapatan Malaysia dalam bahasa mudah. Tiada pendaftaran, tiada borang, terus taip soalan anda.',
-              'The EjenCukai AI assistant answers Malaysian income tax questions in plain language. No sign-up, no forms, just type your question.'
+              'Pembantu AI eCukai menjawab soalan cukai pendapatan Malaysia dalam bahasa mudah. Tiada pendaftaran, tiada borang, terus taip soalan anda.',
+              'The eCukai AI assistant answers Malaysian income tax questions in plain language. No sign-up, no forms, just type your question.'
             )}
           </p>
 

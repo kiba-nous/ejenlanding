@@ -6,4 +6,4 @@ Allow: /
 Disallow: /ebook/thank-you/
 Disallow: /booking/thank-you
 
-Sitemap: https://ejencukai.my/sitemap.xml
+Sitemap: https://ecukai.my/sitemap.xml

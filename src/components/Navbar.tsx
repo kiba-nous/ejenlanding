@@ -89,8 +89,8 @@ function Navbar() {
       </a>
 
       <nav className="container-x flex h-16 items-center justify-between gap-6" aria-label="Main">
-        <Link to="/" className="flex shrink-0 items-center transition-opacity hover:opacity-80" aria-label="EjenCukai home">
-          <img src="/logo.svg" alt="EjenCukai" width={291} height={56} className="h-6 w-auto md:h-7" />
+        <Link to="/" className="flex shrink-0 items-center transition-opacity hover:opacity-80" aria-label="eCukai home">
+          <img src="/logo.svg" alt="eCukai" width={222} height={56} className="h-6 w-auto md:h-7" />
         </Link>
 
         {/* Desktop */}

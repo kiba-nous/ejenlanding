@@ -31,7 +31,7 @@ function Footer() {
     {
       heading: pick('Firma & pelabur', 'Firms & investors'),
       links: [
-        { label: pick('EjenCukai Agent: AI CRM firma cukai', 'EjenCukai Agent: AI CRM for tax firms'), href: PRODUCT_URLS.agent },
+        { label: pick('eCukai Agent: AI CRM firma cukai', 'eCukai Agent: AI CRM for tax firms'), href: PRODUCT_URLS.agent },
         { label: pick('Demo pelabur', 'Investor demo'), href: PRODUCT_URLS.investorDemo },
         { label: pick('Demo ejen AI perniagaan', 'Business AI agent demo'), href: PRODUCT_URLS.businessAgentDemo },
       ],
@@ -51,7 +51,7 @@ function Footer() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
           {/* Brand + contact */}
           <div className="lg:col-span-3">
-            <img src="/logo.svg" alt="EjenCukai" width={291} height={56} className="h-8 w-auto" />
+            <img src="/logo.svg" alt="eCukai" width={222} height={56} className="h-8 w-auto" />
             <p className="mt-5 max-w-xs text-[14px] leading-relaxed text-white/65">
               {pick(
                 'Platform pemfailan cukai. Kami hubungkan anda dengan profesional cukai dan rakan ejen berdaftar LHDN untuk Borang BE, Borang B dan cukai syarikat.',

@@ -52,7 +52,7 @@ function ServicesPricing() {
             <div className="relative -rotate-[0.6deg] drop-shadow-[0_24px_30px_rgba(11,40,61,0.16)]">
               <div className="receipt-edge bg-white px-7 pb-12 pt-8 md:px-9">
                 <div className="text-center">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-ink-500">EjenCukai</p>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-ink-500">eCukai</p>
                   <p className="mt-1 text-[11px] uppercase tracking-[0.14em] text-ink-400">
                     {pick('Pemfailan & khidmat nasihat', 'Filing & advisory')}
                   </p>

@@ -4,7 +4,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { reveal } from './ui/motion';
 
 /**
- * Three reasons, each something we can actually stand behind: EjenCukai is
+ * Three reasons, each something we can actually stand behind: eCukai is
  * the platform; review is done by tax professionals, with complex cases
  * handled alongside a partner LHDN-registered agent.
  */
@@ -16,8 +16,8 @@ function WhyUs() {
       icon: Award,
       title: pick('Disemak profesional cukai', 'Reviewed by tax professionals'),
       body: pick(
-        'Setiap pemfailan disemak oleh profesional cukai. Kes yang lebih kompleks dikendalikan bersama rakan ejen cukai berdaftar LHDN. EjenCukai ialah platform yang menguruskan prosesnya.',
-        'Every filing is reviewed by a tax professional. More complex cases are handled together with a partner LHDN-registered tax agent. EjenCukai is the platform that runs the process.'
+        'Setiap pemfailan disemak oleh profesional cukai. Kes yang lebih kompleks dikendalikan bersama rakan ejen cukai berdaftar LHDN. eCukai ialah platform yang menguruskan prosesnya.',
+        'Every filing is reviewed by a tax professional. More complex cases are handled together with a partner LHDN-registered tax agent. eCukai is the platform that runs the process.'
       ),
     },
     {
@@ -47,7 +47,7 @@ function WhyUs() {
       <div className="container-x relative grid gap-12 lg:grid-cols-12 lg:gap-16">
         <motion.div {...reveal()} className="lg:col-span-5">
           <div className="lg:sticky lg:top-28">
-            <span className="eyebrow text-white/60">{pick('Kenapa EjenCukai', 'Why EjenCukai')}</span>
+            <span className="eyebrow text-white/60">{pick('Kenapa eCukai', 'Why eCukai')}</span>
             <h2 className="mt-4 text-balance text-display-sm md:text-display-md">
               {pick(
                 <>Proses yang <span className="text-brand-400">jelas</span> dari mula hingga akhir.</>,

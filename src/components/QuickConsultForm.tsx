@@ -144,7 +144,7 @@ function QuickConsultForm() {
     trackEvent('form_submit', { client_type: clientType ?? '', service: service?.id ?? '' });
 
     const message = [
-      bm ? `Hi EjenCukai! Saya ${name.trim()}.` : `Hi EjenCukai! I'm ${name.trim()}.`,
+      bm ? `Hi eCukai! Saya ${name.trim()}.` : `Hi eCukai! I'm ${name.trim()}.`,
       '',
       `${pick('Jenis klien', 'Client type')}: ${clientLabel}`,
       `${pick('Perkhidmatan', 'Service')}: ${serviceLabel}`,

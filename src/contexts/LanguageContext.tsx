@@ -30,7 +30,7 @@ const translations: Record<Language, Record<string, string>> = {
 
     'waitlist.title': 'Join the Waitlist',
     'waitlist.subtitle': 'Be among the first to experience AI-powered tax compliance. Get early access and exclusive pricing when we launch.',
-    'waitlist.privacy': "By joining, you agree to receive updates about Ejen Cukai. We respect your privacy and won't spam you.",
+    'waitlist.privacy': "By joining, you agree to receive updates about eCukai. We respect your privacy and won't spam you.",
 
     'footer.company': 'Company',
     'footer.copyright': 'Employou Technologies (IP0602426-H). All rights reserved.',
@@ -41,7 +41,7 @@ const translations: Record<Language, Record<string, string>> = {
 
     'waitlist.title': 'Sertai Senarai Menunggu',
     'waitlist.subtitle': 'Jadilah antara yang pertama merasai pematuhan cukai berkuasa AI. Dapatkan akses awal dan harga eksklusif apabila kami melancarkan.',
-    'waitlist.privacy': 'Dengan menyertai, anda bersetuju untuk menerima kemas kini tentang Ejen Cukai. Kami menghormati privasi anda dan tidak akan menghantar spam.',
+    'waitlist.privacy': 'Dengan menyertai, anda bersetuju untuk menerima kemas kini tentang eCukai. Kami menghormati privasi anda dan tidak akan menghantar spam.',
 
     'footer.company': 'Syarikat',
     'footer.copyright': 'Employou Technologies (IP0602426-H). Hak cipta terpelihara.',

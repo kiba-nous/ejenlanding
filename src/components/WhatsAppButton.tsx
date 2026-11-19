@@ -7,8 +7,8 @@ import { trackEvent, buildWhatsAppUrl } from '../utils/analytics';
 // A short wa.link can't carry a message, so every chat started from here used
 // to open cold. A wa.me link with pre-filled text gives us the opener.
 const GREETING = {
-  bm: 'Hi EjenCukai! Saya ada soalan tentang cukai.',
-  en: 'Hi EjenCukai! I have a question about my taxes.',
+  bm: 'Hi eCukai! Saya ada soalan tentang cukai.',
+  en: 'Hi eCukai! I have a question about my taxes.',
 };
 
 export const WhatsAppButton: React.FC = () => {

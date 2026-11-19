@@ -16,7 +16,7 @@ import { CheckItem } from './ui/Section';
  *
  * Calendly is embedded inline rather than redirected to — sending a buyer to
  * a third-party domain immediately after they pay reads as a scam to a
- * first-time customer. They stay on ejencukai.my with our nav and footer.
+ * first-time customer. They stay on ecukai.my with our nav and footer.
  *
  * NOTE: this route is publicly reachable. Anyone with the URL can book without
  * paying. That is an accepted trade-off at current volume (the URL is not
@@ -214,8 +214,8 @@ export function BookingThankYou() {
                 <a
                   href={buildWhatsAppUrl(
                     pick(
-                      'Hi EjenCukai! Saya baru bayar untuk Konsultasi Cukai Peribadi dan perlukan bantuan dengan tempahan saya.',
-                      'Hi EjenCukai! I just paid for a Personal Tax Consultation and need help with my booking.'
+                      'Hi eCukai! Saya baru bayar untuk Konsultasi Cukai Peribadi dan perlukan bantuan dengan tempahan saya.',
+                      'Hi eCukai! I just paid for a Personal Tax Consultation and need help with my booking.'
                     )
                   )}
                   onClick={() => trackEvent('whatsapp_click', { location: 'booking_thank_you' })}

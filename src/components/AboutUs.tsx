@@ -125,7 +125,7 @@ function AboutUs() {
         >
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
             <span className="text-brand-600">
-              {language === 'en' ? 'About Ejen Cukai' : 'Tentang Ejen Cukai'}
+              {language === 'en' ? 'About eCukai' : 'Tentang eCukai'}
             </span>
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">

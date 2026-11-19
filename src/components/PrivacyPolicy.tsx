@@ -6,7 +6,7 @@ function PrivacyPolicy() {
             <section>
               <h2>1. Information We Collect</h2>
               <p>
-                When you use Ejen Cukai, we may collect the following types of information:
+                When you use eCukai, we may collect the following types of information:
               </p>
               <ul>
                 <li><strong>Google Account Information:</strong> When you sign in with Google OAuth, we collect your email address, name, and profile picture as provided by Google.</li>

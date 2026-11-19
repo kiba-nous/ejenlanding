@@ -35,7 +35,7 @@ function BookCover({ variant, title, subtitle }: { variant: ProductKey; title: s
       <div className="absolute inset-y-0 left-2 w-px bg-white/30" />
       <div className="flex h-full flex-col justify-between p-5 pl-7">
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-80">EjenCukai</p>
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-80">eCukai</p>
           <p className="mt-6 text-[26px] font-extrabold leading-none tracking-tight">{title}</p>
           <p className="mt-2 text-[11px] leading-snug opacity-80">{subtitle}</p>
         </div>
@@ -255,7 +255,7 @@ export function EbookPage() {
                 <a href={`mailto:${CONTACT_EMAIL}`} className="font-semibold text-brand-700 hover:underline">{CONTACT_EMAIL}</a>
                 {' '}·{' '}
                 <a
-                  href={buildWhatsAppUrl(pick('Hi EjenCukai! Saya ada soalan tentang E-Book cukai.', 'Hi EjenCukai! I have a question about the tax e-book.'))}
+                  href={buildWhatsAppUrl(pick('Hi eCukai! Saya ada soalan tentang E-Book cukai.', 'Hi eCukai! I have a question about the tax e-book.'))}
                   onClick={() => trackEvent('whatsapp_click', { location: 'ebook_faq' })}
                   target="_blank"
                   rel="noopener noreferrer"

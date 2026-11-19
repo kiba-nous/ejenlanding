@@ -81,7 +81,7 @@ function BookingForm() {
     // switch this over.
     window.location.href = buildWhatsAppUrl(
       [
-        pick(`Hi EjenCukai! Saya ${details.name}.`, `Hi EjenCukai! I'm ${details.name}.`),
+        pick(`Hi eCukai! Saya ${details.name}.`, `Hi eCukai! I'm ${details.name}.`),
         '',
         pick(
           `Saya ingin tempah Konsultasi Cukai Peribadi (${CONSULTATION.priceLabel} / ${CONSULTATION.unitBm}).`,
